@@ -2,7 +2,7 @@
   "package": {
     "name": "mavenTest",
     "repo": "maven",
-    "subject": "techdev-solutions",
+    "subject": "ruby",
     "desc": "Bintray Demo Project",
     "website_url": "https://techdev.de",
     "issue_tracker_url": "https://github.com/techdev-solutions/bintray-demo/issues",
