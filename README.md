@@ -6,7 +6,23 @@ Easy rx testing with kotlin test
 
 ## Usage
 
+```kotlin
+Observable.just("Hello")
+                .testIt {
+                    it should complete()
+                    it shouldHave noErrors()
+                    it shouldHave value("Hello")
+                }
+                
+Observable.never<Unit>()
+                .testIt {
+                    it should notComplete()
+                    it shouldHave noErrors()
+                    it shouldHave valueCount(0)
+                }
+```
+
 ## Binaries
 Gradle:
 
-## Contribute
+## Contributing
