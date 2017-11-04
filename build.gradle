@@ -48,6 +48,6 @@ publishing {
 
 model {
     tasks.generatePomFileForMavenPublication {
-        destination = file("$buildDir/libs/bintray-demo-1.0.0.pom")
+        destination = file("$buildDir/libs/RxKotlinTest-1.0.0.pom")
     }
 }
