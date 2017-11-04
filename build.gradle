@@ -1,8 +1,8 @@
-group 'de.techdev'
+group 'com.rubylichtenstein'
 version '1.0.0'
 
 buildscript {
-    ext.kotlin_version = '1.1.0'
+    ext.kotlin_version = '1.1.51'
 
     repositories {
         jcenter()
@@ -21,7 +21,8 @@ repositories {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
-    compile "com.squareup.okhttp3:okhttp:3.6.0"
+    compile 'io.reactivex.rxjava2:rxjava:2.1.5'
+    compile 'io.kotlintest:kotlintest:2.0.7'
 }
 
 task wrapper(type: Wrapper) {

@@ -1,12 +1,12 @@
 {
   "package": {
-    "name": "de.techdev",
-    "repo": "maven",
+    "name": "com.rubylichtenstein",
+    "repo": "RxKotlinTest",
     "subject": "ruby",
-    "desc": "Bintray Demo Project",
-    "website_url": "https://techdev.de",
-    "issue_tracker_url": "https://github.com/techdev-solutions/bintray-demo/issues",
-    "vcs_url": "https://github.com/RubyLichtenstein/bintray-demo.git",
+    "desc": "RxKotlinTest",
+    "website_url": "",
+    "issue_tracker_url": "",
+    "vcs_url": "https://github.com/RubyLichtenstein/RxKotlinTest.git",
     "licenses": ["Apache-2.0"],
     "labels": ["kotlin", "bintray", "gradle"],
     "public_download_numbers": false,
