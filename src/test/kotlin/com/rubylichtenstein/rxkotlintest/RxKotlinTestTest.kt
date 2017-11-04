@@ -1,7 +1,8 @@
-package com.rubylichtenstein
+package com.rubylichtenstein.rxkotlintest
 
 import io.kotlintest.matchers.should
 import io.kotlintest.matchers.shouldHave
+import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
@@ -24,7 +25,6 @@ class RxKotlinTestTest {
                 }
     }
 
-
     fun ClosedRange<Int>.random() = Random().nextInt(endInclusive - start) + start
 
     fun <T> randomOne(vararg value: T): Observable<T> =
@@ -32,6 +32,33 @@ class RxKotlinTestTest {
 
     fun onlyEvens(value: List<Int>): Observable<Int> =
             Observable.fromIterable(value).filter { it % 2 == 0 }
+
+    fun <T> noValues() = valueCount<T>(0)
+    fun <T> moreValuesThen(count: Int)
+            = compose<T>({ it.values().size > count },
+            "Should have more values then $count")
+
+    @Test
+    fun test10() {
+        Maybe.just("")
+                .testIt {
+
+                }
+
+        Observable.just("Hello", "Hello", "Hello")
+                .testIt {
+                    it shouldHave moreValuesThen(2)
+                    it shouldHave noErrors()
+                    it shouldHave valueSequence(listOf("Hello", "Hello", "Hello"))
+                }
+
+        Observable.never<Unit>()
+                .testIt {
+                    it should notComplete()
+                    it shouldHave noErrors()
+                    it shouldHave valueCount(0)
+                }
+    }
 
     @Test
     fun testOnlyEvens() {
