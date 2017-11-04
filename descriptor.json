@@ -1,7 +1,7 @@
 {
   "package": {
     "name": "mavenTest",
-    "repo": "RUby-mavenTest",
+    "repo": "maven",
     "subject": "techdev-solutions",
     "desc": "Bintray Demo Project",
     "website_url": "https://techdev.de",
