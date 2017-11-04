@@ -1,6 +1,6 @@
 {
   "package": {
-    "name": "bintray-demo",
+    "name": "RUby-maven",
     "repo": "RUby-maven",
     "subject": "techdev-solutions",
     "desc": "Bintray Demo Project",
