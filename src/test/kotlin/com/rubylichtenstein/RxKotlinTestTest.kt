@@ -1,3 +1,5 @@
+package com.rubylichtenstein
+
 import io.kotlintest.matchers.should
 import io.kotlintest.matchers.shouldHave
 import io.reactivex.Observable
@@ -5,10 +7,6 @@ import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
 import org.junit.Test
 import java.util.*
-
-/**
- * Created by ruby on 25/10/17.
- */
 
 class RxKotlinTestTest {
     @Test
