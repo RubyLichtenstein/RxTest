@@ -14,14 +14,14 @@
   },
 
   "version": {
-    "name": "1.0.0",
+    "name": "1.0.1",
     "released": "2017-03-08",
     "gpgSign": false
   },
 
   "files":
   [
-    {"includePattern": "build/libs/(.*)", "uploadPattern": "com/rubylichtenstein/RxKotlinTest/1.0.0/$1"}
+    {"includePattern": "build/libs/(.*)", "uploadPattern": "com/rubylichtenstein/RxKotlinTest/1.0.1/$1"}
   ],
   "publish": true
 }
