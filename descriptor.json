@@ -21,7 +21,7 @@
 
   "files":
   [
-    {"includePattern": "build/libs/(.*)", "uploadPattern": "de/techdev/bintray-demo/1.0.0/$1"}
+    {"includePattern": "build/libs/(.*)", "uploadPattern": "com/rubylichtenstein/RxKotlinTest/1.0.0/$1"}
   ],
   "publish": true
 }
