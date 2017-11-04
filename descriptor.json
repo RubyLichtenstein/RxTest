@@ -1,0 +1,27 @@
+{
+  "package": {
+    "name": "bintray-demo",
+    "repo": "maven",
+    "subject": "techdev-solutions",
+    "desc": "Bintray Demo Project",
+    "website_url": "https://techdev.de",
+    "issue_tracker_url": "https://github.com/techdev-solutions/bintray-demo/issues",
+    "vcs_url": "https://github.com/techdev-solutions/bintray-demo.git",
+    "licenses": ["Apache-2.0"],
+    "labels": ["kotlin", "bintray", "gradle"],
+    "public_download_numbers": false,
+    "public_stats": false
+  },
+
+  "version": {
+    "name": "1.0.0",
+    "released": "2017-03-08",
+    "gpgSign": false
+  },
+
+  "files":
+  [
+    {"includePattern": "build/libs/(.*)", "uploadPattern": "de/techdev/bintray-demo/1.0.0/$1"}
+  ],
+  "publish": true
+}
