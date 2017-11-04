@@ -1,6 +1,6 @@
 {
   "package": {
-    "name": "mavenTest",
+    "name": "de.techdev",
     "repo": "maven",
     "subject": "ruby",
     "desc": "Bintray Demo Project",
