@@ -12,7 +12,5 @@ deploy:
   key: $BINTRAY_API_KEY
   dry-run: false
 
-language: groovy
-
 after_success:
   - bash <(curl -s https://codecov.io/bash)
