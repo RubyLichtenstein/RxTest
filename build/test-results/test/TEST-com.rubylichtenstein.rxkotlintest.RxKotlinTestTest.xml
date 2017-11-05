@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.rubylichtenstein.rxkotlintest.RxKotlinTestTest" tests="15" skipped="0" failures="0" errors="0" timestamp="2017-11-05T22:23:15" hostname="ruby-Lenovo-Ideapad-Flex-14" time="0.815">
+  <properties/>
+  <testcase name="valueAtTest" classname="com.rubylichtenstein.rxkotlintest.RxKotlinTestTest" time="0.343"/>
+  <testcase name="notCompleteTest" classname="com.rubylichtenstein.rxkotlintest.RxKotlinTestTest" time="0.004"/>
+  <testcase name="emptyTest" classname="com.rubylichtenstein.rxkotlintest.RxKotlinTestTest" time="0.002"/>
+  <testcase name="testRandomOneObservable" classname="com.rubylichtenstein.rxkotlintest.RxKotlinTestTest" time="0.025"/>
+  <testcase name="neverTest" classname="com.rubylichtenstein.rxkotlintest.RxKotlinTestTest" time="0.009"/>
+  <testcase name="test10" classname="com.rubylichtenstein.rxkotlintest.RxKotlinTestTest" time="0.326"/>
+  <testcase name="valueTest" classname="com.rubylichtenstein.rxkotlintest.RxKotlinTestTest" time="0.004"/>
+  <testcase name="completeTest" classname="com.rubylichtenstein.rxkotlintest.RxKotlinTestTest" time="0.003"/>
+  <testcase name="test1" classname="com.rubylichtenstein.rxkotlintest.RxKotlinTestTest" time="0.007"/>
+  <testcase name="test2" classname="com.rubylichtenstein.rxkotlintest.RxKotlinTestTest" time="0.02"/>
+  <testcase name="test3" classname="com.rubylichtenstein.rxkotlintest.RxKotlinTestTest" time="0.004"/>
+  <testcase name="errorTest" classname="com.rubylichtenstein.rxkotlintest.RxKotlinTestTest" time="0.006"/>
+  <testcase name="testOnlyEvens" classname="com.rubylichtenstein.rxkotlintest.RxKotlinTestTest" time="0.023"/>
+  <testcase name="noErrorTest" classname="com.rubylichtenstein.rxkotlintest.RxKotlinTestTest" time="0.002"/>
+  <testcase name="valuesTest" classname="com.rubylichtenstein.rxkotlintest.RxKotlinTestTest" time="0.01"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
