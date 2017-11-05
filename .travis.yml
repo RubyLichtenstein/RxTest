@@ -5,7 +5,7 @@ before_install:
   - chmod +x gradlew
 before_deploy:
   - ./gradlew generatePomFileForMavenPublication
-  - ./gradlew codeCoverageReport
+  - ./gradlew jacocoTestReport
 deploy:
   provider: bintray
   file: "descriptor.json"
