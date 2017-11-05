@@ -19,17 +19,22 @@ apply plugin: "jacoco"
 repositories {
     jcenter()
 }
-jacoco {
-    toolVersion = "0.7.9"
-    reportsDir = file("$buildDir/customJacocoReportDir")
-}
-jacocoTestReport {
+
+task codeCoverageReport(type: JacocoReport) {
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
+
     reports {
-        xml.enabled false
+        xml.enabled true
+        xml.destination "${buildDir}/reports/jacoco/report.xml"
+        html.enabled false
         csv.enabled false
-        html.destination file("${buildDir}/jacocoHtml")
     }
 }
+
 dependencies {
     compile 'junit:junit:4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"

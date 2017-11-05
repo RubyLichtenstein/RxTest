@@ -5,12 +5,12 @@ before_install:
   - chmod +x gradlew
 before_deploy:
   - ./gradlew generatePomFileForMavenPublication
+  - ./gradlew codeCoverageReport
 deploy:
   provider: bintray
   file: "descriptor.json"
   user: $BINTRAY_API_USER
   key: $BINTRAY_API_KEY
   dry-run: false
-
 after_success:
   - bash <(curl -s https://codecov.io/bash)
