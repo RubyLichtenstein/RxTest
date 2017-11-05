@@ -6,6 +6,7 @@ before_install:
 before_deploy:
   - ./gradlew generatePomFileForMavenPublication
   - ./gradlew jacocoTestReport
+
 deploy:
   provider: bintray
   file: "descriptor.json"
