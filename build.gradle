@@ -14,11 +14,22 @@ buildscript {
 
 apply plugin: 'kotlin'
 apply plugin: 'maven-publish'
+apply plugin: "jacoco"
 
 repositories {
     jcenter()
 }
-
+jacoco {
+    toolVersion = "0.7.9"
+    reportsDir = file("$buildDir/customJacocoReportDir")
+}
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/jacocoHtml")
+    }
+}
 dependencies {
     compile 'junit:junit:4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
