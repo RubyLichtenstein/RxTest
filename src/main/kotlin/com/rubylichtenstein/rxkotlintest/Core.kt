@@ -33,9 +33,9 @@ fun <T> assertionWrapper(action: (TestObserver<T>) -> Unit): tom<T> {
     }
 }
 
-fun <T> Observable<T>.test(action: testAction<T>) = test().also(action)
-fun <T> Maybe<T>.test(action: testAction<T>) = test().also(action)
-fun <T> Single<T>.test(action: testAction<T>) = test().also(action)
-fun Completable.test(action: testAction<Void>) = test().also(action)
+fun <T> Observable<T>.test(action: testAction<T>) = test().apply(action)
+fun <T> Maybe<T>.test(action: testAction<T>) = test().apply(action)
+fun <T> Single<T>.test(action: testAction<T>) = test().apply(action)
+fun Completable.test(action: testAction<Void>) = test().apply(action)
 
 infix fun <T> T.shouldBe(matcher: Matcher<T>) = should(matcher)

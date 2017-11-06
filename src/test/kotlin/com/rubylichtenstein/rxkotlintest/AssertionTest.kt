@@ -2,15 +2,39 @@ package com.rubylichtenstein.rxkotlintest
 
 import io.kotlintest.matchers.should
 import io.kotlintest.matchers.shouldHave
+import io.reactivex.Completable
+import io.reactivex.Maybe
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
 import org.junit.Test
 
 class AssertionTest {
+
+    val item0 = "a"
+
     @Test
     fun completeTest() {
-        Observable.just("a")
+        Observable.just(item0)
+                .test {
+                    it.assertComplete()
+                    it should complete()
+                }
+
+        Maybe.just(item0)
+                .test {
+                    it.assertComplete()
+                    it should complete()
+                }
+
+        Single.just(item0)
+                .test {
+                    it.assertComplete()
+                    it should complete()
+                }
+
+        Completable.complete()
                 .test {
                     it.assertComplete()
                     it should complete()
@@ -129,12 +153,14 @@ class AssertionTest {
 
     @Test
     fun emptyTest() {
-        val to = TestObserver<String>()
-        val publishSubject = PublishSubject.create<String>()
-        publishSubject.subscribe(to)
-
-        to.assertEmpty()
-        to should empty()
+        PublishSubject.create<String>()
+                .apply {
+                    subscribe({})
+                }
+                .test {
+                    it.assertEmpty()
+                    it shouldBe empty()
+                }
     }
 
     @Test
