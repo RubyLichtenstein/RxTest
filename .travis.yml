@@ -4,9 +4,10 @@ jdk:
 before_install:
   - chmod +x gradlew
   - chmod +x build
+
 before_deploy:
   - ./gradlew generatePomFileForMavenPublication
-  - ./gradlew jacocoTestReport
+
 
 deploy:
   provider: bintray
@@ -14,5 +15,7 @@ deploy:
   user: $BINTRAY_API_USER
   key: $BINTRAY_API_KEY
   dry-run: false
+
 after_success:
+  -./gradlew jacocoTestReport
   - bash <(curl -s https://codecov.io/bash)
