@@ -2,95 +2,32 @@ package com.rubylichtenstein.rxkotlintest
 
 import io.kotlintest.matchers.should
 import io.kotlintest.matchers.shouldHave
-import io.reactivex.Maybe
 import io.reactivex.Observable
-import io.reactivex.functions.Consumer
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
-import net.bytebuddy.implementation.bytecode.Throw
 import org.junit.Test
-import java.util.*
 
 class AssertionTest {
     @Test
     fun completeTest() {
         Observable.just("a")
                 .test {
-                    assertComplete()
-                    this should complete()
-                }
-
-        Observable.just("a")
-                .testIt {
                     it.assertComplete()
                     it should complete()
                 }
     }
 
-
-    fun <T> noValues() = valueCount<T>(0)
-    fun <T> moreValuesThen(count: Int)
-            = compose<T>({ it.values().size > count },
-            "Should have more values then $count")
-
-    @Test
-    fun test10() {
-        Observable.just("Hello", "Hello", "Hello")
-                .testIt {
-                    it shouldHave moreValuesThen(2)
-                    it shouldHave noErrors()
-                    it shouldHave valueSequence(listOf("Hello", "Hello", "Hello"))
-                }
-
-        Observable.never<Unit>()
-                .testIt {
-                    it should notComplete()
-                    it shouldHave noErrors()
-                    it shouldHave valueCount(0)
-                }
-    }
-
-    @Test
-    fun test1() {
-        val start = 0
-        val end = 10
-
-        Observable.fromIterable(start..end)
-                .testIt {
-                    it should complete()
-                    it shouldHave valueCount(end + 1)
-                    it shouldHave valueAt(start, start)
-                    it shouldHave valueAt(end - 1, end - 1)
-                }
-
-
-    }
-
-    @Test
-    fun test2() {
-        Observable.fromArray("hello kotlin", null)
-                .testIt {
-                    it should notComplete()
-                    it shouldHave error(Throwable::class.java)
-                }
-    }
-
-    @Test
-    fun test3() {
-        PublishSubject.create<String>()
-                .testIt {
-                    it shouldBe empty()
-                }
-    }
-
     @Test
     fun notCompleteTest() {
-        val to = TestObserver<String>()
-        val publishSubject = PublishSubject.create<String>()
-        publishSubject.onNext("a")
-        publishSubject.onNext("b")
-        to.assertNotComplete()
-        to should notComplete()
+        PublishSubject.create<String>()
+                .apply {
+                    onNext("a")
+                    onNext("b")
+                }
+                .test {
+                    it.assertNotComplete()
+                    it should notComplete()
+                }
     }
 
     @Test
@@ -211,7 +148,7 @@ class AssertionTest {
                     it.onNext(value1)
                     it.onError(error)
                 }
-                .testIt {
+                .test {
                     //                    it.assertFailure(true, value0)
 //                    it shouldHave failure()
                 }
@@ -223,7 +160,7 @@ class AssertionTest {
         val value1 = "b"
         val values = listOf(value0, value1)
         Observable.just(values)
-                .testIt {
+                .test {
                     it.assertResult(values)
                     it shouldHave result(values)
                 }
@@ -234,7 +171,7 @@ class AssertionTest {
         val value0 = "a"
         Observable.just(value0).apply {
             subscribe({ })
-            testIt {
+            test {
                 it.assertSubscribed()
                 it should subscribed()
             }
@@ -245,7 +182,7 @@ class AssertionTest {
     fun notSubscribeTest() {
         val value0 = "a"
         Observable.just(value0)
-                .testIt {
+                .test {
                     it.assertSubscribed()
                     it should subscribed()
                 }
