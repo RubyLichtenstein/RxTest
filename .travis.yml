@@ -3,7 +3,6 @@ jdk:
   - oraclejdk8
 before_install:
   - chmod +x gradlew
-  - chmod +x build
 
 before_deploy:
   - ./gradlew generatePomFileForMavenPublication
