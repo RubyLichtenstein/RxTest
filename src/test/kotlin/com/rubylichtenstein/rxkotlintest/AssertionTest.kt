@@ -4,12 +4,14 @@ import io.kotlintest.matchers.should
 import io.kotlintest.matchers.shouldHave
 import io.reactivex.Maybe
 import io.reactivex.Observable
+import io.reactivex.functions.Consumer
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
+import net.bytebuddy.implementation.bytecode.Throw
 import org.junit.Test
 import java.util.*
 
-class RxKotlinTestTest {
+class AssertionTest {
     @Test
     fun completeTest() {
         Observable.just("a")
@@ -25,13 +27,6 @@ class RxKotlinTestTest {
                 }
     }
 
-    fun ClosedRange<Int>.random() = Random().nextInt(endInclusive - start) + start
-
-    fun <T> randomOne(vararg value: T): Observable<T> =
-            Observable.just(value[(0..value.size).random()])
-
-    fun onlyEvens(value: List<Int>): Observable<Int> =
-            Observable.fromIterable(value).filter { it % 2 == 0 }
 
     fun <T> noValues() = valueCount<T>(0)
     fun <T> moreValuesThen(count: Int)
@@ -40,11 +35,6 @@ class RxKotlinTestTest {
 
     @Test
     fun test10() {
-        Maybe.just("")
-                .testIt {
-
-                }
-
         Observable.just("Hello", "Hello", "Hello")
                 .testIt {
                     it shouldHave moreValuesThen(2)
@@ -57,26 +47,6 @@ class RxKotlinTestTest {
                     it should notComplete()
                     it shouldHave noErrors()
                     it shouldHave valueCount(0)
-                }
-    }
-
-    @Test
-    fun testOnlyEvens() {
-        onlyEvens(listOf(1, 2, 3, 4, 5))
-                .testIt {
-                    it should complete()
-                    it shouldHave valueCount(2)
-                    it shouldHave values(2, 4)
-                }
-    }
-
-    @Test
-    fun testRandomOneObservable() {
-        randomOne("a", "b")
-                .testIt {
-                    it should complete()
-                    it shouldHave valueCount(1)
-                    it shouldHave value({ (it == "a") or (it == "b") })
                 }
     }
 
@@ -230,5 +200,55 @@ class RxKotlinTestTest {
         to should empty()
     }
 
+    @Test
+    fun failureTest() {
+        val value0 = "a"
+        val value1 = "b"
+        val error = Throwable()
+        PublishSubject.create<String>()
+                .also {
+                    it.onNext(value0)
+                    it.onNext(value1)
+                    it.onError(error)
+                }
+                .testIt {
+                    //                    it.assertFailure(true, value0)
+//                    it shouldHave failure()
+                }
+    }
 
+    @Test
+    fun resultTest() {
+        val value0 = "a"
+        val value1 = "b"
+        val values = listOf(value0, value1)
+        Observable.just(values)
+                .testIt {
+                    it.assertResult(values)
+                    it shouldHave result(values)
+                }
+    }
+
+    @Test
+    fun subscribeTest() {
+        val value0 = "a"
+        Observable.just(value0).apply {
+            subscribe({ })
+            testIt {
+                it.assertSubscribed()
+                it should subscribed()
+            }
+        }
+    }
+
+    @Test
+    fun notSubscribeTest() {
+        val value0 = "a"
+        Observable.just(value0)
+                .testIt {
+                    it.assertSubscribed()
+                    it should subscribed()
+                }
+
+    }
 }

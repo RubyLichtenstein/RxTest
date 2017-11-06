@@ -12,34 +12,6 @@ import io.reactivex.observers.TestObserver
 /**
  * Created by ruby on 27/10/17.
  */
-interface RxMatcher<T> : Matcher<TestObserver<T>>
-
-fun <T> compose(action: (TestObserver<T>) -> Boolean, message: String): Matcher<TestObserver<T>> {
-    return object : Matcher<TestObserver<T>> {
-        override fun test(value: TestObserver<T>) = Result(action(value), message)
-    }
-}
-
-typealias testAction<T> = (TestObserver<T>) -> Unit
-
-fun <T> Observable<T>.test(action: TestObserver<T>.() -> Unit) = test().also(action)
-
-fun <T> Observable<T>.testIt(action: testAction<T>) = test().also(action)
-fun <T> Maybe<T>.testIt(action: testAction<T>) = test().also(action)
-fun <T> Single<T>.testIt(action: testAction<T>) = test().also(action)
-fun Completable.testIt(action: testAction<Void>) = test().also(action)
-
-fun <T> test(action: (TestObserver<T>) -> Unit): RxMatcher<T> {
-    return object : RxMatcher<T> {
-        override fun test(value: TestObserver<T>) = try {
-            action(value)
-            Result(true, "")
-        } catch (assertionError: AssertionError) {
-            Result(false, assertionError.message.toString())
-
-        }
-    }
-}
 
 fun <T> complete(): Matcher<TestObserver<T>> = test({ it.assertComplete() })
 fun <T> notComplete(): Matcher<TestObserver<T>> = test({ it.assertNotComplete() })
