@@ -13,7 +13,7 @@ before_script:
 
 script:
   - ./gradlew check
-  - ./gradlew codeCoverageReport
+  - ./gradlew jacocoTestReport
 
 deploy:
   provider: bintray
