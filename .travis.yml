@@ -1,12 +1,18 @@
 language: java
 jdk:
   - oraclejdk8
-before_install:
-  - chmod +x gradlew
+#before_install:
+#  - chmod +x gradlew
 
 before_deploy:
   - ./gradlew generatePomFileForMavenPublication
 
+before_script:
+  - chmod +x gradlew
+
+script:
+  - ./gradlew check
+  - ./gradlew codeCoverageReport
 
 deploy:
   provider: bintray
@@ -16,5 +22,4 @@ deploy:
   dry-run: false
 
 after_success:
-  -./gradlew jacocoTestReport
   - bash <(curl -s https://codecov.io/bash)
