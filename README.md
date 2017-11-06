@@ -1,7 +1,7 @@
 # RxKotlinTest
-Easy rx testing with kotlin assertionWrapper
-[![Build Status](https://travis-ci.org/RubyLichtenstein/RxKotlinTest.svg?branch=master)](https://travis-ci.org/RubyLichtenstein/RxKotlinTest)
+##Easy rx testing with kotlin assertionWrapper
 
+[![Build Status](https://travis-ci.org/RubyLichtenstein/RxKotlinTest.svg?branch=master)](https://travis-ci.org/RubyLichtenstein/RxKotlinTest)
 [![codecov](https://codecov.io/gh/RubyLichtenstein/RxKotlinTest/branch/master/graph/badge.svg)](https://codecov.io/gh/RubyLichtenstein/RxKotlinTest)
 
 
@@ -10,14 +10,14 @@ Easy rx testing with kotlin assertionWrapper
 
 ```kotlin
 Observable.just("Hello")
-                .assertionWrapper {
+                .test {
                     it should complete()
                     it shouldHave noErrors()
                     it shouldHave value("Hello")
                 }
                 
 Observable.never<Unit>()
-                .assertionWrapper {
+                .test {
                     it should notComplete()
                     it shouldHave noErrors()
                     it shouldHave valueCount(0)
