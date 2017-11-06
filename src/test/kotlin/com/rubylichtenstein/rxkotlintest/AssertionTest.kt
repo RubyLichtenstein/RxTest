@@ -7,12 +7,18 @@ import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
+import io.reactivex.schedulers.TestScheduler
 import io.reactivex.subjects.PublishSubject
 import org.junit.Test
+import java.util.concurrent.TimeUnit
 
 class AssertionTest {
 
     val item0 = "a"
+    val item1 = "a"
+    val item2 = "a"
+
+    val items = listOf(item0, item1, item2)
 
     @Test
     fun completeTest() {
@@ -205,13 +211,50 @@ class AssertionTest {
     }
 
     @Test
-    fun notSubscribeTest() {
-        val value0 = "a"
-        Observable.just(value0)
+    fun valueCountTest() {
+        Observable.fromIterable(items)
                 .test {
-                    it.assertSubscribed()
-                    it should subscribed()
+                    it.assertValueCount(items.size)
+                    it shouldHave valueCount(items.size)
+                }
+    }
+
+//    @Test
+//    fun notSubscribeTest() {
+//        Observable.just(item0)
+//                .test {
+//                    it.assertNotSubscribed()
+//                    it should notSubscribed()
+//                }
+//    }
+
+    @Test
+    fun terminateTest() {
+        Observable.just(item0)
+                .test {
+                    it.assertTerminated()
+                    it should terminate()
                 }
 
+        Observable.error<String>(Throwable())
+                .test {
+                    it.assertTerminated()
+                    it should terminate()
+                }
     }
+
+//    @Test
+//    fun timeoutTest() {
+//        val value0 = "a"
+//        Observable.just(value0)
+//                .timeout(1, TimeUnit.MICROSECONDS)
+//                .test {
+//                    TestScheduler().apply {
+//                        advanceTimeBy(1, TimeUnit.MICROSECONDS)
+//                    }
+//
+//                    it.assertTimeout()
+//                    it shouldHave timeout()
+//                }
+//    }
 }
