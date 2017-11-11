@@ -1,6 +1,6 @@
 {
   "package": {
-    "name": "com.rubylichtenstein",
+    "name": "com.rubylichtenstein.rxkotlintest",
     "repo": "RxKotlinTest",
     "subject": "ruby",
     "desc": "RxKotlinTest",
