@@ -1,7 +1,7 @@
 {
   "package": {
     "name": "com.rubylichtenstein.rxkotlintest",
-    "repo": "rxkotlintest",
+    "repo": "RxKotlinTest",
     "subject": "ruby",
     "desc": "RxKotlinTest",
     "website_url": "",
@@ -21,7 +21,7 @@
 
   "files":
   [
-    {"includePattern": "build/libs/(.*)", "uploadPattern": "com/rubylichtenstein/RxKotlinTest/1.0.2/$1"}
+    {"includePattern": "build/libs/(.*)", "uploadPattern": "com/rubylichtenstein/rxkotlintest/1.0.2/$1"}
   ],
   "publish": true
 }
