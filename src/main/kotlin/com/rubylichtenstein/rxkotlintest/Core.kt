@@ -16,6 +16,7 @@ typealias tom<T> = TestObserverMatcher<T>
 
 interface TestObserverMatcher<T> : Matcher<TestObserver<T>>
 
+
 fun <T> compose(action: (TestObserver<T>) -> Boolean, message: String): tom<T> {
     return object : tom<T> {
         override fun test(value: TestObserver<T>) = Result(action(value), message)
