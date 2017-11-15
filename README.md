@@ -7,9 +7,10 @@
 ## Exmaple
 
 ```kotlin
-Observable.just("Hello")
+Observable.just("Hello", "Rx", "Kotlin", "Test")
                 .test {
-                    it shouldHave value("Hello")
+                    it shouldHave values(listOf("Hello", "Rx", "Kotlin", "Test"))
+                    it shouldHave valueCount(4)
                     it should complete()
                     it shouldHave noErrors()
                 }
