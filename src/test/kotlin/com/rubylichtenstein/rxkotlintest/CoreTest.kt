@@ -9,17 +9,41 @@ import org.junit.Test
 
 class CoreTest {
 
+    fun <T> noValues() = valueCount<T>(0)
+
+    fun <T> oneOrTowValues() = valueCount<T>(1) or valueCount(2)
+
     fun <T> moreValuesThen(count: Int)
-            = compose<T>({ it.values().size > count },
-            "Should have more values then $count")
+            = compose<T>({ it.values().size > count }, "Should have more values then $count")
+
+    fun <T> lessValuesThen(count: Int)
+            = compose<T>({ it.values().size < count }, "Should have less values then $count")
+
+    fun <T> valueCountBetween(min: Int, max: Int) = moreValuesThen<T>(min) and lessValuesThen<T>(max)
 
     @Test
     fun composeTest() {
-        Observable.just("Hello", "Hello", "Hello")
+        val values = listOf<String>("Rx", "Kotlin", "Test")
+        Observable.fromIterable(values)
                 .test {
                     it shouldHave moreValuesThen(2)
                     it shouldHave noErrors()
-                    it shouldHave valueSequence(listOf("Hello", "Hello", "Hello"))
+                    it shouldHave valueSequence(values)
+                }
+
+        Observable.empty<String>()
+                .test {
+                    it shouldHave noValues()
+                }
+
+        Observable.just("")
+                .test {
+                    it shouldHave oneOrTowValues()
+                }
+
+        Observable.just("","")
+                .test {
+                    it shouldHave valueCountBetween(1, 3)
                 }
     }
 
@@ -41,4 +65,42 @@ class CoreTest {
         assertionWrapper.test(TestObserver()).passed shouldBe false
         assertionWrapper.test(TestObserver()).message shouldBe detailMessage
     }
+}
+
+fun <T> noValues() = valueCount<T>(0)
+
+fun <T> oneOrTowValues() = valueCount<T>(1) or valueCount(2)
+
+fun <T> moreValuesThen(count: Int)
+        = compose<T>({ it.values().size > count }, "Should have more values then $count")
+
+fun <T> lessValuesThen(count: Int)
+        = compose<T>({ it.values().size < count }, "Should have less values then $count")
+
+fun <T> valueCountBetween(min: Int, max: Int) = moreValuesThen<T>(min) and lessValuesThen<T>(max)
+
+@Test
+fun composeTest() {
+    val values = listOf<String>("Rx", "Kotlin", "Test")
+    Observable.fromIterable(values)
+            .test {
+                it shouldHave moreValuesThen(2)
+                it shouldHave noErrors()
+                it shouldHave valueSequence(values)
+            }
+
+    Observable.empty<String>()
+            .test {
+                it shouldHave noValues()
+            }
+
+    Observable.just("")
+            .test {
+                it shouldHave oneOrTowValues()
+            }
+
+    Observable.just("","")
+            .test {
+                it shouldHave valueCountBetween(1, 3)
+            }
 }

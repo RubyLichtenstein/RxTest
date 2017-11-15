@@ -25,7 +25,7 @@ Observable.never<Unit>()
 ## Usage
 ```kotlin
 
-it should complete()
+it should complete() 
 it should notComplete()
 it shouldHave error(error: Throwable)
 it shouldHave error(errorClass: Class<out Throwable>)
@@ -53,6 +53,47 @@ it shouldHave valueSequence(sequence: Iterable<T>)
 it shouldHave valueSet(expected: Collection<T>)
 it shouldHave valueOnly(vararg values: T)
 
+```
+
+## Creating your own assertions
+
+```kotlin
+fun <T> noValues() = valueCount<T>(0)
+fun <T> oneOrTowValues() = valueCount<T>(1) or valueCount(2)
+
+fun <T> moreValuesThen(count: Int)
+        = compose<T>({ it.values().size > count }, "Should have more values then $count")
+
+fun <T> lessValuesThen(count: Int)
+        = compose<T>({ it.values().size < count }, "Should have less values then $count")
+
+fun <T> valueCountBetween(min: Int, max: Int) = moreValuesThen<T>(min) and lessValuesThen<T>(max)
+
+@Test
+fun composeTest() {
+    val values = listOf<String>("Rx", "Kotlin", "Test")
+    Observable.fromIterable(values)
+            .test {
+                it shouldHave moreValuesThen(2)
+                it shouldHave noErrors()
+                it shouldHave valueSequence(values)
+            }
+
+    Observable.empty<String>()
+            .test {
+                it shouldHave noValues()
+            }
+
+    Observable.just("")
+            .test {
+                it shouldHave oneOrTowValues()
+            }
+
+    Observable.just("","")
+            .test {
+                it shouldHave valueCountBetween(1, 3)
+            }
+}
 ```
 
 ## Download
