@@ -6,7 +6,7 @@
 # Introduction
 
 RxKotlinTest is an easy to use extendable kotlin DSL for testing RxJava2 code.
-RxKotlinTest based on KotlinTest.
+The library based on [KotlinTest](https://github.com/kotlintest/kotlintest).
 
 # Example
 
