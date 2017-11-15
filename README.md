@@ -58,8 +58,10 @@ it shouldHave valueOnly(vararg values: T)
 ## Creating your own assertions
 
 ```kotlin
+
 fun <T> noValues() = valueCount<T>(0)
-fun <T> oneOrTowValues() = valueCount<T>(1) or valueCount(2)
+
+fun <T> errorOrComplete(error: Throwable) = error<T>(error) or complete()
 
 fun <T> moreValuesThen(count: Int)
         = compose<T>({ it.values().size > count }, "Should have more values then $count")
@@ -86,7 +88,7 @@ fun composeTest() {
 
     Observable.just("")
             .test {
-                it shouldHave oneOrTowValues()
+                it shouldHave errorOrComplete(Throwable())
             }
 
     Observable.just("","")
