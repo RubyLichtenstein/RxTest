@@ -99,6 +99,9 @@ fun composeTest() {
 ## Download
 Gradle
 
+    testCompile 'com.rubylichtenstein:rxkotlintest:1.0.2'
+
+
 ## Contributing
 
 
