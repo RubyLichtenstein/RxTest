@@ -146,10 +146,20 @@ fun composeTest() {
 
 # Download
 Gradle
-
-    testCompile 'com.rubylichtenstein:rxkotlintest:1.0.2'
+```groovy
+testCompile 'com.rubylichtenstein:rxkotlintest:1.0.2'
+```
 
 Maven
+
+```xml
+<dependency>
+    <groupId>com.rubylichtenstein</groupId>
+    <artifactId>rxkotlintest</artifactId>
+    <version>1.0.2</version>
+    <type>pom</type>
+</dependency>
+```
 
 # Contribute
 
