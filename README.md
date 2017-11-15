@@ -4,6 +4,8 @@
 [![Build Status](https://travis-ci.org/RubyLichtenstein/RxKotlinTest.svg?branch=master)](https://travis-ci.org/RubyLichtenstein/RxKotlinTest)
 [![codecov](https://codecov.io/gh/RubyLichtenstein/RxKotlinTest/branch/master/graph/badge.svg)](https://codecov.io/gh/RubyLichtenstein/RxKotlinTest)
 
+## Intro
+
 ## Exmaple
 
 ```kotlin
@@ -86,10 +88,10 @@ it shouldHave valueOnly(vararg values: T)
 compose(action: (TestObserver<T>) -> Boolean, message: String)
 ```
 
-## Creating your own assertions
+## Create your own assertions
 
+#### Example
 ```kotlin
-
 fun <T> noValues() = valueCount<T>(0)
 
 fun <T> errorOrComplete(error: Throwable) = error<T>(error) or complete()
