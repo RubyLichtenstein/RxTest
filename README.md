@@ -1,16 +1,16 @@
 # RxKotlinTest
-## Testing RxJava2 made fun with kotlin DSL
 
 [![Build Status](https://travis-ci.org/RubyLichtenstein/RxKotlinTest.svg?branch=master)](https://travis-ci.org/RubyLichtenstein/RxKotlinTest)
 [![codecov](https://codecov.io/gh/RubyLichtenstein/RxKotlinTest/branch/master/graph/badge.svg)](https://codecov.io/gh/RubyLichtenstein/RxKotlinTest)
 
-## Introduction
+# Introduction
 
-RxKotlinTest is an easy to use extendable kotlin DSL for testing RxJava2 based on KotlinTest
+RxKotlinTest is an easy to use extendable kotlin DSL for testing RxJava2 code.
+RxKotlinTest based on KotlinTest.
 
-## Example
+# Example
 
-#### Assertions
+### Assertions
 ```kotlin
 Observable.just("Hello", "Rx", "Kotlin", "Test")
                 .test {
@@ -28,7 +28,7 @@ Observable.never<Unit>()
                 }
 ```
 
-#### Composing Assertions
+### Composing Assertions
 ```kotlin
 fun <T> noValues() = valueCount<T>(0)
 
@@ -38,8 +38,8 @@ fun <T> moreValuesThen(count: Int)
         = createAssertion<T>({ it.values().size > count }, "Should have more values then $count")
 ```
 
-## Usage
-#### Assertions
+# Usage
+### Assertions
 ```kotlin
 it should complete() 
 
@@ -96,14 +96,14 @@ it shouldHave valueSet(expected: Collection<T>)
 it shouldHave valueOnly(vararg values: T)
 
 ```
-#### Composing assertions
+### Composing assertions
 ```kotlin
 createAssertion(action: (TestObserver<T>) -> Boolean, message: String)
 ```
 
-## Create your own assertions
+# Create your own assertions
 
-#### Example
+### Example
 ```kotlin
 fun <T> noValues() = valueCount<T>(0)
 
@@ -144,14 +144,14 @@ fun composeTest() {
 }
 ```
 
-## Download
+# Download
 Gradle
 
     testCompile 'com.rubylichtenstein:rxkotlintest:1.0.2'
 
 Maven
 
-## Contribute
+# Contribute
 
 Contact me - ruby.lichtenstein@gmail.com
 
