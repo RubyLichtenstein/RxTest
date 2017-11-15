@@ -1,6 +1,5 @@
 package com.rubylichtenstein.rxkotlintest
 
-import io.kotlintest.matchers.should
 import io.kotlintest.matchers.shouldBe
 import io.kotlintest.matchers.shouldHave
 import io.reactivex.Observable
@@ -14,10 +13,10 @@ class CoreTest {
     fun <T> errorOrComplete(error: Throwable) = error<T>(error) or complete()
 
     fun <T> moreValuesThen(count: Int)
-            = compose<T>({ it.values().size > count }, "Should have more values then $count")
+            = createAssertion<T>({ it.values().size > count }, "Should have more values then $count")
 
     fun <T> lessValuesThen(count: Int)
-            = compose<T>({ it.values().size < count }, "Should have less values then $count")
+            = createAssertion<T>({ it.values().size < count }, "Should have less values then $count")
 
     fun <T> valueCountBetween(min: Int, max: Int) = moreValuesThen<T>(min) and lessValuesThen<T>(max)
 

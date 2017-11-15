@@ -13,7 +13,7 @@ val passedMessage = ""
 
 interface TestObserverMatcher<T> : Matcher<TestObserver<T>>
 
-fun <T> compose(action: (TestObserver<T>) -> Boolean, message: String): TestObserverMatcher<T> {
+fun <T> createAssertion(action: (TestObserver<T>) -> Boolean, message: String): TestObserverMatcher<T> {
     return object : TestObserverMatcher<T> {
         override fun test(value: TestObserver<T>) = Result(action(value), message)
     }

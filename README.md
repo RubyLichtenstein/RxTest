@@ -4,10 +4,13 @@
 [![Build Status](https://travis-ci.org/RubyLichtenstein/RxKotlinTest.svg?branch=master)](https://travis-ci.org/RubyLichtenstein/RxKotlinTest)
 [![codecov](https://codecov.io/gh/RubyLichtenstein/RxKotlinTest/branch/master/graph/badge.svg)](https://codecov.io/gh/RubyLichtenstein/RxKotlinTest)
 
-## Intro
+## Introduction
 
-## Exmaple
+RxKotlinTest is an easy to use extendable kotlin DSL for testing RxJava2 based on KotlinTest
 
+## Example
+
+#### Assertions
 ```kotlin
 Observable.just("Hello", "Rx", "Kotlin", "Test")
                 .test {
@@ -23,6 +26,16 @@ Observable.never<Unit>()
                     it should notComplete()
                     it shouldHave noErrors()
                 }
+```
+
+#### Composing Assertions
+```kotlin
+fun <T> noValues() = valueCount<T>(0)
+
+fun <T> errorOrComplete(error: Throwable) = error<T>(error) or complete()
+
+fun <T> moreValuesThen(count: Int)
+        = createAssertion<T>({ it.values().size > count }, "Should have more values then $count")
 ```
 
 ## Usage
@@ -85,7 +98,7 @@ it shouldHave valueOnly(vararg values: T)
 ```
 #### Composing assertions
 ```kotlin
-compose(action: (TestObserver<T>) -> Boolean, message: String)
+createAssertion(action: (TestObserver<T>) -> Boolean, message: String)
 ```
 
 ## Create your own assertions
@@ -97,10 +110,10 @@ fun <T> noValues() = valueCount<T>(0)
 fun <T> errorOrComplete(error: Throwable) = error<T>(error) or complete()
 
 fun <T> moreValuesThen(count: Int)
-        = compose<T>({ it.values().size > count }, "Should have more values then $count")
+        = createAssertion<T>({ it.values().size > count }, "Should have more values then $count")
 
 fun <T> lessValuesThen(count: Int)
-        = compose<T>({ it.values().size < count }, "Should have less values then $count")
+        = createAssertion<T>({ it.values().size < count }, "Should have less values then $count")
 
 fun <T> valueCountBetween(min: Int, max: Int) = moreValuesThen<T>(min) and lessValuesThen<T>(max)
 
@@ -138,7 +151,7 @@ Gradle
 
 Maven
 
-## Contributing
+## Contribute
 
 Contact me - ruby.lichtenstein@gmail.com
 
