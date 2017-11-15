@@ -1,4 +1,4 @@
-package com.rubylichtenstein.rxkotlintest
+package com.rubylichtenstein.rxkotlintest.core
 
 import io.kotlintest.matchers.Matcher
 import io.kotlintest.matchers.Result

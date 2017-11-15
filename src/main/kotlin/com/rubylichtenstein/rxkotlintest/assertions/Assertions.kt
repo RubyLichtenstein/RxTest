@@ -1,4 +1,7 @@
-package com.rubylichtenstein.rxkotlintest
+package com.rubylichtenstein.rxkotlintest.assertions
+
+import com.rubylichtenstein.rxkotlintest.core.TestObserverMatcher
+import com.rubylichtenstein.rxkotlintest.core.assertionWrapper
 
 /**
  * Created by ruby on 27/10/17.

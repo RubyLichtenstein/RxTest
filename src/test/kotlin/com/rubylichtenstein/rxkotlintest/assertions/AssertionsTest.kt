@@ -1,5 +1,7 @@
-package com.rubylichtenstein.rxkotlintest
+package com.rubylichtenstein.rxkotlintest.assertions
 
+import com.rubylichtenstein.rxkotlintest.core.shouldBe
+import com.rubylichtenstein.rxkotlintest.core.test
 import io.kotlintest.matchers.should
 import io.kotlintest.matchers.shouldHave
 import io.reactivex.Completable
@@ -7,12 +9,10 @@ import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
-import io.reactivex.schedulers.TestScheduler
 import io.reactivex.subjects.PublishSubject
 import org.junit.Test
-import java.util.concurrent.TimeUnit
 
-class AssertionTest {
+class AssertionsTest {
 
     val item0 = "a"
     val item1 = "a"

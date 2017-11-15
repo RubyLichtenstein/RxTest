@@ -1,5 +1,9 @@
-package com.rubylichtenstein.rxkotlintest
+package com.rubylichtenstein.rxkotlintest.core
 
+import com.rubylichtenstein.rxkotlintest.assertions.complete
+import com.rubylichtenstein.rxkotlintest.assertions.noErrors
+import com.rubylichtenstein.rxkotlintest.assertions.valueCount
+import com.rubylichtenstein.rxkotlintest.assertions.valueSequence
 import io.kotlintest.matchers.shouldBe
 import io.kotlintest.matchers.shouldHave
 import io.reactivex.Observable
@@ -10,7 +14,7 @@ class CoreTest {
 
     fun <T> noValues() = valueCount<T>(0)
 
-    fun <T> errorOrComplete(error: Throwable) = error<T>(error) or complete()
+    fun <T> errorOrComplete(error: Throwable) = com.rubylichtenstein.rxkotlintest.assertions.error<T>(error) or complete()
 
     fun <T> moreValuesThen(count: Int)
             = createAssertion<T>({ it.values().size > count }, "Should have more values then $count")
