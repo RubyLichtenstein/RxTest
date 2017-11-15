@@ -104,4 +104,5 @@ Gradle
 
 ## Contributing
 
+Contact me - ruby.lichtenstein@gmail.com
 
