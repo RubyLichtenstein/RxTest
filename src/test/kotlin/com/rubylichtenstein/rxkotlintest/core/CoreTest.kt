@@ -1,9 +1,7 @@
 package com.rubylichtenstein.rxkotlintest.core
 
-import com.rubylichtenstein.rxkotlintest.assertions.complete
-import com.rubylichtenstein.rxkotlintest.assertions.noErrors
-import com.rubylichtenstein.rxkotlintest.assertions.valueCount
-import com.rubylichtenstein.rxkotlintest.assertions.valueSequence
+import com.rubylichtenstein.rxkotlintest.assertions.*
+import io.kotlintest.matchers.should
 import io.kotlintest.matchers.shouldBe
 import io.kotlintest.matchers.shouldHave
 import io.reactivex.Observable
@@ -26,7 +24,39 @@ class CoreTest {
 
     @Test
     fun composeTest() {
-        val values = listOf<String>("Rx", "Kotlin", "Test")
+
+        val values = listOf("Hello", "Rx", "Kotlin", "Test")
+
+        Observable.fromIterable(values)
+                .test()
+                .assertValueSequence(values)
+                .assertValueCount(values.size)
+                .assertComplete()
+                .assertNoErrors();
+
+        Observable.never<Unit>()
+                .test()
+                .assertValueCount(0)
+                .assertNotComplete()
+                .assertNoErrors();
+
+        Observable.fromIterable(values)
+                .test {
+                    it shouldHave valueSequence(values)
+                    it shouldHave valueCount(values.size)
+                    it shouldHave noErrors()
+                    it should complete()
+                }
+
+        Observable.never<Unit>()
+                .test {
+                    it shouldHave noValues()
+                    it shouldHave noErrors()
+                    it should notComplete()
+                }
+
+
+//        val values = listOf<String>("Rx", "Kotlin", "Test")
         Observable.fromIterable(values)
                 .test {
                     it shouldHave moreValuesThen(2)

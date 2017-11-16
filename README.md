@@ -10,22 +10,43 @@ The library based on [KotlinTest](https://github.com/kotlintest/kotlintest).
 
 # Example
 
-### Assertions
+### Before
 ```kotlin
-Observable.just("Hello", "Rx", "Kotlin", "Test")
+        val values = listOf("Hello", "Rx", "Kotlin", "Test")
+        
+        Observable.fromIterable(values)
+                .test()
+                .assertValueSequence(values)
+                .assertValueCount(values.size)
+                .assertComplete()
+                .assertNoErrors();
+
+        Observable.never<Unit>()
+                .test()
+                .assertValueCount(0)
+                .assertNotComplete()
+                .assertNoErrors();
+```
+
+### After
+```kotlin
+        val values = listOf("Hello", "Rx", "Kotlin", "Test")
+
+        Observable.fromIterable(values)
                 .test {
-                    it shouldHave values(listOf("Hello", "Rx", "Kotlin", "Test"))
-                    it shouldHave valueCount(4)
+                    it shouldHave valueSequence(values)
+                    it shouldHave valueCount(values.size)
+                    it shouldHave noErrors()
                     it should complete()
-                    it shouldHave noErrors()
                 }
-                
-Observable.never<Unit>()
+
+        Observable.never<Unit>()
                 .test {
-                    it shouldHave valueCount(0)
-                    it should notComplete()
+                    it shouldHave noValues()
                     it shouldHave noErrors()
+                    it should notComplete()
                 }
+
 ```
 
 ### Composing Assertions
