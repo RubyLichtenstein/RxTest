@@ -8,11 +8,15 @@ import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
+import io.reactivex.schedulers.TestScheduler
 
 val passedMessage = ""
 
 interface TestObserverMatcher<T> : Matcher<TestObserver<T>>
-
+fun a(){
+    val testScheduler =TestScheduler()
+    Observable.just(1)
+}
 fun <T> createAssertion(action: (TestObserver<T>) -> Boolean, message: String): TestObserverMatcher<T> {
     return object : TestObserverMatcher<T> {
         override fun test(value: TestObserver<T>) = Result(action(value), message)

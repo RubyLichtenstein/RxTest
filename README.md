@@ -46,6 +46,32 @@ The library based on [KotlinTest](https://github.com/kotlintest/kotlintest).
                     it shouldHave noErrors()
                     it should notComplete()
                 }
+                
+Given("list of values"){
+            val values = listOf("Hello", "Rx", "Kotlin", "Test")
+            val publishSubject = PublishSubject.create<String>()
+            val publishSubjectTest = publishSubject.test()
+
+            When("subject emit values"){
+                values.forEach {
+                    publishSubject.onNext(it)
+                }
+
+                Then("values emitted"){
+                    publishSubjectTest shouldHave valueSequence(values)
+                }
+            }
+
+            When("call subject onComplete"){
+                publishSubject.onComplete()
+
+                Then("subject complete with no errors"){
+                    publishSubject.test {
+                        it should complete()
+                    }
+                }
+            }
+        }                
 
 ```
 
