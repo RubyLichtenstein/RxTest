@@ -47,7 +47,7 @@ The library based on [KotlinTest](https://github.com/kotlintest/kotlintest).
                     it should notComplete()
                 }
                 
-Given("list of values"){
+        Given("list of values"){
             val values = listOf("Hello", "Rx", "Kotlin", "Test")
             val publishSubject = PublishSubject.create<String>()
             val publishSubjectTest = publishSubject.test()
