@@ -25,28 +25,24 @@ class CoreTest : BehaviorSpec(){
     fun <T> valueCountBetween(min: Int, max: Int) = moreValuesThen<T>(min) and lessValuesThen<T>(max)
 
     init {
-        Given("list of values"){
-            val values = listOf("Hello", "Rx", "Kotlin", "Test")
-            val publishSubject = PublishSubject.create<String>()
-            val publishSubjectTest = publishSubject.test()
+        Given("Value, subject"){
+            val value = "Hello Rx Kotlin Test"
+            val subject = PublishSubject.create<String>()
+            val subjectTest = subject.test()
 
-            When("subject emit values"){
-                values.forEach {
-                    publishSubject.onNext(it)
-                }
+            When("subject emit value"){
+                subject.onNext(value)
 
-                Then("values emitted"){
-                    publishSubjectTest shouldHave valueSequence(values)
+                Then("value have been emitted"){
+                    subjectTest shouldEmit value
                 }
             }
 
             When("call subject onComplete"){
-                publishSubject.onComplete()
+                subject.onComplete()
 
                 Then("subject complete with no errors"){
-                    publishSubject.test {
-                        it should complete()
-                    }
+                    subjectTest should notComplete()
                 }
             }
         }
