@@ -12,43 +12,33 @@ The library based on [KotlinTest](https://github.com/kotlintest/kotlintest).
 
 ### Before
 ```kotlin
-        val values = listOf("Hello", "Rx", "Kotlin", "Test")
-        
-        Observable.fromIterable(values)
-                .test()
-                .assertValueSequence(values)
-                .assertValueCount(values.size)
-                .assertComplete()
-                .assertNoErrors();
-
-        Observable.never<Unit>()
-                .test()
-                .assertValueCount(0)
-                .assertNotComplete()
-                .assertNoErrors();
+fun before(){
+    //Given value, subject
+    val value = "HelloRxKotlinTest"
+    val subject = PublishSubject.create<String>()
+    val subjectTest = subject.test()
+    
+    //When subject emits value     
+    subject.onNext(value)
+ 
+    //Then value has emitted
+    subjectTest.assertValue(value)
+          
+    //When call subject onComplete
+    subject.onComplete()
+    
+    //Then subject complete with no errors
+    subjectTest.assertComplete()
+    subjectTest.assertNoErrors()
+            
+}
 ```
 
 ### After
 ```kotlin
-        val values = listOf("Hello", "Rx", "Kotlin", "Test")
-
-        Observable.fromIterable(values)
-                .test {
-                    it shouldHave valueSequence(values)
-                    it shouldHave valueCount(values.size)
-                    it shouldHave noErrors()
-                    it should complete()
-                }
-
-        Observable.never<Unit>()
-                .test {
-                    it shouldHave noValues()
-                    it shouldHave noErrors()
-                    it should notComplete()
-                }
-    
+fun after(){    
         Given("Value, subject"){
-            val value = "Hello Rx Kotlin Test"
+            val value = "HelloRxKotlinTest"
             val subject = PublishSubject.create<String>()
             val subjectTest = subject.test()
 
@@ -68,7 +58,7 @@ The library based on [KotlinTest](https://github.com/kotlintest/kotlintest).
                 }
             }
         }
-
+}
 ```
 
 ### Composing Assertions
@@ -84,6 +74,8 @@ fun <T> moreValuesThen(count: Int)
 # Usage
 ### Assertions
 ```kotlin
+fun assertions(){
+
 it should complete() 
 
 it should notComplete()
@@ -138,6 +130,7 @@ it shouldHave valueSet(expected: Collection<T>)
 
 it shouldHave valueOnly(vararg values: T)
 
+}
 ```
 ### Composing assertions
 ```kotlin

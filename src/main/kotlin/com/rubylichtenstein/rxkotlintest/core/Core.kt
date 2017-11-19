@@ -1,5 +1,6 @@
 package com.rubylichtenstein.rxkotlintest.core
 
+import com.rubylichtenstein.rxkotlintest.assertions.never
 import com.rubylichtenstein.rxkotlintest.assertions.value
 import io.kotlintest.matchers.Matcher
 import io.kotlintest.matchers.Result
@@ -40,7 +41,8 @@ fun Completable.test(action: (TestObserver<Void>) -> Unit) = test().apply(action
 
 infix fun <T> T.shouldBe(matcher: Matcher<T>) = should(matcher)
 infix fun <T> T.shouldEmit(matcher: Matcher<T>) = should(matcher)
+infix fun <T> TestObserver<T>.shouldEmit(t: T) = shouldHave(value(t))
+infix fun <T> TestObserver<T>.shouldEmit(t: (T) -> Boolean) = shouldHave(value(t))
+infix fun <T> TestObserver<T>.shouldNeverEmit(t: T) = shouldHave(never(t))
+infix fun <T> TestObserver<T>.shouldNeverEmit(t: (T) -> Boolean) = shouldHave(never(t))
 
-infix fun <T> TestObserver<T>.shouldEmit(t: T) {
-    shouldHave(value(t))
-}

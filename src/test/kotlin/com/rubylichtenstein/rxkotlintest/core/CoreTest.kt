@@ -10,7 +10,7 @@ import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
 import org.junit.Test
 
-class CoreTest : BehaviorSpec(){
+class CoreTest : BehaviorSpec() {
 
     fun <T> noValues() = valueCount<T>(0)
 
@@ -25,23 +25,41 @@ class CoreTest : BehaviorSpec(){
     fun <T> valueCountBetween(min: Int, max: Int) = moreValuesThen<T>(min) and lessValuesThen<T>(max)
 
     init {
-        Given("Value, subject"){
+        //Given value, subject
+        val value = "HelloRxKotlinTest"
+        val subject = PublishSubject.create<String>()
+        val subjectTest = subject.test()
+
+        //When subject emits value
+        subject.onNext(value)
+
+        //Then value has emitted
+        subjectTest.assertValue(value)
+
+        //When call subject onComplete
+        subject.onComplete()
+
+        //Then subject complete with no errors
+        subjectTest.assertComplete()
+        subjectTest.assertNoErrors()
+
+        Given("Value, subject") {
             val value = "Hello Rx Kotlin Test"
             val subject = PublishSubject.create<String>()
             val subjectTest = subject.test()
 
-            When("subject emit value"){
+            When("subject emit value") {
                 subject.onNext(value)
 
-                Then("value have been emitted"){
+                Then("value have been emitted") {
                     subjectTest shouldEmit value
                 }
             }
 
-            When("call subject onComplete"){
+            When("call subject onComplete") {
                 subject.onComplete()
 
-                Then("subject complete with no errors"){
+                Then("subject complete with no errors") {
                     subjectTest should notComplete()
                 }
             }
@@ -54,16 +72,16 @@ class CoreTest : BehaviorSpec(){
 
         val values = listOf("Hello", "Rx", "Kotlin", "Test")
 
-        Given("List of values"){
+        Given("List of values") {
             val values = listOf("Hello", "Rx", "Kotlin", "Test")
 
-            When("Observable emit values"){
+            When("Observable emit values") {
                 val observable = Observable.fromIterable(values)
 
-                Then("Observable should emit values and complete with no errors"){
+                Then("Observable should emit values and complete with no errors") {
                     observable.test {
                         it shouldHave valueSequence(values)
-                        it shouldHave valueCount(values.size+1)
+                        it shouldHave valueCount(values.size + 1)
                         it shouldHave noErrors()
                         it should notComplete()
                     }
