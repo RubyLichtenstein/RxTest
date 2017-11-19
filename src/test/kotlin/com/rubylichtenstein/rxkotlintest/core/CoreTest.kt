@@ -24,122 +24,31 @@ class CoreTest : BehaviorSpec() {
 
     fun <T> valueCountBetween(min: Int, max: Int) = moreValuesThen<T>(min) and lessValuesThen<T>(max)
 
-    init {
-        //Given value, subject
-        val value = "HelloRxKotlinTest"
-        val subject = PublishSubject.create<String>()
-        val subjectTest = subject.test()
-
-        //When subject emits value
-        subject.onNext(value)
-
-        //Then value has emitted
-        subjectTest.assertValue(value)
-
-        //When call subject onComplete
-        subject.onComplete()
-
-        //Then subject complete with no errors
-        subjectTest.assertComplete()
-        subjectTest.assertNoErrors()
-
-        Given("Value, subject") {
-            val value = "Hello Rx Kotlin Test"
-            val subject = PublishSubject.create<String>()
-            val subjectTest = subject.test()
-
-            When("subject emit value") {
-                subject.onNext(value)
-
-                Then("value have been emitted") {
-                    subjectTest shouldEmit value
-                }
-            }
-
-            When("call subject onComplete") {
-                subject.onComplete()
-
-                Then("subject complete with no errors") {
-                    subjectTest should notComplete()
-                }
-            }
-        }
-    }
-
-
     @Test
     fun composeTest() {
 
-        val values = listOf("Hello", "Rx", "Kotlin", "Test")
-
-        Given("List of values") {
-            val values = listOf("Hello", "Rx", "Kotlin", "Test")
-
-            When("Observable emit values") {
-                val observable = Observable.fromIterable(values)
-
-                Then("Observable should emit values and complete with no errors") {
-                    observable.test {
-                        it shouldHave valueSequence(values)
-                        it shouldHave valueCount(values.size + 1)
-                        it shouldHave noErrors()
-                        it should notComplete()
-                    }
+        val values = listOf<String>("Rx", "Kotlin", "Test")
+        Observable.fromIterable(values)
+                .test {
+                    it shouldHave moreValuesThen(2)
+                    it shouldHave noErrors()
+                    it shouldHave valueSequence(values)
                 }
-            }
-        }
 
-//        Observable.fromIterable(values)
-//                .test()
-//                .assertValueSequence(values)
-//                .assertValueCount(values.size)
-//                .assertComplete()
-//                .assertNoErrors();
-//
-//        Observable.never<Unit>()
-//                .test()
-//                .assertValueCount(0)
-//                .assertNotComplete()
-//                .assertNoErrors();
-//
-//        Observable.fromIterable(values)
-//                .test {
-//                    it shouldHave valueSequence(values)
-//                    it shouldHave valueCount(values.size)
-//                    it shouldHave noErrors()
-//                    it should complete()
-//                }
-//
-//        Observable.never<Unit>()
-//                .test {
-//                    it shouldHave noValues()
-//                    it shouldHave noErrors()
-//                    it should notComplete()
-//                }
-//
-//
-////        val values = listOf<String>("Rx", "Kotlin", "Test")
-//        Observable.fromIterable(values)
-//                .test {
-//                    it shouldHave moreValuesThen(2)
-//                    it shouldHave noErrors()
-//                    it shouldHave valueSequence(values)
-//                }
-//
-//        Observable.empty<String>()
-//                .test {
-//                    it shouldHave noValues()
-//                }
-//
-//        Observable.just("")
-//                .test {
-//                    it shouldHave errorOrComplete(Throwable())
-//                }
-//
-//        Observable.just("","")
-//                .test {
-//                    it shouldHave valueCountBetween(1, 3)
-//                }
+        Observable.empty<String>()
+                .test {
+                    it shouldHave noValues()
+                }
+
+        Observable.just("")
+                .test {
+                    it shouldHave errorOrComplete(Throwable())
+                }
+
+        Observable.just("","")
+                .test {
+                    it shouldHave valueCountBetween(1, 3)
+                }
     }
 
     @Test

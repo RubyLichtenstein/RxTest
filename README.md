@@ -21,7 +21,7 @@ fun before(){
     //When subject emits value     
     subject.onNext(value)
  
-    //Then value has emitted
+    //Then value emitted
     subjectTest.assertValue(value)
           
     //When call subject onComplete
@@ -45,7 +45,7 @@ fun after(){
             When("subject emit value"){
                 subject.onNext(value)
                 
-                Then("value have been emitted"){
+                Then("value emitted"){
                     subjectTest shouldEmit value
                 }
             }
