@@ -1,5 +1,6 @@
 package com.rubylichtenstein.rxkotlintest
 
+import com.rubylichtenstein.rxkotlintest.assertions.complete
 import com.rubylichtenstein.rxkotlintest.assertions.notComplete
 import com.rubylichtenstein.rxkotlintest.core.shouldEmit
 import io.kotlintest.matchers.should
@@ -44,7 +45,7 @@ class Readme : BehaviorSpec(){
                 subject.onComplete()
 
                 Then("subject complete with no errors") {
-                    subjectTest should notComplete()
+                    subjectTest should complete()
                 }
             }
         }

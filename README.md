@@ -10,55 +10,29 @@ The library based on [KotlinTest](https://github.com/kotlintest/kotlintest).
 
 # Example
 
-### Before
+### After
 ```kotlin
-fun before(){
-    //Given value, subject
+Given("Value, subject"){
     val value = "HelloRxKotlinTest"
     val subject = PublishSubject.create<String>()
     val subjectTest = subject.test()
-    
-    //When subject emits value     
-    subject.onNext(value)
- 
-    //Then value emitted
-    subjectTest.assertValue(value)
-          
-    //When call subject onComplete
-    subject.onComplete()
-    
-    //Then subject complete with no errors
-    subjectTest.assertComplete()
-    subjectTest.assertNoErrors()
-            
-}
-```
 
-### After
-```kotlin
-fun after(){    
-        Given("Value, subject"){
-            val value = "HelloRxKotlinTest"
-            val subject = PublishSubject.create<String>()
-            val subjectTest = subject.test()
+    When("subject emit value"){
+        subject.onNext(value)
 
-            When("subject emit value"){
-                subject.onNext(value)
-                
-                Then("value emitted"){
-                    subjectTest shouldEmit value
-                }
-            }
-
-            When("call subject onComplete"){
-                subject.onComplete()
-
-                Then("subject complete with no errors"){
-                    subjectTest should notComplete()
-                }
-            }
+        Then("value emitted"){
+            subjectTest shouldEmit value
         }
-}
+    }
+
+    When("call subject onComplete"){
+        subject.onComplete()
+
+        Then("subject complete with no errors"){
+            subjectTest should notComplete()
+        }
+    }
+}    
 ```
 
 ### Composing Assertions
