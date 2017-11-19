@@ -10,7 +10,7 @@ The library based on [KotlinTest](https://github.com/kotlintest/kotlintest).
 
 # Example
 
-### After
+### BDD
 ```kotlin
 Given("Value, subject"){
     val value = "HelloRxKotlinTest"
