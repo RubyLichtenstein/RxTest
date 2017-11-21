@@ -41,22 +41,9 @@ Given("Value, subject"){
     }
 }    
 ```
-
-### Composing Assertions
-```kotlin
-fun <T> noValues() = valueCount<T>(0)
-
-fun <T> errorOrComplete(error: Throwable) = error<T>(error) or complete()
-
-fun <T> moreValuesThen(count: Int)
-        = createAssertion<T>({ it.values().size > count }, "Should have more values then $count")
-```
-
 # Usage
 ### Assertions
 ```kotlin
-fun assertions(){
-
 it should complete() 
 
 it should notComplete()
@@ -80,6 +67,8 @@ it shouldEmit valueSequence(sequence: Iterable<T>)
 it shouldEmit Collection<T>
 
 it shouldEmit valueOnly(vararg values: T)
+
+it shouldHave valueCount(count: Int)
 
 it shouldNeverEmit T
 
@@ -109,15 +98,7 @@ it shouldHave result(vararg values: T)
 
 it should terminate()
 
-it shouldHave valueCount(count: Int)
-
-}
 ```
-### Composing assertions
-```kotlin
-createAssertion(action: (TestObserver<T>) -> Boolean, message: String)
-```
-
 # Create your own assertions
 
 ### Example
@@ -139,14 +120,14 @@ fun composeTest() {
     val values = listOf<String>("Rx", "Kotlin", "Test")
     Observable.fromIterable(values)
             .test {
-                it shouldHave moreValuesThen(2)
+                it shouldEmit moreValuesThen(2)
                 it shouldHave noErrors()
-                it shouldHave valueSequence(values)
+                it shouldEmit valueSequence(values)
             }
 
     Observable.empty<String>()
             .test {
-                it shouldHave noValues()
+                it shouldEmit noValues()
             }
 
     Observable.just("")
@@ -160,7 +141,6 @@ fun composeTest() {
             }
 }
 ```
-
 # Download
 Gradle
 ```groovy
@@ -168,7 +148,6 @@ testCompile 'com.rubylichtenstein:rxkotlintest:1.0.2'
 ```
 
 Maven
-
 ```xml
 <dependency>
     <groupId>com.rubylichtenstein</groupId>
