@@ -5,12 +5,21 @@
 
 # Introduction
 
-RxKotlinTest is an easy to use extendable kotlin DSL for testing RxJava2 code.
-The library based on [KotlinTest](https://github.com/kotlintest/kotlintest).
+RxKotlinTest is a library build on top of [KotlinTest](https://github.com/kotlintest/kotlintest) to help you write more readable tests for RxJava2.
 
 # Example
+### Basic use
+```kotlin
+val value = "HelloRxKotlinTest"
 
-### BDD
+Observable.just(values)
+    .test {
+        it shouldEmit value
+        it should complete()
+        it shouldHave noErrors()
+    }
+```
+### BDD style 
 ```kotlin
 Given("Value, subject"){
     val value = "HelloRxKotlinTest"
@@ -60,11 +69,11 @@ it shouldHave error(errorClass: Class<out Throwable>)
 
 it shouldHave error(errorPredicate: (Throwable) -> Boolean)
 
-it shouldHave noErrors(): TestObserverMatcher<T>
+it shouldHave noErrors()
 
-it shouldHave value(value: T): TestObserverMatcher<T>
+it shouldEmit T
 
-it shouldHave value(valuePredicate: (T) -> Boolean)
+it shouldEmit (T) -> Boolean
 
 it shouldHave never(value: T)
 
