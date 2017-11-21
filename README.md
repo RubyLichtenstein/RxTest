@@ -19,7 +19,7 @@ Observable.just(values)
         it shouldHave noErrors()
     }
 ```
-### BDD style 
+### [BDD style](https://github.com/kotlintest/kotlintest/blob/master/doc/reference.md#behavior-spec) 
 ```kotlin
 Given("Value, subject"){
     val value = "HelloRxKotlinTest"
