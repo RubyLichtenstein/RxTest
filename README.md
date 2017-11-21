@@ -7,7 +7,7 @@
 
 RxKotlinTest is a library build on top of [KotlinTest](https://github.com/kotlintest/kotlintest) to help you write more readable tests for RxJava2.
 
-# Example
+# Examples
 ### Basic use
 ```kotlin
 val value = "HelloRxKotlinTest"
@@ -75,17 +75,23 @@ it shouldEmit T
 
 it shouldEmit (T) -> Boolean
 
-it shouldHave never(value: T)
+it shouldEmit values(vararg values: T)
 
-it shouldHave never(neverPredicate: (T) -> Boolean)
+it shouldEmit valueSequence(sequence: Iterable<T>)
+
+it shouldEmit Collection<T>
+
+it shouldEmit valueOnly(vararg values: T)
+
+it shouldNeverEmit T
+
+it shouldNeverEmit (T) -> Boolean
 
 it shouldHave valueAt(index: Int, value: T)
 
 it shouldHave valueAt(index: Int, valuePredicate: (T) -> Boolean)
 
-it shouldHave values(vararg values: T)
-
-it shouldBy empty()
+it shouldBe empty()
 
 it shouldHave noTimeout()
 
@@ -106,12 +112,6 @@ it shouldHave result(vararg values: T)
 it should terminate()
 
 it shouldHave valueCount(count: Int)
-
-it shouldHave valueSequence(sequence: Iterable<T>)
-
-it shouldHave valueSet(expected: Collection<T>)
-
-it shouldHave valueOnly(vararg values: T)
 
 }
 ```
