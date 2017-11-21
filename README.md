@@ -10,11 +10,9 @@ RxKotlinTest is a library build on top of [KotlinTest](https://github.com/kotlin
 # Examples
 ### Basic use
 ```kotlin
-val value = "HelloRxKotlinTest"
-
-Observable.just(values)
+Observable.just("HelloRxKotlinTest")
     .test {
-        it shouldEmit value
+        it shouldEmit "HelloRxKotlinTest"
         it should complete()
         it shouldHave noErrors()
     }
