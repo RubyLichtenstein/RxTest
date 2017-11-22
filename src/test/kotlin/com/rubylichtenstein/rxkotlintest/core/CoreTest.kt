@@ -1,26 +1,26 @@
 package com.rubylichtenstein.rxkotlintest.core
 
-import com.rubylichtenstein.rxkotlintest.assertions.*
-import io.kotlintest.matchers.should
+import com.rubylichtenstein.rxkotlintest.matchers.*
 import io.kotlintest.matchers.shouldBe
 import io.kotlintest.matchers.shouldHave
 import io.kotlintest.specs.BehaviorSpec
 import io.reactivex.Observable
 import io.reactivex.observers.TestObserver
-import io.reactivex.subjects.PublishSubject
 import org.junit.Test
 
 class CoreTest : BehaviorSpec() {
 
     fun <T> noValues() = valueCount<T>(0)
 
-    fun <T> errorOrComplete(error: Throwable) = com.rubylichtenstein.rxkotlintest.assertions.error<T>(error) or complete()
+    fun <T> errorOrComplete(error: Throwable) = com.rubylichtenstein.rxkotlintest.matchers.error<T>(error) or complete()
 
     fun <T> moreValuesThen(count: Int)
-            = createAssertion<T>({ it.values().size > count }, "Should have more values then $count")
+            = matcher<T>({ it.values().size > count },
+            "Should have more values then $count")
 
     fun <T> lessValuesThen(count: Int)
-            = createAssertion<T>({ it.values().size < count }, "Should have less values then $count")
+            = matcher<T>({ it.values().size < count },
+            "Should have less values then $count")
 
     fun <T> valueCountBetween(min: Int, max: Int) = moreValuesThen<T>(min) and lessValuesThen<T>(max)
 
@@ -56,9 +56,9 @@ class CoreTest : BehaviorSpec() {
         val detailMessage = "error message"
 
         val assertionWrapperPass
-                = assertionWrapper<String> {}
+                = assertionToMatcher<String> {}
 
-        val assertionWrapper = assertionWrapper<String> {
+        val assertionWrapper = assertionToMatcher<String> {
             throw AssertionError(detailMessage)
         }
 

@@ -1,7 +1,8 @@
-package com.rubylichtenstein.rxkotlintest.assertions
+package com.rubylichtenstein.rxkotlintest.matchers
 
 import com.rubylichtenstein.rxkotlintest.core.shouldBe
 import com.rubylichtenstein.rxkotlintest.core.shouldEmit
+import com.rubylichtenstein.rxkotlintest.core.shouldNeverEmit
 import com.rubylichtenstein.rxkotlintest.core.test
 import io.kotlintest.matchers.should
 import io.kotlintest.matchers.shouldHave
@@ -13,7 +14,7 @@ import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
 import org.junit.Test
 
-class AssertionsTest {
+class MatchersTest {
 
     val item0 = "a"
     val item1 = "a"
@@ -157,9 +158,12 @@ class AssertionsTest {
 
         to.assertNever(never)
         to shouldHave never(never)
+        to shouldNeverEmit never
 
-        to.assertNever({ it.equals(never) })
-        to shouldHave never({ it.equals(never) })
+        val valuePredicate = { v:String -> v.equals(never) }
+        to.assertNever(valuePredicate)
+        to shouldHave never(valuePredicate)
+        to shouldNeverEmit valuePredicate
     }
 
     @Test
@@ -223,15 +227,6 @@ class AssertionsTest {
                     it shouldHave valueCount(items.size)
                 }
     }
-
-//    @Test
-//    fun notSubscribeTest() {
-//        Observable.just(item0)
-//                .test {
-//                    it.assertNotSubscribed()
-//                    it should notSubscribed()
-//                }
-//    }
 
     @Test
     fun terminateTest() {

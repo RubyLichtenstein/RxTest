@@ -1,7 +1,6 @@
 package com.rubylichtenstein.rxkotlintest
 
-import com.rubylichtenstein.rxkotlintest.assertions.complete
-import com.rubylichtenstein.rxkotlintest.assertions.notComplete
+import com.rubylichtenstein.rxkotlintest.matchers.complete
 import com.rubylichtenstein.rxkotlintest.core.shouldEmit
 import io.kotlintest.matchers.should
 import io.kotlintest.specs.BehaviorSpec

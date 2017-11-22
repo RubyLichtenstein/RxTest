@@ -108,10 +108,10 @@ fun <T> noValues() = valueCount<T>(0)
 fun <T> errorOrComplete(error: Throwable) = error<T>(error) or complete()
 
 fun <T> moreValuesThen(count: Int)
-        = createAssertion<T>({ it.values().size > count }, "Should have more values then $count")
+        = matcher<T>({ it.values().size > count }, "Should have more values then $count")
 
 fun <T> lessValuesThen(count: Int)
-        = createAssertion<T>({ it.values().size < count }, "Should have less values then $count")
+        = matcher<T>({ it.values().size < count }, "Should have less values then $count")
 
 fun <T> valueCountBetween(min: Int, max: Int) = moreValuesThen<T>(min) and lessValuesThen<T>(max)
 

@@ -1,7 +1,7 @@
 package com.rubylichtenstein.rxkotlintest.core
 
-import com.rubylichtenstein.rxkotlintest.assertions.never
-import com.rubylichtenstein.rxkotlintest.assertions.value
+import com.rubylichtenstein.rxkotlintest.matchers.never
+import com.rubylichtenstein.rxkotlintest.matchers.value
 import io.kotlintest.matchers.Matcher
 import io.kotlintest.matchers.Result
 import io.kotlintest.matchers.should
@@ -16,13 +16,13 @@ val passedMessage = ""
 
 interface TestObserverMatcher<T> : Matcher<TestObserver<T>>
 
-fun <T> createAssertion(action: (TestObserver<T>) -> Boolean, message: String): TestObserverMatcher<T> {
+fun <T> matcher(action: (TestObserver<T>) -> Boolean, message: String): TestObserverMatcher<T> {
     return object : TestObserverMatcher<T> {
         override fun test(value: TestObserver<T>) = Result(action(value), message)
     }
 }
 
-fun <T> assertionWrapper(action: (TestObserver<T>) -> Unit): TestObserverMatcher<T> {
+fun <T> assertionToMatcher(action: (TestObserver<T>) -> Unit): TestObserverMatcher<T> {
     return object : TestObserverMatcher<T> {
         override fun test(value: TestObserver<T>) = try {
             action(value)
