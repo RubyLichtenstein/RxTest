@@ -19,27 +19,30 @@ Observable.just("HelloRxKotlinTest")
 ```
 ### [BDD style](https://github.com/kotlintest/kotlintest/blob/master/doc/reference.md#behavior-spec) 
 ```kotlin
-Given("Value, subject"){
-    val value = "HelloRxKotlinTest"
-    val subject = PublishSubject.create<String>()
-    val subjectTest = subject.test()
+Given("Value, subject") {
+            val value = "Hello Rx Kotlin Test"
+            val subject = ReplaySubject.create<String>()
 
-    When("subject emit value"){
-        subject.onNext(value)
+            When("subject emit value") {
+                subject.onNext(value)
 
-        Then("value emitted"){
-            subjectTest shouldEmit value
+                Then("value emitted") {
+                    subject.test {
+                        it shouldEmit value
+                    }
+                }
+            }
+
+            When("call subject onComplete") {
+                subject.onComplete()
+
+                Then("subject complete with no errors") {
+                    subject.test {
+                        it should complete()
+                    }
+                }
+            }
         }
-    }
-
-    When("call subject onComplete"){
-        subject.onComplete()
-
-        Then("subject complete with no errors"){
-            subjectTest should notComplete()
-        }
-    }
-}    
 ```
 # Usage
 ### Matcher's
@@ -96,32 +99,6 @@ fun <T> noValues() = valueCount<T>(0)
 fun <T> errorOrComplete(error: Throwable) = error<T>(error) or complete()
 
 fun <T> valueCountBetween(min: Int, max: Int) = moreValuesThen<T>(min) and lessValuesThen<T>(max)
-
-@Test
-fun composeTest() {
-    val values = listOf<String>("Rx", "Kotlin", "Test")
-    Observable.fromIterable(values)
-            .test {
-                it shouldEmit moreValuesThen(2)
-                it shouldHave noErrors()
-                it shouldEmit valueSequence(values)
-            }
-
-    Observable.empty<String>()
-            .test {
-                it shouldEmit noValues()
-            }
-
-    Observable.just("")
-            .test {
-                it shouldHave errorOrComplete(Throwable())
-            }
-
-    Observable.just("","")
-            .test {
-                it shouldHave valueCountBetween(1, 3)
-            }
-}
 ```
 # Download
 Gradle
