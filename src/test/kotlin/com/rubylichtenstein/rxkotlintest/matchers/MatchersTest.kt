@@ -12,6 +12,7 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.ReplaySubject
 import org.junit.Test
 
 class MatchersTest {
@@ -147,12 +148,48 @@ class MatchersTest {
         to shouldEmit values(value0, value1)
     }
 
+
+    @Test
+    fun valueSequenceTest() {
+        val valueSequence = listOf(item0, item1, item2)
+        Observable.fromIterable(valueSequence)
+                .test{
+                    it.assertValueSequence(valueSequence)
+                    it shouldEmit valueSequence(valueSequence)
+                }
+    }
+
+    @Test
+    fun valueSetTest() {
+        val valueSequence = listOf(item0, item1, item2)
+        Observable.fromIterable(valueSequence)
+                .test{
+                    it.assertValueSet(valueSequence)
+                    it shouldEmit valueSet(valueSequence)
+                }
+    }
+
+    @Test
+    fun valueOnly() {
+        val replaySubject = ReplaySubject.create<String>()
+        replaySubject.onNext(item0)
+        replaySubject.onNext(item1)
+        replaySubject.onNext(item2)
+
+        replaySubject.test{
+            it.assertValuesOnly(item0, item1, item2)
+            it shouldEmit valueOnly(item0, item1, item2)
+        }
+    }
+
     @Test
     fun neverTest() {
         val to = TestObserver<String>()
         val publishSubject = PublishSubject.create<String>()
         val value = "a"
         val never = "b"
+        val valuePredicate = { v:String -> v.equals(never) }
+
         publishSubject.subscribe(to)
         publishSubject.onNext(value)
 
@@ -160,7 +197,6 @@ class MatchersTest {
         to shouldHave never(never)
         to shouldNeverEmit never
 
-        val valuePredicate = { v:String -> v.equals(never) }
         to.assertNever(valuePredicate)
         to shouldHave never(valuePredicate)
         to shouldNeverEmit valuePredicate
