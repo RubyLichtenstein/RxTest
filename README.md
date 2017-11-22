@@ -42,76 +42,58 @@ Given("Value, subject"){
 }    
 ```
 # Usage
-### Assertions
+### Matcher's
+- `complete()`
+- `notComplete()`
+- `error(error: Throwable)`
+- `error(errorClass: Class<out Throwable>)`
+- `error(errorPredicate: (Throwable) -> Boolean)`
+- `noErrors()`
+- `value(t: T)` 
+- `value(predicate: (T) -> Boolean)` 
+- `values(vararg values: T)` 
+- `valueSequence(sequence: Iterable<T>)` 
+- `valueSet(set: Collection<T>)` 
+- `valueOnly(vararg values: T)` 
+- `valueCount(count: Int)` 
+- `never(t: T)` 
+- `never(predicate: (T) -> Boolean)` 
+- `valueAt(index: Int, value: T)` 
+- `valueAt(index: Int, valuePredicate: (T) -> Boolean)` 
+- `empty()` 
+- `timeout()` 
+- `noTimeout()` 
+- `subscribed()` 
+- `notSubscribed()` 
+- `failure(errorPredicate: (Throwable) -> Boolean, vararg values: T)` 
+- `failure(error: Class<out Throwable>, vararg values: T)` 
+- `failureAndMessage(error: Class<out Throwable>, message: String, vararg values: T)` 
+- `result(vararg values: T)` 
+- `terminate()` 
+ 
+# Create your own Matcher
+
+#### 1. From scratch 
+Using: `matcher(action: (TestObserver<T>) -> Boolean, message: String): TestObserverMatcher<T>`
+
 ```kotlin
-it should complete() 
+fun <T> moreValuesThen(count: Int) =
+    matcher<T>({ it.values().size > count },
+    "Should have more values then $count")
 
-it should notComplete()
-
-it shouldHave error(error: Throwable)
-
-it shouldHave error(errorClass: Class<out Throwable>)
-
-it shouldHave error(errorPredicate: (Throwable) -> Boolean)
-
-it shouldHave noErrors()
-
-it shouldEmit T
-
-it shouldEmit (T) -> Boolean
-
-it shouldEmit values(vararg values: T)
-
-it shouldEmit valueSequence(sequence: Iterable<T>)
-
-it shouldEmit Collection<T>
-
-it shouldEmit valueOnly(vararg values: T)
-
-it shouldHave valueCount(count: Int)
-
-it shouldNeverEmit T
-
-it shouldNeverEmit (T) -> Boolean
-
-it shouldHave valueAt(index: Int, value: T)
-
-it shouldHave valueAt(index: Int, valuePredicate: (T) -> Boolean)
-
-it shouldBe empty()
-
-it shouldHave noTimeout()
-
-it shouldHave timeout()
-
-it should subscribed()
-
-it should notSubscribed()
-
-it shouldHave failure(errorPredicate: (Throwable) -> Boolean, vararg values: T)
-
-it shouldHave failure(error: Class<out Throwable>, vararg values: T)
-
-it shouldHave failureAndMessage(error: Class<out Throwable>, message: String, vararg values: T)
-
-it shouldHave result(vararg values: T)
-
-it should terminate()
-
+fun <T> lessValuesThen(count: Int) =
+    matcher<T>({ it.values().size < count }, 
+    "Should have less values then $count")
 ```
-# Create your own assertions
 
-### Example
+#### 2. Wrap existing
 ```kotlin
 fun <T> noValues() = valueCount<T>(0)
+```
 
+#### 3. Combine with OR and AND
+```kotlin
 fun <T> errorOrComplete(error: Throwable) = error<T>(error) or complete()
-
-fun <T> moreValuesThen(count: Int)
-        = matcher<T>({ it.values().size > count }, "Should have more values then $count")
-
-fun <T> lessValuesThen(count: Int)
-        = matcher<T>({ it.values().size < count }, "Should have less values then $count")
 
 fun <T> valueCountBetween(min: Int, max: Int) = moreValuesThen<T>(min) and lessValuesThen<T>(max)
 
@@ -159,5 +141,5 @@ Maven
 
 # Contribute
 
-Contact me - ruby.lichtenstein@gmail.com
+Contact me - ruby.lich@gmail.com
 
