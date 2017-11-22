@@ -76,10 +76,21 @@ fun <T> failureAndMessage(error: Class<out Throwable>,
                           vararg values: T): TestObserverMatcher<T>
         = assertionWrapper({ it.assertFailureAndMessage(error, message, *values) })
 
-fun <T> result(vararg values: T): TestObserverMatcher<T> = assertionWrapper({ it.assertResult(*values) })
-fun <T> terminate(): TestObserverMatcher<T> = assertionWrapper({ it.assertTerminated() })
-fun <T> valueCount(count: Int): TestObserverMatcher<T> = assertionWrapper({ it.assertValueCount(count) })
-fun <T> valueSequence(sequence: Iterable<T>): TestObserverMatcher<T> = assertionWrapper({ it.assertValueSequence(sequence) })
-fun <T> valueSet(expected: Collection<T>): TestObserverMatcher<T> = assertionWrapper({ it.assertValueSet(expected) })
-fun <T> valueOnly(vararg values: T): TestObserverMatcher<T> = assertionWrapper({ it.assertValuesOnly(*values) })
+fun <T> result(vararg values: T): TestObserverMatcher<T>
+        = assertionWrapper({ it.assertResult(*values) })
+
+fun <T> terminate(): TestObserverMatcher<T>
+        = assertionWrapper({ it.assertTerminated() })
+
+fun <T> valueCount(count: Int): TestObserverMatcher<T>
+        = assertionWrapper({ it.assertValueCount(count) })
+
+fun <T> valueSequence(sequence: Iterable<T>): TestObserverMatcher<T>
+        = assertionWrapper({ it.assertValueSequence(sequence) })
+
+fun <T> valueSet(expected: Collection<T>): TestObserverMatcher<T>
+        = assertionWrapper({ it.assertValueSet(expected) })
+
+fun <T> valueOnly(vararg values: T): TestObserverMatcher<T>
+        = assertionWrapper({ it.assertValuesOnly(*values) })
 

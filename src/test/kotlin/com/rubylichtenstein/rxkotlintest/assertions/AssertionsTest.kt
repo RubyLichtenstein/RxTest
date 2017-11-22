@@ -1,6 +1,7 @@
 package com.rubylichtenstein.rxkotlintest.assertions
 
 import com.rubylichtenstein.rxkotlintest.core.shouldBe
+import com.rubylichtenstein.rxkotlintest.core.shouldEmit
 import com.rubylichtenstein.rxkotlintest.core.test
 import io.kotlintest.matchers.should
 import io.kotlintest.matchers.shouldHave
@@ -99,9 +100,12 @@ class AssertionsTest {
 
         to.assertValue(value)
         to shouldHave value(value)
+        to shouldEmit value
 
-        to.assertValue({ it.equals(value) })
-        to shouldHave value({ it.equals(value) })
+        val a = { v: String -> v.length == 1}
+        to.assertValue(a)
+        to shouldHave value(a)
+        to shouldEmit a
     }
 
     @Test
@@ -139,6 +143,7 @@ class AssertionsTest {
 
         to.assertValues(value0, value1)
         to shouldHave values(value0, value1)
+        to shouldEmit values(value0, value1)
     }
 
     @Test
