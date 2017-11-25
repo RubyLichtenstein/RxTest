@@ -8,15 +8,44 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import org.hamcrest.Description
+import org.hamcrest.Matcher
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.TypeSafeMatcher
 
 data class AssertionResult(val passed: Boolean, val message: String)
 
+fun <T> crateMatcher(assertion: (TestObserver<T>) -> Boolean,
+                     message: String)
+        : TypeSafeMatcher<TestObserver<T>> {
+    return CreateMatcher(assertion, message)
+}
+private
+class CreateMatcher<T>(private val assertion: (TestObserver<T>) -> Boolean,
+                       private var matchMessage: String = "Empty") : TypeSafeMatcher<TestObserver<T>>() {
+    var mismatchMessage = "";
+    var mTestObserver: TestObserver<T>? = null
+
+    override fun describeMismatchSafely(item: TestObserver<T>?, mismatchDescription: Description?) {
+        super.describeMismatchSafely(item, mismatchDescription?.appendText(mismatchMessage))
+    }
+
+    override fun describeTo(description: Description) {
+        description.appendText(matchMessage)
+        mTestObserver.let {
+            description.appendValue(mTestObserver)
+        }
+    }
+
+    override fun matchesSafely(testObserver: TestObserver<T>) : Boolean{
+        mTestObserver = testObserver
+        return assertion(testObserver)
+    }
+}
+
 class AssertionToMatcher<T>(private val assertion: (TestObserver<T>) -> Unit,
                             private var matchMessage: String = "Empty") : TypeSafeMatcher<TestObserver<T>>() {
     var mismatchMessage = "";
-    var mTestObserver : TestObserver<T>? = null
+    var mTestObserver: TestObserver<T>? = null
 
     override fun describeMismatchSafely(item: TestObserver<T>?, mismatchDescription: Description?) {
         super.describeMismatchSafely(item, mismatchDescription?.appendText(mismatchMessage))
@@ -49,10 +78,10 @@ fun <T> applyAssertion(testObserver: TestObserver<T>,
     }
 }
 
-infix fun <T> TestObserver<T>.should(matcher: AssertionToMatcher<T>) = assertThat(this, matcher)
-infix fun <T> TestObserver<T>.shouldHave(matcher: AssertionToMatcher<T>) = should(matcher)
-infix fun <T> TestObserver<T>.shouldBe(matcher: AssertionToMatcher<T>) = should(matcher)
-infix fun <T> TestObserver<T>.shouldEmit(matcher: AssertionToMatcher<T>) = shouldHave(matcher)
+infix fun <T> TestObserver<T>.should(matcher: Matcher<TestObserver<T>>) = assertThat(this, matcher)
+infix fun <T> TestObserver<T>.shouldHave(matcher: Matcher<TestObserver<T>>) = should(matcher)
+infix fun <T> TestObserver<T>.shouldBe(matcher: Matcher<TestObserver<T>>) = should(matcher)
+infix fun <T> TestObserver<T>.shouldEmit(matcher: Matcher<TestObserver<T>>) = shouldHave(matcher)
 infix fun <T> TestObserver<T>.shouldEmit(t: T) = shouldHave(value(t))
 infix fun <T> TestObserver<T>.shouldEmit(t: (T) -> Boolean) = shouldHave(value(t))
 infix fun <T> TestObserver<T>.shouldNeverEmit(t: T) = shouldHave(never(t))
