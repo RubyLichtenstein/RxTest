@@ -7,7 +7,10 @@ import io.kotlintest.specs.BehaviorSpec
 import io.reactivex.Observable
 import io.reactivex.observers.TestObserver
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
 
+@RunWith(JUnit4::class)
 class CoreTest : BehaviorSpec() {
 
     fun <T> noValues() = valueCount<T>(0)
@@ -23,6 +26,14 @@ class CoreTest : BehaviorSpec() {
             "Should have less values then $count")
 
     fun <T> valueCountBetween(min: Int, max: Int) = moreValuesThen<T>(min) and lessValuesThen<T>(max)
+
+    @Test
+    fun composeTest1() {
+        Observable.just("h")
+                .test {
+                    it should TestObserverMatcher({it.assertComplete()})
+                }
+    }
 
     @Test
     fun composeTest() {
