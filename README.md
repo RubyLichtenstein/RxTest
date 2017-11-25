@@ -5,7 +5,12 @@
 
 # Introduction
 
-RxKotlinTest is a library build on top of [KotlinTest](https://github.com/kotlintest/kotlintest) to help you write more readable tests for RxJava2.
+RxKotlinTest help you write more readable tests for RxJava2.
+
+The project provides 3 parts
+1. Hamcrest extension for testObserver assertions
+2. Assertion methods for more readable tests
+3. Extension function for observables    
 
 # Examples
 ### Basic use
@@ -16,33 +21,6 @@ Observable.just("HelloRxKotlinTest")
         it should complete()
         it shouldHave noErrors()
     }
-```
-### [BDD style](https://github.com/kotlintest/kotlintest/blob/master/doc/reference.md#behavior-spec) 
-```kotlin
-Given("Value, subject") {
-            val value = "Hello Rx Kotlin Test"
-            val subject = ReplaySubject.create<String>()
-
-            When("subject emit value") {
-                subject.onNext(value)
-
-                Then("value emitted") {
-                    subject.test {
-                        it shouldEmit value
-                    }
-                }
-            }
-
-            When("call subject onComplete") {
-                subject.onComplete()
-
-                Then("subject complete with no errors") {
-                    subject.test {
-                        it should complete()
-                    }
-                }
-            }
-        }
 ```
 # Usage
 ### Matcher's
