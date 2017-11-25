@@ -15,7 +15,7 @@ class CoreTest : BehaviorSpec() {
 
     fun <T> noValues() = valueCount<T>(0)
 
-    fun <T> errorOrComplete(error: Throwable) = com.rubylichtenstein.rxkotlintest.matchers.error<T>(error) or complete()
+    fun <T> errorOrComplete(error: Throwable) = com.rubylichtenstein.rxkotlintest.matchers.error<T>(error)//.or complete()
 
     fun <T> moreValuesThen(count: Int)
             = matcher<T>({ it.values().size > count },
@@ -31,7 +31,7 @@ class CoreTest : BehaviorSpec() {
     fun composeTest1() {
         Observable.just("h")
                 .test {
-                    it should TestObserverMatcher({it.assertComplete()})
+                    it should AssertionToMatcher({it.assertComplete()})
                 }
     }
 

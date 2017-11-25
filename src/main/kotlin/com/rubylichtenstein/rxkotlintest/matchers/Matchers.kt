@@ -1,8 +1,6 @@
 package com.rubylichtenstein.rxkotlintest.matchers
 
-import com.rubylichtenstein.rxkotlintest.core.TestObserverMatcher
-import com.rubylichtenstein.rxkotlintest.core.TestObserverMatcherDep
-import com.rubylichtenstein.rxkotlintest.core.assertionToMatcher
+import com.rubylichtenstein.rxkotlintest.core.AssertionToMatcher
 
 /**
  * Created by ruby on 27/10/17.
@@ -12,86 +10,80 @@ import com.rubylichtenstein.rxkotlintest.core.assertionToMatcher
 /**
  * @see io.reactivex.observers.TestObserver.assertComplete
  */
-fun <T> complete(): TestObserverMatcher<T>
-        = TestObserverMatcher({ it.assertComplete() })
+fun <T> complete() = AssertionToMatcher<T>({ it.assertComplete() }, "Should Complete")
+fun <T> notComplete() = AssertionToMatcher<T>({ it.assertNotComplete() }, "Should NotComplete")
+fun <T> error(error: Throwable) = AssertionToMatcher<T>({ it.assertError(error) }, "Error $error")
 
-fun <T> notComplete(): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertNotComplete() })
+fun <T> error(errorClass: Class<out Throwable>) = AssertionToMatcher<T>({ it.assertError(errorClass) })
 
-fun <T> error(error: Throwable): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertError(error) })
+fun <T> error(errorPredicate: (Throwable) -> Boolean): AssertionToMatcher<T>
+        = AssertionToMatcher({ it.assertError(errorPredicate) })
 
-fun <T> error(errorClass: Class<out Throwable>): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertError(errorClass) })
+fun <T> noErrors(): AssertionToMatcher<T>
+        = AssertionToMatcher({ it.assertNoErrors() })
 
-fun <T> error(errorPredicate: (Throwable) -> Boolean): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertError(errorPredicate) })
+fun <T> value(value: T): AssertionToMatcher<T>
+        = AssertionToMatcher({ it.assertValue(value) })
 
-fun <T> noErrors(): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertNoErrors() })
+fun <T> value(valuePredicate: (T) -> Boolean): AssertionToMatcher<T>
+        = AssertionToMatcher({ it.assertValue(valuePredicate) })
 
-fun <T> value(value: T): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertValue(value) })
+fun <T> never(value: T): AssertionToMatcher<T>
+        = AssertionToMatcher({ it.assertNever(value) })
 
-fun <T> value(valuePredicate: (T) -> Boolean): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertValue(valuePredicate) })
+fun <T> never(neverPredicate: (T) -> Boolean): AssertionToMatcher<T>
+        = AssertionToMatcher({ it.assertNever(neverPredicate) })
 
-fun <T> never(value: T): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertNever(value) })
+fun <T> valueAt(index: Int, value: T): AssertionToMatcher<T>
+        = AssertionToMatcher({ it.assertValueAt(index, value) })
 
-fun <T> never(neverPredicate: (T) -> Boolean): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertNever(neverPredicate) })
+fun <T> valueAt(index: Int, valuePredicate: (T) -> Boolean): AssertionToMatcher<T>
+        = AssertionToMatcher({ it.assertValueAt(index, valuePredicate) })
 
-fun <T> valueAt(index: Int, value: T): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertValueAt(index, value) })
+fun <T> values(vararg values: T): AssertionToMatcher<T>
+        = AssertionToMatcher({ it.assertValues(*values) })
 
-fun <T> valueAt(index: Int, valuePredicate: (T) -> Boolean): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertValueAt(index, valuePredicate) })
+fun <T> empty(): AssertionToMatcher<T>
+        = AssertionToMatcher({ it.assertEmpty() })
 
-fun <T> values(vararg values: T): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertValues(*values) })
+fun <T> noTimeout(): AssertionToMatcher<T>
+        = AssertionToMatcher({ it.assertNoTimeout() })
 
-fun <T> empty(): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertEmpty() })
+fun <T> timeout(): AssertionToMatcher<T>
+        = AssertionToMatcher({ it.assertTimeout() })
 
-fun <T> noTimeout(): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertNoTimeout() })
+fun <T> subscribed(): AssertionToMatcher<T>
+        = AssertionToMatcher({ it.assertSubscribed() })
 
-fun <T> timeout(): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertTimeout() })
+fun <T> notSubscribed(): AssertionToMatcher<T>
+        = AssertionToMatcher({ it.assertNotSubscribed() })
 
-fun <T> subscribed(): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertSubscribed() })
+fun <T> failure(errorPredicate: (Throwable) -> Boolean, vararg values: T): AssertionToMatcher<T>
+        = AssertionToMatcher({ it.assertFailure(errorPredicate, values) })
 
-fun <T> notSubscribed(): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertNotSubscribed() })
-
-fun <T> failure(errorPredicate: (Throwable) -> Boolean, vararg values: T): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertFailure(errorPredicate, values) })
-
-fun <T> failure(error: Class<out Throwable>, vararg values: T): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertFailure(error, *values) })
+fun <T> failure(error: Class<out Throwable>, vararg values: T): AssertionToMatcher<T>
+        = AssertionToMatcher({ it.assertFailure(error, *values) })
 
 fun <T> failureAndMessage(error: Class<out Throwable>,
                           message: String,
-                          vararg values: T): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertFailureAndMessage(error, message, *values) })
+                          vararg values: T): AssertionToMatcher<T>
+        = AssertionToMatcher({ it.assertFailureAndMessage(error, message, *values) })
 
-fun <T> result(vararg values: T): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertResult(*values) })
+fun <T> result(vararg values: T): AssertionToMatcher<T>
+        = AssertionToMatcher({ it.assertResult(*values) })
 
-fun <T> terminate(): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertTerminated() })
+fun <T> terminate(): AssertionToMatcher<T>
+        = AssertionToMatcher({ it.assertTerminated() })
 
-fun <T> valueCount(count: Int): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertValueCount(count) })
+fun <T> valueCount(count: Int): AssertionToMatcher<T>
+        = AssertionToMatcher({ it.assertValueCount(count) })
 
-fun <T> valueSequence(sequence: Iterable<T>): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertValueSequence(sequence) })
+fun <T> valueSequence(sequence: Iterable<T>): AssertionToMatcher<T>
+        = AssertionToMatcher({ it.assertValueSequence(sequence) })
 
-fun <T> valueSet(expected: Collection<T>): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertValueSet(expected) })
+fun <T> valueSet(expected: Collection<T>): AssertionToMatcher<T>
+        = AssertionToMatcher({ it.assertValueSet(expected) })
 
-fun <T> valueOnly(vararg values: T): TestObserverMatcherDep<T>
-        = assertionToMatcher({ it.assertValuesOnly(*values) })
+fun <T> valueOnly(vararg values: T): AssertionToMatcher<T>
+        = AssertionToMatcher({ it.assertValuesOnly(*values) })
 
