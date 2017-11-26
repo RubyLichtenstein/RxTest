@@ -23,16 +23,22 @@ kotiln infix `testObserver should complete()`
 
 [full list]
 ```kotlin
-assertThat(testObserver, complete())
+@Test
+fun completeTest(){
+    assertThat(testObserver, complete())
+}
 ```
 or
 ```kotlin
+@Test
+fun completeTest(){
 Observable.just("HelloRxKotlinTest")
     .test {
         it shouldEmit "HelloRxKotlinTest"
         it should complete()
         it shouldHave noErrors()
     }
+}
 ```
 ### Assertions
 ```kotlin
@@ -41,9 +47,9 @@ TestObserver<T>.shouldHave(matcher: Matcher<TestObserver<T>>)
 TestObserver<T>.shouldBe(matcher: Matcher<TestObserver<T>>)
 TestObserver<T>.shouldEmit(matcher: Matcher<TestObserver<T>>) 
 TestObserver<T>.shouldEmit(t: T) = shouldHave(value(t))
-TestObserver<T>.shouldEmit(t: (T) -> Boolean) = shouldHave(value(t))
-TestObserver<T>.shouldNeverEmit(t: T) = shouldHave(never(t))
-TestObserver<T>.shouldNeverEmit(t: (T) -> Boolean) = shouldHave(never(t))
+TestObserver<T>.shouldEmit(t: (T) -> Boolean)
+TestObserver<T>.shouldNeverEmit(t: T)
+TestObserver<T>.shouldNeverEmit(t: (T) -> Boolean)
 ```
 ### RxExtensions 
 ```kotlin
