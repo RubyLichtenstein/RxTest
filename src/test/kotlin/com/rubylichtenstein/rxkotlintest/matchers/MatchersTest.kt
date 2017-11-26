@@ -8,8 +8,6 @@ import io.reactivex.Single
 import io.reactivex.observers.TestObserver
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.ReplaySubject
-import org.hamcrest.CoreMatchers.equalTo
-import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 
 class MatchersTest {
@@ -21,16 +19,11 @@ class MatchersTest {
     val items = listOf(item0, item1, item2)
 
     @Test
-    fun some(){
-        assertThat("Hello", (equalTo("Hello1")))
-    }
-
-    @Test
     fun completeTest() {
         Observable.just(item0)
                 .test {
                     it.assertComplete()
-                    it should notComplete()
+                    it should complete()
                 }
 
         Maybe.just(item0)
@@ -146,8 +139,8 @@ class MatchersTest {
         publishSubject.onNext(value1)
 
         to.assertValues(value0, value1)
-        to shouldHave values(value0)
-        to shouldEmit values(value0)
+        to shouldHave values(value0, value1)
+        to shouldEmit values(value0, value1)
     }
 
 

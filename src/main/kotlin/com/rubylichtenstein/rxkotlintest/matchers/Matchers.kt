@@ -10,8 +10,8 @@ import com.rubylichtenstein.rxkotlintest.core.AssertionToMatcher
 /**
  * @see io.reactivex.observers.TestObserver.assertComplete
  */
-fun <T> complete() = AssertionToMatcher<T>({ it.assertComplete() }, "Should Complete")
-fun <T> notComplete() = AssertionToMatcher<T>({ it.assertNotComplete() }, "Should NotComplete")
+fun <T> complete() = AssertionToMatcher<T>({ it.assertComplete() }, "Complete")
+fun <T> notComplete() = AssertionToMatcher<T>({ it.assertNotComplete() }, "NotComplete")
 fun <T> error(error: Throwable) = AssertionToMatcher<T>({ it.assertError(error) }, "Error $error")
 
 fun <T> error(errorClass: Class<out Throwable>) = AssertionToMatcher<T>({ it.assertError(errorClass) })

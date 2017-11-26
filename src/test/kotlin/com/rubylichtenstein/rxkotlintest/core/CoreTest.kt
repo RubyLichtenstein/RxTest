@@ -3,6 +3,7 @@ package com.rubylichtenstein.rxkotlintest.core
 import com.rubylichtenstein.rxkotlintest.matchers.*
 import io.reactivex.Observable
 import org.hamcrest.CoreMatchers.allOf
+import org.hamcrest.CoreMatchers.anyOf
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -12,14 +13,14 @@ class CoreTest {
 
     fun <T> noValues() = valueCount<T>(0)
 
-    fun <T> errorOrComplete(error: Throwable) = allOf(error<T>(error), complete())
+    fun <T> errorOrComplete(error: Throwable) = anyOf(error<T>(error), complete())
 
     fun <T> moreValuesThen(count: Int)
-            = crateMatcher<T>({ it.values().size > count },
+            = CreateMatcher<T>({ it.values().size > count },
             "Should have more values then $count")
 
     fun <T> lessValuesThen(count: Int)
-            = crateMatcher<T>({ it.values().size < count },
+            = CreateMatcher<T>({ it.values().size < count },
             "Should have less values then $count")
 
     fun <T> valueCountBetween(min: Int, max: Int) = allOf(moreValuesThen<T>(min), lessValuesThen<T>(max))
