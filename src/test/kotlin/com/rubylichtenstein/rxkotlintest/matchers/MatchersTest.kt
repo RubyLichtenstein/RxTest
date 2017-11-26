@@ -1,6 +1,7 @@
 package com.rubylichtenstein.rxkotlintest.matchers
 
-import com.rubylichtenstein.rxkotlintest.core.*
+import com.rubylichtenstein.rxkotlintest.assertions.*
+import com.rubylichtenstein.rxkotlintest.reextentions.test
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Observable

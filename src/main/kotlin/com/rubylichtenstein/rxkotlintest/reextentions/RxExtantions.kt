@@ -1,10 +1,9 @@
-package com.rubylichtenstein.rxkotlintest.core
+package com.rubylichtenstein.rxkotlintest.reextentions
 
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
-import io.reactivex.disposables.Disposable
 import io.reactivex.observers.TestObserver
 
 

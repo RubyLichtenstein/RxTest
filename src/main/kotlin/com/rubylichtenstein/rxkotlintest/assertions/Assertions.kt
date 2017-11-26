@@ -1,4 +1,4 @@
-package com.rubylichtenstein.rxkotlintest.core
+package com.rubylichtenstein.rxkotlintest.assertions
 
 import com.rubylichtenstein.rxkotlintest.matchers.never
 import com.rubylichtenstein.rxkotlintest.matchers.value

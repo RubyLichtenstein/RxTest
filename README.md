@@ -7,13 +7,25 @@
 
 RxKotlinTest help you write more readable tests for RxJava2.
 
-The project provides 3 parts
+The project have 3 parts
 1. Hamcrest extension for testObserver assertions
 2. Assertion methods for more readable tests
 3. Extension function for observables    
 
-# Examples
-### Basic use
+Hamcrest Matcher's let you write
+`assertThat(testObserver, complete())`
+more readable `testObserver.should(complete())`
+kotiln infix `testObserver should complete()`
+### Matcher's
+- `complete()`
+- `error(error: Throwable)`
+- `value(t: T)` 
+
+[full list]
+```kotlin
+assertThat(testObserver, complete())
+```
+or
 ```kotlin
 Observable.just("HelloRxKotlinTest")
     .test {
@@ -22,6 +34,29 @@ Observable.just("HelloRxKotlinTest")
         it shouldHave noErrors()
     }
 ```
+### Assertions
+```kotlin
+TestObserver<T>.should(matcher: Matcher<TestObserver<T>>)
+TestObserver<T>.shouldHave(matcher: Matcher<TestObserver<T>>) 
+TestObserver<T>.shouldBe(matcher: Matcher<TestObserver<T>>)
+TestObserver<T>.shouldEmit(matcher: Matcher<TestObserver<T>>) 
+TestObserver<T>.shouldEmit(t: T) = shouldHave(value(t))
+TestObserver<T>.shouldEmit(t: (T) -> Boolean) = shouldHave(value(t))
+TestObserver<T>.shouldNeverEmit(t: T) = shouldHave(never(t))
+TestObserver<T>.shouldNeverEmit(t: (T) -> Boolean) = shouldHave(never(t))
+```
+### RxExtensions 
+```kotlin
+Maybe<T>.test(action: (TestObserver<T>) -> Unit): TestObserver<T>
+Single<T>.test(action: (TestObserver<T>) -> Unit): TestObserver<T>
+Observable<T>.test(action: (TestObserver<T>) -> Unit): TestObserver<T>
+Completable.test(action: (TestObserver<Void>) -> Unit): TestObserver<Void>
+```
+### Create matcher
+```kotlin
+
+```
+
 # Usage
 ### Matcher's
 - `complete()`

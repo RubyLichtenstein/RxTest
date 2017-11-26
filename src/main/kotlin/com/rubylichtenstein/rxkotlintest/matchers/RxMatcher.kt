@@ -1,4 +1,4 @@
-package com.rubylichtenstein.rxkotlintest.core
+package com.rubylichtenstein.rxkotlintest.matchers
 
 
 import io.reactivex.observers.TestObserver
@@ -6,6 +6,8 @@ import org.hamcrest.Description
 import org.hamcrest.TypeSafeMatcher
 
 data class AssertionResult(val passed: Boolean, val message: String)
+
+val passedMessage = ""
 
 class CreateMatcher<T>(private val assertion: (TestObserver<T>) -> Boolean,
                        private var matchMessage: String = "Empty") : TypeSafeMatcher<TestObserver<T>>() {
@@ -50,7 +52,6 @@ class AssertionToMatcher<T>(private val assertion: (TestObserver<T>) -> Unit,
     }
 }
 
-val passedMessage = ""
 
 
 fun <T> applyAssertion(testObserver: TestObserver<T>,

@@ -1,7 +1,5 @@
 package com.rubylichtenstein.rxkotlintest.matchers
 
-import com.rubylichtenstein.rxkotlintest.core.AssertionToMatcher
-
 /**
  * Created by ruby on 27/10/17.
  */
@@ -13,11 +11,8 @@ import com.rubylichtenstein.rxkotlintest.core.AssertionToMatcher
 fun <T> complete() = AssertionToMatcher<T>({ it.assertComplete() }, "Complete")
 fun <T> notComplete() = AssertionToMatcher<T>({ it.assertNotComplete() }, "NotComplete")
 fun <T> error(error: Throwable) = AssertionToMatcher<T>({ it.assertError(error) }, "Error $error")
-
 fun <T> error(errorClass: Class<out Throwable>) = AssertionToMatcher<T>({ it.assertError(errorClass) })
-
-fun <T> error(errorPredicate: (Throwable) -> Boolean): AssertionToMatcher<T>
-        = AssertionToMatcher({ it.assertError(errorPredicate) })
+fun <T> error(errorPredicate: (Throwable) -> Boolean) = AssertionToMatcher<T>({ it.assertError(errorPredicate) })
 
 fun <T> noErrors(): AssertionToMatcher<T>
         = AssertionToMatcher({ it.assertNoErrors() })
