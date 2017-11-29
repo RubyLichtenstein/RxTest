@@ -6,6 +6,7 @@ import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.functions.Predicate
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
 import io.reactivex.subjects.PublishSubject
@@ -20,6 +21,8 @@ class MatchersTest {
     val item2 = "a"
 
     val items = listOf(item0, item1, item2)
+
+
 
     @Test
     fun completeTest() {
@@ -213,7 +216,7 @@ class MatchersTest {
     }
 
     @Test
-    fun failureTest() {
+    fun failure0Test() {
         val value0 = "a"
         val value1 = "b"
         val errorMessage = "Error"
@@ -227,7 +230,41 @@ class MatchersTest {
                 .test {
                     it.assertFailure(Throwable::class.java, value0, value1)
                     it shouldHave failure(Throwable::class.java, value0, value1)
+                }
+    }
+
+    @Test
+    fun failure1Test() {
+        val value0 = "a"
+        val value1 = "b"
+        val errorMessage = "Error"
+        val error = Throwable(errorMessage)
+        ReplaySubject.create<String>()
+                .also {
+                    it.onNext(value0)
+                    it.onNext(value1)
+                    it.onError(error)
+                }
+                .test {
+                    it.assertFailure(Predicate { true }, value0, value1)
                     it shouldHave failure({ true }, value0, value1)
+                }
+    }
+
+    @Test
+    fun failureAndMessageTest() {
+        val value0 = "a"
+        val value1 = "b"
+        val errorMessage = "Error"
+        val error = Throwable(errorMessage)
+        ReplaySubject.create<String>()
+                .also {
+                    it.onNext(value0)
+                    it.onNext(value1)
+                    it.onError(error)
+                }
+                .test {
+                    it.assertFailureAndMessage(Throwable::class.java, errorMessage, value0, value1)
                     it shouldHave failureAndMessage(Throwable::class.java, errorMessage, value0, value1)
                 }
     }

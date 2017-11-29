@@ -1,10 +1,11 @@
 package com.rubylichtenstein.rxkotlintest.matchers
 
+import com.rubylichtenstein.rxkotlintest.assertions.should
 import com.rubylichtenstein.rxkotlintest.assertions.shouldHave
 import com.rubylichtenstein.rxkotlintest.extentions.test
 import io.reactivex.Observable
-import org.hamcrest.CoreMatchers.allOf
-import org.hamcrest.CoreMatchers.anyOf
+import org.hamcrest.CoreMatchers.*
+import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -55,6 +56,18 @@ class CreateMatcherTest {
                 .test {
                     it shouldHave valueCountBetween(1, 3)
                 }
+    }
+
+    @Test
+    fun failTest() {
+        try {
+            Observable.just("")
+                    .test {
+                        it should notComplete()
+                    }
+        } catch (e: Throwable) {
+            assertThat(e, notNullValue())
+        }
     }
 
     @Test
