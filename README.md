@@ -3,35 +3,10 @@
 [![Build Status](https://travis-ci.org/RubyLichtenstein/RxKotlinTest.svg?branch=master)](https://travis-ci.org/RubyLichtenstein/RxKotlinTest)
 [![codecov](https://codecov.io/gh/RubyLichtenstein/RxKotlinTest/branch/master/graph/badge.svg)](https://codecov.io/gh/RubyLichtenstein/RxKotlinTest)
 
-# Introduction
-
-RxKotlinTest help you write more readable tests for RxJava2.
-
-The project have 3 parts
-1. Hamcrest extension for testObserver assertions
-2. Assertion methods for more readable tests
-3. Extension function for observables    
-
-Hamcrest Matcher's let you write
-`assertThat(testObserver, complete())`
-more readable `testObserver.should(complete())`
-kotiln infix `testObserver should complete()`
-### Matcher's
-- `complete()`
-- `error(error: Throwable)`
-- `value(t: T)` 
-
-[full list]
+# More readable tests with RxKotlinTest 
 ```kotlin
 @Test
-fun completeTest(){
-    assertThat(testObserver, complete())
-}
-```
-or
-```kotlin
-@Test
-fun completeTest(){
+fun test(){
 Observable.just("HelloRxKotlinTest")
     .test {
         it shouldEmit "HelloRxKotlinTest"
@@ -40,31 +15,19 @@ Observable.just("HelloRxKotlinTest")
     }
 }
 ```
-### Assertions
-```kotlin
-TestObserver<T>.should(matcher: Matcher<TestObserver<T>>)
-TestObserver<T>.shouldHave(matcher: Matcher<TestObserver<T>>) 
-TestObserver<T>.shouldBe(matcher: Matcher<TestObserver<T>>)
-TestObserver<T>.shouldEmit(matcher: Matcher<TestObserver<T>>) 
-TestObserver<T>.shouldEmit(t: T) = shouldHave(value(t))
-TestObserver<T>.shouldEmit(t: (T) -> Boolean)
-TestObserver<T>.shouldNeverEmit(t: T)
-TestObserver<T>.shouldNeverEmit(t: (T) -> Boolean)
-```
-### RxExtensions 
-```kotlin
-Maybe<T>.test(action: (TestObserver<T>) -> Unit): TestObserver<T>
-Single<T>.test(action: (TestObserver<T>) -> Unit): TestObserver<T>
-Observable<T>.test(action: (TestObserver<T>) -> Unit): TestObserver<T>
-Completable.test(action: (TestObserver<Void>) -> Unit): TestObserver<Void>
-```
-### Create matcher
-```kotlin
+RxKotlinTest have 3 building blocks
 
-```
+1. Matcher's
+2. Assertions
+3. Extensions    
 
-# Usage
+<extension> <assertion> <matcher(value)>
+
+testObserver should complete()
+testObserver shouldEmit value()
+ 
 ### Matcher's
+
 - `complete()`
 - `notComplete()`
 - `error(error: Throwable)`
@@ -92,20 +55,39 @@ Completable.test(action: (TestObserver<Void>) -> Unit): TestObserver<Void>
 - `failureAndMessage(error: Class<out Throwable>, message: String, vararg values: T)` 
 - `result(vararg values: T)` 
 - `terminate()` 
+
+### Assertions
+
+```kotlin
+TestObserver should(matcher: Matcher<TestObserver<T>>)
+TestObserver shouldHave(matcher: Matcher<TestObserver<T>>) 
+TestObserver shouldBe(matcher: Matcher<TestObserver<T>>)
+TestObserver shouldEmit(matcher: Matcher<TestObserver<T>>) 
+TestObserver shouldEmit(t: T)
+TestObserver shouldEmit(t: (T) -> Boolean)
+TestObserver shouldNeverEmit(t: T)
+TestObserver shouldNeverEmit(t: (T) -> Boolean)
+```
+### Extensions 
+```kotlin
+Maybe.test(action: (TestObserver<T>) -> Unit): TestObserver<T>
+Single.test(action: (TestObserver<T>) -> Unit): TestObserver<T>
+Observable.test(action: (TestObserver<T>) -> Unit): TestObserver<T>
+Completable.test(action: (TestObserver<Void>) -> Unit): TestObserver<Void>
+```
  
-# Create your own Matcher
+# Create Matcher
 
 #### 1. From scratch 
 Using: `matcher(action: (TestObserver<T>) -> Boolean, message: String): TestObserverMatcher<T>`
 
 ```kotlin
-fun <T> moreValuesThen(count: Int) =
-    matcher<T>({ it.values().size > count },
-    "Should have more values then $count")
-
-fun <T> lessValuesThen(count: Int) =
-    matcher<T>({ it.values().size < count }, 
-    "Should have less values then $count")
+fun <T> moreValuesThen(count: Int) = matcher<T>({ it.values().size > count },
+                                                "Should have more values then $count")
+```
+```kotlin
+fun <T> lessValuesThen(count: Int) = matcher<T>({ it.values().size < count }, 
+                                                "Should have less values then $count")
 ```
 
 #### 2. Wrap existing
