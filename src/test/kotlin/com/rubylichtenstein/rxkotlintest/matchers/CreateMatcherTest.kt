@@ -1,7 +1,7 @@
 package com.rubylichtenstein.rxkotlintest.matchers
 
 import com.rubylichtenstein.rxkotlintest.assertions.shouldHave
-import com.rubylichtenstein.rxkotlintest.reextentions.test
+import com.rubylichtenstein.rxkotlintest.extentions.test
 import io.reactivex.Observable
 import org.hamcrest.CoreMatchers.allOf
 import org.hamcrest.CoreMatchers.anyOf
@@ -10,7 +10,7 @@ import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
-class RxMatchersTest {
+class CreateMatcherTest {
 
     fun <T> noValues() = valueCount<T>(0)
 
