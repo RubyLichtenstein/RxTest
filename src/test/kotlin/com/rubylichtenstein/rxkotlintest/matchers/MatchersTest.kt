@@ -216,7 +216,8 @@ class MatchersTest {
     fun failureTest() {
         val value0 = "a"
         val value1 = "b"
-        val error = Throwable()
+        val errorMessage = "Error"
+        val error = Throwable(errorMessage)
         ReplaySubject.create<String>()
                 .also {
                     it.onNext(value0)
@@ -226,7 +227,8 @@ class MatchersTest {
                 .test {
                     it.assertFailure(Throwable::class.java, value0, value1)
                     it shouldHave failure(Throwable::class.java, value0, value1)
-                    it shouldHave failure({true}, value0, value1)
+                    it shouldHave failure({ true }, value0, value1)
+                    it shouldHave failureAndMessage(Throwable::class.java, errorMessage, value0, value1)
                 }
     }
 
