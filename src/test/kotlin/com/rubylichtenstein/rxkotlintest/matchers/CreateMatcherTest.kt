@@ -18,11 +18,15 @@ class CreateMatcherTest {
 
     fun <T> moreValuesThen(count: Int)
             = CreateMatcher<T>({ it.values().size > count },
-            "Should have more values then $count")
+            "Should have more values then $count",
+            "Have more values then $count"
+    )
 
     fun <T> lessValuesThen(count: Int)
             = CreateMatcher<T>({ it.values().size < count },
-            "Should have less values then $count")
+            "Should have less values then $count",
+            "Have less values then $count"
+    )
 
     fun <T> valueCountBetween(min: Int, max: Int) = allOf(moreValuesThen<T>(min), lessValuesThen<T>(max))
 
@@ -47,7 +51,7 @@ class CreateMatcherTest {
                     it shouldHave errorOrComplete(Throwable())
                 }
 
-        Observable.just("","")
+        Observable.just("", "")
                 .test {
                     it shouldHave valueCountBetween(1, 3)
                 }

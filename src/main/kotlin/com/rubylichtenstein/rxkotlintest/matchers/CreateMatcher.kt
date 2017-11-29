@@ -10,8 +10,8 @@ data class AssertionResult(val passed: Boolean, val message: String)
 val passedMessage = ""
 
 class CreateMatcher<T>(private val assertion: (TestObserver<T>) -> Boolean,
-                       private var matchMessage: String = "Empty") : TypeSafeMatcher<TestObserver<T>>() {
-    var mismatchMessage = "";
+                       private val mismatchMessage: String,
+                       private val matchMessage: String) : TypeSafeMatcher<TestObserver<T>>() {
 
     override fun describeMismatchSafely(item: TestObserver<T>?, mismatchDescription: Description?) {
         super.describeMismatchSafely(item, mismatchDescription?.appendText(mismatchMessage))
