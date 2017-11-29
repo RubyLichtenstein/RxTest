@@ -28,13 +28,13 @@ fun <T> values(vararg values: T) = AssertionToMatcher<T>({ it.assertValues(*valu
 
 fun <T> empty() = AssertionToMatcher<T>({ it.assertEmpty() })
 
-fun <T> noTimeout() = AssertionToMatcher<T>({ it.assertNoTimeout() })
-
-fun <T> timeout() = AssertionToMatcher<T>({ it.assertTimeout() })
+//fun <T> noTimeout() = AssertionToMatcher<T>({ it.assertNoTimeout() })
+//
+//fun <T> timeout() = AssertionToMatcher<T>({ it.assertTimeout() })
 
 fun <T> subscribed() = AssertionToMatcher<T>({ it.assertSubscribed() })
 
-fun <T> notSubscribed() = AssertionToMatcher<T>({ it.assertNotSubscribed() })
+//fun <T> notSubscribed() = AssertionToMatcher<T>({ it.assertNotSubscribed() })
 
 fun <T> failure(errorPredicate: (Throwable) -> Boolean, vararg values: T) = AssertionToMatcher<T>({ it.assertFailure(errorPredicate, values) })
 

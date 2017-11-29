@@ -7,9 +7,11 @@ import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.observers.TestObserver
+import io.reactivex.schedulers.TestScheduler
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.ReplaySubject
 import org.junit.Test
+import java.util.concurrent.TimeUnit
 
 class MatchersTest {
 
@@ -100,7 +102,7 @@ class MatchersTest {
         to shouldHave value(value)
         to shouldEmit value
 
-        val a = { v: String -> v.length == 1}
+        val a = { v: String -> v.length == 1 }
         to.assertValue(a)
         to shouldHave value(a)
         to shouldEmit a
@@ -149,7 +151,7 @@ class MatchersTest {
     fun valueSequenceTest() {
         val valueSequence = listOf(item0, item1, item2)
         Observable.fromIterable(valueSequence)
-                .test{
+                .test {
                     it.assertValueSequence(valueSequence)
                     it shouldEmit valueSequence(valueSequence)
                 }
@@ -159,7 +161,7 @@ class MatchersTest {
     fun valueSetTest() {
         val valueSequence = listOf(item0, item1, item2)
         Observable.fromIterable(valueSequence)
-                .test{
+                .test {
                     it.assertValueSet(valueSequence)
                     it shouldEmit valueSet(valueSequence)
                 }
@@ -172,7 +174,7 @@ class MatchersTest {
         replaySubject.onNext(item1)
         replaySubject.onNext(item2)
 
-        replaySubject.test{
+        replaySubject.test {
             it.assertValuesOnly(item0, item1, item2)
             it shouldEmit valueOnly(item0, item1, item2)
         }
@@ -184,7 +186,7 @@ class MatchersTest {
         val publishSubject = PublishSubject.create<String>()
         val value = "a"
         val never = "b"
-        val valuePredicate = { v:String -> v.equals(never) }
+        val valuePredicate = { v: String -> v.equals(never) }
 
         publishSubject.subscribe(to)
         publishSubject.onNext(value)
@@ -215,15 +217,16 @@ class MatchersTest {
         val value0 = "a"
         val value1 = "b"
         val error = Throwable()
-        PublishSubject.create<String>()
+        ReplaySubject.create<String>()
                 .also {
                     it.onNext(value0)
                     it.onNext(value1)
                     it.onError(error)
                 }
                 .test {
-                    //                    it.assertFailure(true, value0)
-//                    it shouldHave failure()
+                    it.assertFailure(Throwable::class.java, value0, value1)
+                    it shouldHave failure(Throwable::class.java, value0, value1)
+                    it shouldHave failure({true}, value0, value1)
                 }
     }
 
@@ -278,15 +281,19 @@ class MatchersTest {
 //    @Test
 //    fun timeoutTest() {
 //        val value0 = "a"
-//        Observable.just(value0)
-//                .timeout(1, TimeUnit.MICROSECONDS)
-//                .test {
-//                    TestScheduler().apply {
-//                        advanceTimeBy(1, TimeUnit.MICROSECONDS)
-//                    }
+//        val testScheduler = TestScheduler()
 //
+//
+//        Observable.just(value0)
+//                .timeout(1, TimeUnit.MILLISECONDS)
+//                .observeOn(testScheduler)
+//                .doOnNext {
+//                    testScheduler.advanceTimeBy(10, TimeUnit.MILLISECONDS)
+//                }
+//                .test {
 //                    it.assertTimeout()
 //                    it shouldHave timeout()
-//                }
-//    }
+//                }}
 }
+
+
