@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/RubyLichtenstein/RxKotlinTest.svg?branch=master)](https://travis-ci.org/RubyLichtenstein/RxKotlinTest)
 [![codecov](https://codecov.io/gh/RubyLichtenstein/RxKotlinTest/branch/master/graph/badge.svg)](https://codecov.io/gh/RubyLichtenstein/RxKotlinTest)
 
-# More readable tests with RxKotlinTest 
+## Readable tests 
 ```kotlin
 @Test
 fun test(){
@@ -15,17 +15,25 @@ Observable.just("HelloRxKotlinTest")
     }
 }
 ```
-RxKotlinTest have 3 building blocks
 
-1. Matcher's
-2. Assertions
-3. Extensions    
+## Extendable
+```kotlin
+Maybe.just("Hello")
+     .test{
+        it shouldEmit noValues()
+     }
+```
+## Building blocks
 
+ - Matcher's
+ - Assertions
+ - Extensions    
+
+```kotlin
 <extension> <assertion> <matcher(value)>
-
 testObserver should complete()
 testObserver shouldEmit value()
- 
+``` 
 ### Matcher's
 
 - `complete()`
@@ -59,21 +67,21 @@ testObserver shouldEmit value()
 ### Assertions
 
 ```kotlin
-TestObserver should(matcher: Matcher<TestObserver<T>>)
-TestObserver shouldHave(matcher: Matcher<TestObserver<T>>) 
-TestObserver shouldBe(matcher: Matcher<TestObserver<T>>)
-TestObserver shouldEmit(matcher: Matcher<TestObserver<T>>) 
-TestObserver shouldEmit(t: T)
-TestObserver shouldEmit(t: (T) -> Boolean)
-TestObserver shouldNeverEmit(t: T)
-TestObserver shouldNeverEmit(t: (T) -> Boolean)
+TestObserver should Matcher<TestObserver<T>>
+TestObserver shouldHave Matcher<TestObserver<T>>
+TestObserver shouldBe Matcher<TestObserver<T>>
+TestObserver shouldEmit Matcher<TestObserver<T>>)
+TestObserver shouldEmit T
+TestObserver shouldEmit (T) -> Boolean
+TestObserver shouldNeverEmit T
+TestObserver shouldNeverEmit (T) -> Boolean
 ```
 ### Extensions 
 ```kotlin
-Maybe.test(action: (TestObserver<T>) -> Unit): TestObserver<T>
-Single.test(action: (TestObserver<T>) -> Unit): TestObserver<T>
-Observable.test(action: (TestObserver<T>) -> Unit): TestObserver<T>
-Completable.test(action: (TestObserver<Void>) -> Unit): TestObserver<Void>
+Maybe.test((TestObserver<T>) -> Unit): TestObserver<T>
+Single.test((TestObserver<T>) -> Unit): TestObserver<T>
+Observable.test((TestObserver<T>) -> Unit): TestObserver<T>
+Completable.test((TestObserver<Void>) -> Unit): TestObserver<Void>
 ```
  
 # Create Matcher
