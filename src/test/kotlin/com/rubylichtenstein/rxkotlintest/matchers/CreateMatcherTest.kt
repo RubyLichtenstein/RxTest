@@ -59,6 +59,18 @@ class CreateMatcherTest {
     }
 
     @Test
+    fun createFailTest() {
+        try {
+            Observable.just("", "")
+                    .test {
+                        it shouldHave moreValuesThen(45)
+                    }
+        } catch (e: Throwable) {
+            assertThat(e, notNullValue())
+        }
+    }
+
+    @Test
     fun failTest() {
         try {
             Observable.just("")
