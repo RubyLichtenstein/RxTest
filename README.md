@@ -3,17 +3,14 @@
 [![Build Status](https://travis-ci.org/RubyLichtenstein/RxKotlinTest.svg?branch=master)](https://travis-ci.org/RubyLichtenstein/RxKotlinTest)
 [![codecov](https://codecov.io/gh/RubyLichtenstein/RxKotlinTest/branch/master/graph/badge.svg)](https://codecov.io/gh/RubyLichtenstein/RxKotlinTest)
 
-## Readable tests 
+## More readable tests 
 ```kotlin
-@Test
-fun test(){
-Observable.just("HelloRxKotlinTest")
+Observable.just("Hello")
     .test {
-        it shouldEmit "HelloRxKotlinTest"
+        it shouldEmit "Hello"
         it should complete()
         it shouldHave noErrors()
     }
-}
 ```
 
 ## Extendable
@@ -25,7 +22,7 @@ Maybe.just("Hello")
 ```
 ## Building blocks
 
- - Matcher's
+ - Matchers
  - Assertions
  - Extensions    
 
@@ -34,7 +31,7 @@ Maybe.just("Hello")
 testObserver should complete()
 testObserver shouldEmit value()
 ``` 
-### Matcher's
+### Matchers
 
 - `complete()`
 - `notComplete()`
@@ -78,10 +75,18 @@ TestObserver shouldNeverEmit (T) -> Boolean
 ```
 ### Extensions 
 ```kotlin
-Maybe.test((TestObserver<T>) -> Unit): TestObserver<T>
-Single.test((TestObserver<T>) -> Unit): TestObserver<T>
-Observable.test((TestObserver<T>) -> Unit): TestObserver<T>
-Completable.test((TestObserver<Void>) -> Unit): TestObserver<Void>
+Maybe.test{
+
+}
+Single.test{
+
+}
+Observable.test{
+
+}
+Completable.test{
+
+}
 ```
  
 # Create Matcher
