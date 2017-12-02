@@ -13,14 +13,14 @@ Observable.just("Hello")
     }
 ```
 
-## Extendable
+## Extendable API
 ```kotlin
 Maybe.just("Hello")
      .test{
         it shouldEmit noValues()
      }
 ```
-## Building blocks
+## Test Building blocks
 
  - Matchers
  - Assertions
