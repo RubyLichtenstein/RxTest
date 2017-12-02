@@ -4,12 +4,10 @@ package com.rubylichtenstein.rxkotlintest.matchers
 import com.rubylichtenstein.rxkotlintest.assertions.should
 import com.rubylichtenstein.rxkotlintest.assertions.shouldHave
 import com.rubylichtenstein.rxkotlintest.extentions.test
-import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.observers.BaseTestConsumer
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
-import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -17,12 +15,12 @@ import org.junit.runners.JUnit4
 @RunWith(JUnit4::class)
 class CreateMatcherTest {
 
-    fun <T, U : BaseTestConsumer<T, U>> noValues() = valueCount<T>(0)
+    fun <T, U : BaseTestConsumer<T, U>> noValues() = valueCount<T, U>(0)
 
     fun <T, U : BaseTestConsumer<T, U>> errorOrComplete(error: Throwable)
-            = anyOf(error<T>(error), complete())
+            = anyOf(error<T, U>(error), complete())
 
-    fun  <T, U : BaseTestConsumer<T, U>> moreValuesThen(count: Int)
+    fun <T, U : BaseTestConsumer<T, U>> moreValuesThen(count: Int)
             = CreateMatcher<T, U>({ it.values().size > count },
             "Should have more values then $count",
             "Have more values then $count"
@@ -80,7 +78,7 @@ class CreateMatcherTest {
         try {
             Observable.just("")
                     .test {
-                        it      should notComplete()
+                        it should notComplete()
                     }
         } catch (e: Throwable) {
             assertThat(e, notNullValue())
