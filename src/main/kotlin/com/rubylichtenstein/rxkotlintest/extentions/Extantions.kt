@@ -1,13 +1,12 @@
 package com.rubylichtenstein.rxkotlintest.extentions
 
-import io.reactivex.Completable
-import io.reactivex.Maybe
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.*
 import io.reactivex.observers.TestObserver
+import io.reactivex.subscribers.TestSubscriber
 
-fun <T> Maybe<T>.test(action: (TestObserver<T>) -> Unit): TestObserver<T> = test().apply(action)
-fun <T> Single<T>.test(action: (TestObserver<T>) -> Unit): TestObserver<T> = test().apply(action)
-fun <T> Observable<T>.test(action: (TestObserver<T>) -> Unit): TestObserver<T> = test().apply(action)
+fun <T> Maybe<T>.test(action: (TestObserver<T>) -> Unit) = test().apply(action)
+fun <T> Single<T>.test(action: (TestObserver<T>) -> Unit) = test().apply(action)
+fun <T> Observable<T>.test(action: (TestObserver<T>) -> Unit) = test().apply(action)
 fun Completable.test(action: (TestObserver<Void>) -> Unit): TestObserver<Void> = test().apply(action)
+fun <T> Flowable<T>.test(action: (TestSubscriber<T>) -> Unit) = test().apply(action)
 

@@ -1,104 +1,109 @@
-package com.rubylichtenstein.rxkotlintest.matchers
-
-import com.rubylichtenstein.rxkotlintest.assertions.should
-import com.rubylichtenstein.rxkotlintest.assertions.shouldHave
-import com.rubylichtenstein.rxkotlintest.extentions.test
-import io.reactivex.Observable
-import org.hamcrest.CoreMatchers.*
-import org.hamcrest.MatcherAssert.assertThat
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
-
-@RunWith(JUnit4::class)
-class CreateMatcherTest {
-
-    fun <T> noValues() = valueCount<T>(0)
-
-    fun <T> errorOrComplete(error: Throwable) = anyOf(error<T>(error), complete())
-
-    fun <T> moreValuesThen(count: Int)
-            = CreateMatcher<T>({ it.values().size > count },
-            "Should have more values then $count",
-            "Have more values then $count"
-    )
-
-    fun <T> lessValuesThen(count: Int)
-            = CreateMatcher<T>({ it.values().size < count },
-            "Should have less values then $count",
-            "Have less values then $count"
-    )
-
-    fun <T> valueCountBetween(min: Int, max: Int) = allOf(moreValuesThen<T>(min), lessValuesThen<T>(max))
-
-    @Test
-    fun composeTest() {
-
-        val values = listOf<String>("Rx", "Kotlin", "Test")
-        Observable.fromIterable(values)
-                .test {
-                    it shouldHave moreValuesThen(2)
-                    it shouldHave noErrors()
-                    it shouldHave valueSequence(values)
-                }
-
-        Observable.empty<String>()
-                .test {
-                    it shouldHave noValues()
-                }
-
-        Observable.just("")
-                .test {
-                    it shouldHave errorOrComplete(Throwable())
-                }
-
-        Observable.just("", "")
-                .test {
-                    it shouldHave valueCountBetween(1, 3)
-                }
-    }
-
-    @Test
-    fun createFailTest() {
-        try {
-            Observable.just("", "")
-                    .test {
-                        it shouldHave moreValuesThen(45)
-                    }
-        } catch (e: Throwable) {
-            assertThat(e, notNullValue())
-        }
-    }
-
-    @Test
-    fun failTest() {
-        try {
-            Observable.just("")
-                    .test {
-                        it should notComplete()
-                    }
-        } catch (e: Throwable) {
-            assertThat(e, notNullValue())
-        }
-    }
-
-    @Test
-    fun assertionWrapperTest() {
-//        val detailMessage = "error message"
+//package com.rubylichtenstein.rxkotlintest.matchers
 //
-//        val assertionWrapperPass
-//                = assertionToMatcher<String> {}
+//import com.rubylichtenstein.rxkotlintest.assertions.should
+//import com.rubylichtenstein.rxkotlintest.assertions.shouldHave
+//import com.rubylichtenstein.rxkotlintest.extentions.extractIds
+//import com.rubylichtenstein.rxkotlintest.extentions.readFileNames
+//import com.rubylichtenstein.rxkotlintest.extentions.test
+//import io.reactivex.Flowable
+//import io.reactivex.Observable
+//import junit.framework.Assert.assertEquals
+//import org.hamcrest.CoreMatchers.*
+//import org.hamcrest.MatcherAssert.assertThat
+//import org.junit.Assert
+//import org.junit.Test
+//import org.junit.runner.RunWith
+//import org.junit.runners.JUnit4
 //
-//        val assertionWrapper = assertionToMatcher<String> {
-//            throw AssertionError(detailMessage)
+//@RunWith(JUnit4::class)
+//class CreateMatcherTest {
+//
+//    fun <T> noValues() = valueCount<T>(0)
+//
+//    fun <T> errorOrComplete(error: Throwable) = anyOf(error<T>(error), complete())
+//
+//    fun <T> moreValuesThen(count: Int)
+//            = CreateMatcher<T>({ it.values().size > count },
+//            "Should have more values then $count",
+//            "Have more values then $count"
+//    )
+//
+//    fun <T> lessValuesThen(count: Int)
+//            = CreateMatcher<T>({ it.values().size < count },
+//            "Should have less values then $count",
+//            "Have less values then $count"
+//    )
+//
+//    fun <T> valueCountBetween(min: Int, max: Int) = allOf(moreValuesThen<T>(min), lessValuesThen<T>(max))
+//
+//    @Test
+//    fun composeTest() {
+//
+//        val values = listOf<String>("Rx", "Kotlin", "Test")
+//        Observable.fromIterable(values)
+//                .test {
+//                    it shouldHave moreValuesThen(2)
+//                    it shouldHave noErrors()
+//                    it shouldHave valueSequence(values)
+//                }
+//
+//        Observable.empty<String>()
+//                .test {
+//                    it shouldHave noValues()
+//                }
+//
+//        Observable.just("")
+//                .test {
+//                    it shouldHave errorOrComplete(Throwable())
+//                }
+//
+//        Observable.just("", "")
+//                .test {
+//                    it shouldHave valueCountBetween(1, 3)
+//                }
+//    }
+//
+//    @Test
+//    fun createFailTest() {
+//        try {
+//            Observable.just("", "")
+//                    .test {
+//                        it shouldHave moreValuesThen(45)
+//                    }
+//        } catch (e: Throwable) {
+//            assertThat(e, notNullValue())
 //        }
+//    }
 //
-//        assertionWrapperPass.test(TestObserver()).passed shouldBe true
-//        assertionWrapperPass.test(TestObserver()).message shouldBe passedMessage
+//    @Test
+//    fun failTest() {
+//        try {
+//            Observable.just("")
+//                    .test {
+//                        it      should notComplete()
+//                    }
+//        } catch (e: Throwable) {
+//            assertThat(e, notNullValue())
+//        }
+//    }
 //
+//    @Test
+//    fun assertionWrapperTest() {
+////        val detailMessage = "error message"
+////
+////        val assertionWrapperPass
+////                = assertionToMatcher<String> {}
+////
+////        val assertionWrapper = assertionToMatcher<String> {
+////            throw AssertionError(detailMessage)
+////        }
+////
+////        assertionWrapperPass.test(TestObserver()).passed shouldBe true
+////        assertionWrapperPass.test(TestObserver()).message shouldBe passedMessage
+////
+////
+////        assertionWrapper.test(TestObserver()).passed shouldBe false
+////        assertionWrapper.test(TestObserver()).message shouldBe detailMessage
+//    }
+//}
 //
-//        assertionWrapper.test(TestObserver()).passed shouldBe false
-//        assertionWrapper.test(TestObserver()).message shouldBe detailMessage
-    }
-}
-

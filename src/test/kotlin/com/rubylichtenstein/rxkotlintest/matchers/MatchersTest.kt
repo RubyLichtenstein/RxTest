@@ -2,10 +2,7 @@ package com.rubylichtenstein.rxkotlintest.matchers
 
 import com.rubylichtenstein.rxkotlintest.assertions.*
 import com.rubylichtenstein.rxkotlintest.extentions.test
-import io.reactivex.Completable
-import io.reactivex.Maybe
-import io.reactivex.Observable
-import io.reactivex.Single
+import io.reactivex.*
 import io.reactivex.functions.Predicate
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
@@ -13,6 +10,7 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.ReplaySubject
 import org.junit.Test
 import java.util.concurrent.TimeUnit
+import javax.print.DocFlavor
 
 class MatchersTest {
 
@@ -22,20 +20,18 @@ class MatchersTest {
 
     val items = listOf(item0, item1, item2)
 
-
-
     @Test
     fun completeTest() {
         Observable.just(item0)
                 .test {
                     it.assertComplete()
-                    it should complete()
+
                 }
 
         Maybe.just(item0)
                 .test {
                     it.assertComplete()
-                    it should complete()
+                    it should complete<String, TestObserver<String>>()
                 }
 
         Single.just(item0)
@@ -48,6 +44,12 @@ class MatchersTest {
                 .test {
                     it.assertComplete()
                     it should complete()
+                }
+
+        Observable.just("hello")
+                .toFlowable(BackpressureStrategy.BUFFER)
+                .test{
+                    it shuold complete()
                 }
     }
 
