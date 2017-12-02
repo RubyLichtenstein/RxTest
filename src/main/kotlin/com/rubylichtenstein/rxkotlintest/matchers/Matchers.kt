@@ -21,10 +21,10 @@ fun <T> error(error: Throwable) = AssertionToMatcher<T, TestObserver<T>>({ it.as
 fun <T> error(errorClass: Class<out Throwable>) = AssertionToMatcher<T, TestObserver<T>>({ it.assertError(errorClass) })
 fun <T> error(errorPredicate: (Throwable) -> Boolean) = AssertionToMatcher<T, TestObserver<T>>({ it.assertError(errorPredicate) })
 fun <T> noErrors() = AssertionToMatcher<T, TestObserver<T>>({ it.assertNoErrors() })
-fun <T> value(value: T) = AssertionToMatcher<T, TestObserver<T>>({ it.assertValue(value) })
-fun <T> value(valuePredicate: (T) -> Boolean) = AssertionToMatcher<T, TestObserver<T>>({ it.assertValue(valuePredicate) })
-fun <T> never(value: T) = AssertionToMatcher<T, TestObserver<T>>({ it.assertNever(value) })
-fun <T> never(neverPredicate: (T) -> Boolean) = AssertionToMatcher<T, TestObserver<T>>({ it.assertNever(neverPredicate) })
+fun <T, U :BaseTestConsumer<T, U>> value(value: T) = AssertionToMatcher<T, U>({ it.assertValue(value) })
+fun <T, U :BaseTestConsumer<T, U>> value(valuePredicate: (T) -> Boolean) = AssertionToMatcher<T, U>({ it.assertValue(valuePredicate) })
+fun <T, U :BaseTestConsumer<T, U>> never(value: T) = AssertionToMatcher<T, U>({ it.assertNever(value) })
+fun <T, U :BaseTestConsumer<T, U>> never(neverPredicate: (T) -> Boolean) = AssertionToMatcher<T, U>({ it.assertNever(neverPredicate) })
 
 fun <T> valueAt(index: Int, value: T) = AssertionToMatcher<T, TestObserver<T>>({ it.assertValueAt(index, value) })
 

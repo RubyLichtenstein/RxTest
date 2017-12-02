@@ -25,13 +25,13 @@ class MatchersTest {
         Observable.just(item0)
                 .test {
                     it.assertComplete()
-
+                    it should complete()
                 }
 
         Maybe.just(item0)
                 .test {
                     it.assertComplete()
-                    it should complete<String, TestObserver<String>>()
+                    it should complete()
                 }
 
         Single.just(item0)
@@ -49,7 +49,7 @@ class MatchersTest {
         Observable.just("hello")
                 .toFlowable(BackpressureStrategy.BUFFER)
                 .test{
-                    it shuold complete()
+                    it.should(complete())
                 }
     }
 

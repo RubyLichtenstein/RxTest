@@ -10,11 +10,11 @@ data class AssertionResult(val passed: Boolean, val message: String)
 
 val passedMessage = ""
 
-class CreateMatcher<T>(private val assertion: (TestObserver<T>) -> Boolean,
+class CreateMatcher<T, U : BaseTestConsumer<T, U>>(private val assertion: (BaseTestConsumer<T, U>) -> Boolean,
                        private val mismatchMessage: String,
-                       private val matchMessage: String) : TypeSafeMatcher<TestObserver<T>>() {
+                       private val matchMessage: String) : TypeSafeMatcher<BaseTestConsumer<T, U>>() {
 
-    override fun describeMismatchSafely(item: TestObserver<T>?, mismatchDescription: Description?) {
+    override fun describeMismatchSafely(item: BaseTestConsumer<T, U>?, mismatchDescription: Description?) {
         super.describeMismatchSafely(item, mismatchDescription?.appendText(mismatchMessage))
     }
 
@@ -22,17 +22,17 @@ class CreateMatcher<T>(private val assertion: (TestObserver<T>) -> Boolean,
         description.appendText(matchMessage)
     }
 
-    override fun matchesSafely(testObserver: TestObserver<T>): Boolean {
+    override fun matchesSafely(testObserver: BaseTestConsumer<T, U>): Boolean {
         return assertion(testObserver)
     }
 }
 
 class AssertionToMatcher<T, U : BaseTestConsumer<T, U>>(private val assertion: (BaseTestConsumer<T, in U>) -> Unit,
                                                         private var matchMessage: String = "Empty")
-    : TypeSafeMatcher<U>() {
+    : TypeSafeMatcher<BaseTestConsumer<T, U>>() {
     var mismatchMessage = "";
 
-    override fun describeMismatchSafely(item: U, mismatchDescription: Description?) {
+    override fun describeMismatchSafely(item: BaseTestConsumer<T, U>, mismatchDescription: Description?) {
         super.describeMismatchSafely(item, mismatchDescription?.appendText(mismatchMessage))
     }
 
@@ -40,7 +40,7 @@ class AssertionToMatcher<T, U : BaseTestConsumer<T, U>>(private val assertion: (
         description.appendText(matchMessage)
     }
 
-    override fun matchesSafely(testObserver: U)
+    override fun matchesSafely(testObserver: BaseTestConsumer<T, U>)
             = with(applyAssertion(testObserver, assertion)) {
         mismatchMessage = message
         passed
@@ -48,8 +48,8 @@ class AssertionToMatcher<T, U : BaseTestConsumer<T, U>>(private val assertion: (
 }
 
 
-fun <T, U : BaseTestConsumer<T, in U>> applyAssertion(testObserver: BaseTestConsumer<T, in U>,
-                                                      assertion: (BaseTestConsumer<T, in U>) -> Unit): AssertionResult {
+fun <T, U : BaseTestConsumer<T, U>> applyAssertion(testObserver: BaseTestConsumer<T, U>,
+                                                   assertion: (BaseTestConsumer<T, U>) -> Unit): AssertionResult {
     return try {
         assertion(testObserver)
         AssertionResult(true, passedMessage)
