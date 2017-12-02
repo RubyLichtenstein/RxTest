@@ -87,6 +87,10 @@ Observable.test{
 Completable.test{
 
 }
+
+Flowable.test{
+
+}
 ```
  
 # Create Matcher

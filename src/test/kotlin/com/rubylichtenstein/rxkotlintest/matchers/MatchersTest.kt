@@ -4,6 +4,7 @@ import com.rubylichtenstein.rxkotlintest.assertions.*
 import com.rubylichtenstein.rxkotlintest.extentions.test
 import io.reactivex.*
 import io.reactivex.functions.Predicate
+import io.reactivex.observers.BaseTestConsumer
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
 import io.reactivex.subjects.PublishSubject
@@ -19,6 +20,36 @@ class MatchersTest {
     val item2 = "a"
 
     val items = listOf(item0, item1, item2)
+
+    @Test
+    fun <T, U : BaseTestConsumer<T, U>> allTest(t: T, action: (BaseTestConsumer<T, U>) -> Unit) {
+//        Observable.just(t)
+//                .test{action(it)}
+
+        Maybe.just(t)
+                .test {
+                    it.assertComplete()
+                    it should complete()
+                }
+
+        Single.just(t)
+                .test {
+                    it.assertComplete()
+                    it should complete()
+                }
+
+        Completable.complete()
+                .test {
+                    it.assertComplete()
+                    it should complete()
+                }
+
+        Observable.just(t)
+                .toFlowable(BackpressureStrategy.BUFFER)
+                .test {
+                    it.should(complete())
+                }
+    }
 
     @Test
     fun completeTest() {
@@ -48,7 +79,7 @@ class MatchersTest {
 
         Observable.just("hello")
                 .toFlowable(BackpressureStrategy.BUFFER)
-                .test{
+                .test {
                     it.should(complete())
                 }
     }
