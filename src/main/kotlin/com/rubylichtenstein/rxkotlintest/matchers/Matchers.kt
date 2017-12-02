@@ -12,52 +12,52 @@ import io.reactivex.subscribers.TestSubscriber
 /**
  * @see io.reactivex.observers.TestObserver.assertComplete
  */
-//fun <T> baseComplete() = AssertionToMatcher<T, TestObserver<T>>({ it.assertComplete() }, "Complete")
+//fun <T, U :BaseTestConsumer<T, U>> baseComplete() = AssertionToMatcher<T, U>({ it.assertComplete() }, "Complete")
 fun <T, U :BaseTestConsumer<T, U>> complete()
         = AssertionToMatcher<T, U>({ it.assertComplete() }, "Complete")
 
-fun <T> notComplete() = AssertionToMatcher<T, TestObserver<T>>({ it.assertNotComplete() }, "NotComplete")
-fun <T> error(error: Throwable) = AssertionToMatcher<T, TestObserver<T>>({ it.assertError(error) }, "Error $error")
-fun <T> error(errorClass: Class<out Throwable>) = AssertionToMatcher<T, TestObserver<T>>({ it.assertError(errorClass) })
-fun <T> error(errorPredicate: (Throwable) -> Boolean) = AssertionToMatcher<T, TestObserver<T>>({ it.assertError(errorPredicate) })
-fun <T> noErrors() = AssertionToMatcher<T, TestObserver<T>>({ it.assertNoErrors() })
+fun <T, U :BaseTestConsumer<T, U>> notComplete() = AssertionToMatcher<T, U>({ it.assertNotComplete() }, "NotComplete")
+fun <T, U :BaseTestConsumer<T, U>> error(error: Throwable) = AssertionToMatcher<T, U>({ it.assertError(error) }, "Error $error")
+fun <T, U :BaseTestConsumer<T, U>> error(errorClass: Class<out Throwable>) = AssertionToMatcher<T, U>({ it.assertError(errorClass) })
+fun <T, U :BaseTestConsumer<T, U>> error(errorPredicate: (Throwable) -> Boolean) = AssertionToMatcher<T, U>({ it.assertError(errorPredicate) })
+fun <T, U :BaseTestConsumer<T, U>> noErrors() = AssertionToMatcher<T, U>({ it.assertNoErrors() })
 fun <T, U :BaseTestConsumer<T, U>> value(value: T) = AssertionToMatcher<T, U>({ it.assertValue(value) })
 fun <T, U :BaseTestConsumer<T, U>> value(valuePredicate: (T) -> Boolean) = AssertionToMatcher<T, U>({ it.assertValue(valuePredicate) })
 fun <T, U :BaseTestConsumer<T, U>> never(value: T) = AssertionToMatcher<T, U>({ it.assertNever(value) })
 fun <T, U :BaseTestConsumer<T, U>> never(neverPredicate: (T) -> Boolean) = AssertionToMatcher<T, U>({ it.assertNever(neverPredicate) })
 
-fun <T> valueAt(index: Int, value: T) = AssertionToMatcher<T, TestObserver<T>>({ it.assertValueAt(index, value) })
+fun <T, U :BaseTestConsumer<T, U>> valueAt(index: Int, value: T) = AssertionToMatcher<T, U>({ it.assertValueAt(index, value) })
 
-fun <T> valueAt(index: Int, valuePredicate: (T) -> Boolean) = AssertionToMatcher<T, TestObserver<T>>({ it.assertValueAt(index, valuePredicate) })
+fun <T, U :BaseTestConsumer<T, U>> valueAt(index: Int, valuePredicate: (T) -> Boolean) = AssertionToMatcher<T, U>({ it.assertValueAt(index, valuePredicate) })
 
-fun <T> values(vararg values: T) = AssertionToMatcher<T, TestObserver<T>>({ it.assertValues(*values) })
+fun <T, U :BaseTestConsumer<T, U>> values(vararg values: T) = AssertionToMatcher<T, U>({ it.assertValues(*values) })
 
-fun <T> empty() = AssertionToMatcher<T, TestObserver<T>>({ it.assertEmpty() })
+fun <T, U :BaseTestConsumer<T, U>> empty() = AssertionToMatcher<T, U>({ it.assertEmpty() })
 
-//fun <T> noTimeout() = AssertionToMatcher<T>({ it.assertNoTimeout() })
-//
-//fun <T> timeout() = AssertionToMatcher<T>({ it.assertTimeout() })
 
-fun <T> subscribed() = AssertionToMatcher<T, TestObserver<T>>({ it.assertSubscribed() })
+fun <T, U :BaseTestConsumer<T, U>> subscribed() = AssertionToMatcher<T, U>({ it.assertSubscribed() })
 
-//fun <T> notSubscribed() = AssertionToMatcher<T>({ it.assertNotSubscribed() })
 
-fun <T> failure(errorPredicate: (Throwable) -> Boolean, vararg values: T) = AssertionToMatcher<T, TestObserver<T>>({ it.assertFailure(errorPredicate, values) })
+fun <T, U :BaseTestConsumer<T, U>> failure(errorPredicate: (Throwable) -> Boolean, vararg values: T) = AssertionToMatcher<T, U>({ it.assertFailure(errorPredicate, values) })
 
-fun <T> failure(error: Class<out Throwable>, vararg values: T) = AssertionToMatcher<T, TestObserver<T>>({ it.assertFailure(error, *values) })
+fun <T, U :BaseTestConsumer<T, U>> failure(error: Class<out Throwable>, vararg values: T) = AssertionToMatcher<T, U>({ it.assertFailure(error, *values) })
 
-fun <T> failureAndMessage(error: Class<out Throwable>,
+fun <T, U :BaseTestConsumer<T, U>> failureAndMessage(error: Class<out Throwable>,
                           message: String,
-                          vararg values: T) = AssertionToMatcher<T, TestObserver<T>>({ it.assertFailureAndMessage(error, message, *values) })
+                          vararg values: T) = AssertionToMatcher<T, U>({ it.assertFailureAndMessage(error, message, *values) })
 
-fun <T> result(vararg values: T) = AssertionToMatcher<T, TestObserver<T>>({ it.assertResult(*values) })
+fun <T, U :BaseTestConsumer<T, U>> result(vararg values: T) = AssertionToMatcher<T, U>({ it.assertResult(*values) })
 
-fun <T> terminate() = AssertionToMatcher<T, TestObserver<T>>({ it.assertTerminated() })
+fun <T, U :BaseTestConsumer<T, U>> terminate() = AssertionToMatcher<T, U>({ it.assertTerminated() })
 
-fun <T> valueCount(count: Int) = AssertionToMatcher<T, TestObserver<T>>({ it.assertValueCount(count) })
+fun <T, U :BaseTestConsumer<T, U>> valueCount(count: Int) = AssertionToMatcher<T, U>({ it.assertValueCount(count) })
 
-fun <T> valueSequence(sequence: Iterable<T>) = AssertionToMatcher<T, TestObserver<T>>({ it.assertValueSequence(sequence) })
+fun <T, U :BaseTestConsumer<T, U>> valueSequence(sequence: Iterable<T>) = AssertionToMatcher<T, U>({ it.assertValueSequence(sequence) })
 
-fun <T> valueSet(expected: Collection<T>) = AssertionToMatcher<T, TestObserver<T>>({ it.assertValueSet(expected) })
-fun <T> valueOnly(vararg values: T) = AssertionToMatcher<T, TestObserver<T>>({ it.assertValuesOnly(*values) })
+fun <T, U :BaseTestConsumer<T, U>> valueSet(expected: Collection<T>) = AssertionToMatcher<T, U>({ it.assertValueSet(expected) })
+fun <T, U :BaseTestConsumer<T, U>> valueOnly(vararg values: T) = AssertionToMatcher<T, U>({ it.assertValuesOnly(*values) })
 
+//fun <T, U :BaseTestConsumer<T, U>> noTimeout() = AssertionToMatcher<T, U :BaseTestConsumer<T, U>>({ it.assertNoTimeout() })
+//
+//fun <T, U :BaseTestConsumer<T, U>> notSubscribed() = AssertionToMatcher<T, U :BaseTestConsumer<T, U>>({ it.assertNotSubscribed() })
+//fun <T, U :BaseTestConsumer<T, U>> timeout() = AssertionToMatcher<T, U :BaseTestConsumer<T, U>>({ it.assertTimeout() })
