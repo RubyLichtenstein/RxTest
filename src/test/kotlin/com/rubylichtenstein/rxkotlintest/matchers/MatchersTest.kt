@@ -22,41 +22,35 @@ class MatchersTest {
 
     val items = listOf(item0, item1, item2)
 
-    @Test
-    fun <T> allTest(t: T, actionObserver: (TestObserver<*>) -> Unit, actionSubscriber: (TestSubscriber<T>) -> Unit) {
-        Observable.just(t)
-                .test { actionObserver(it) }
-
-        Maybe.just(t)
-                .test {
-                    actionObserver.invoke(it)
-                }
-
-        Single.just(t)
-                .test {
-                    actionObserver.invoke(it)
-                }
-
-        Completable.complete()
-                .test {
-                    actionObserver.invoke(it)
-                }
-
-        Observable.just(t)
-                .toFlowable(BackpressureStrategy.BUFFER)
-                .test {
-                    actionSubscriber.invoke(it)
-                }
-    }
+//    @Test
+//    fun <T> allTest(t: T, actionObserver: (TestObserver<*>) -> Unit, actionSubscriber: (TestSubscriber<T>) -> Unit) {
+//        Observable.just(t)
+//                .test { actionObserver(it) }
+//
+//        Maybe.just(t)
+//                .test {
+//                    actionObserver.invoke(it)
+//                }
+//
+//        Single.just(t)
+//                .test {
+//                    actionObserver.invoke(it)
+//                }
+//
+//        Completable.complete()
+//                .test {
+//                    actionObserver.invoke(it)
+//                }
+//
+//        Observable.just(t)
+//                .toFlowable(BackpressureStrategy.BUFFER)
+//                .test {
+//                    actionSubscriber.invoke(it)
+//                }
+//    }it
 
     @Test
     fun completeTest() {
-//        allTest(item0, {
-//            it.assertComplete()
-//            it should complete()
-//        }, {
-//
-//        })
         Observable.just(item0)
                 .test {
                     it.assertComplete()
