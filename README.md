@@ -121,7 +121,7 @@ fun <T> valueCountBetween(min: Int, max: Int) = moreValuesThen<T>(min) and lessV
 # Download
 Gradle
 ```groovy
-testCompile 'com.rubylichtenstein:rxkotlintest:1.0.2'
+testCompile 'com.rubylichtenstein:rxkotlintest:1.2.0'
 ```
 
 Maven
