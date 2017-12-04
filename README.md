@@ -129,7 +129,7 @@ Maven
 <dependency>
     <groupId>com.rubylichtenstein</groupId>
     <artifactId>rxkotlintest</artifactId>
-    <version>1.0.2</version>
+    <version>1.2.1</version>
     <type>pom</type>
 </dependency>
 ```
