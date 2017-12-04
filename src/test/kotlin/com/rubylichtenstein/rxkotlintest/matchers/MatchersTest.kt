@@ -9,6 +9,7 @@ import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.ReplaySubject
+import io.reactivex.subscribers.TestSubscriber
 import org.junit.Test
 import java.util.concurrent.TimeUnit
 import javax.print.DocFlavor
@@ -22,37 +23,40 @@ class MatchersTest {
     val items = listOf(item0, item1, item2)
 
     @Test
-    fun <T, U : BaseTestConsumer<T, U>> allTest(t: T, action: (BaseTestConsumer<T, U>) -> Unit) {
-//        Observable.just(t)
-//                .test{action(it)}
+    fun <T> allTest(t: T, actionObserver: (TestObserver<*>) -> Unit, actionSubscriber: (TestSubscriber<T>) -> Unit) {
+        Observable.just(t)
+                .test { actionObserver(it) }
 
         Maybe.just(t)
                 .test {
-                    it.assertComplete()
-                    it should complete()
+                    actionObserver.invoke(it)
                 }
 
         Single.just(t)
                 .test {
-                    it.assertComplete()
-                    it should complete()
+                    actionObserver.invoke(it)
                 }
 
         Completable.complete()
                 .test {
-                    it.assertComplete()
-                    it should complete()
+                    actionObserver.invoke(it)
                 }
 
         Observable.just(t)
                 .toFlowable(BackpressureStrategy.BUFFER)
                 .test {
-                    it.should(complete())
+                    actionSubscriber.invoke(it)
                 }
     }
 
     @Test
     fun completeTest() {
+//        allTest(item0, {
+//            it.assertComplete()
+//            it should complete()
+//        }, {
+//
+//        })
         Observable.just(item0)
                 .test {
                     it.assertComplete()
