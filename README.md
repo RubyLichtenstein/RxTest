@@ -63,16 +63,15 @@ testObserver shouldEmit value()
 
 ### Assertions
 
-```kotlin
-TestObserver should Matcher<TestObserver<T>>
-TestObserver shouldHave Matcher<TestObserver<T>>
-TestObserver shouldBe Matcher<TestObserver<T>>
-TestObserver shouldEmit Matcher<TestObserver<T>>)
-TestObserver shouldEmit T
-TestObserver shouldEmit (T) -> Boolean
-TestObserver shouldNeverEmit T
-TestObserver shouldNeverEmit (T) -> Boolean
-```
+- `should <Matcher>`
+- `shouldHave <Matcher>`
+- `shouldBe <Matcher>`
+- `shouldEmit <Matcher>`
+- `shouldEmit <T>`
+- `shouldEmit <(T) -> Boolean>`
+- `TestObserver shouldNeverEmit <T>`
+- `shouldNeverEmit <(T) -> Boolean>`
+
 ### Extensions 
 ```kotlin
 Maybe.test{
