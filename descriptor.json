@@ -15,14 +15,14 @@
   },
 
   "version": {
-    "name": "1.2.2",
+    "name": "1.2.3",
     "released": "2017-05-12",
     "gpgSign": false
   },
 
   "files":
   [
-    {"includePattern": "build/libs/(.*)", "uploadPattern": "com/rubylichtenstein/rxkotlintest/1.0.2/$1"}
+    {"includePattern": "build/libs/(.*)", "uploadPattern": "com/rubylichtenstein/rxkotlintest/1.2.3/$1"}
   ],
   "publish": true
 }
