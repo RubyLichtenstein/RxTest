@@ -1,5 +1,5 @@
 group 'com.rubylichtenstein'
-version '1.2.1'
+version '1.2.2'
 
 buildscript {
     ext.kotlin_version = '1.2.0'
@@ -31,7 +31,7 @@ dependencies {
     compile 'junit:junit:4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
     compile 'io.reactivex.rxjava2:rxjava:2.1.5'
-}
+ }
 
 task wrapper(type: Wrapper) {
     gradleVersion = '3.4.1'
