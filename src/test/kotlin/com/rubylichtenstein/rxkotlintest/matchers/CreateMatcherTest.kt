@@ -84,24 +84,5 @@ class CreateMatcherTest {
             assertThat(e, notNullValue())
         }
     }
-
-    @Test
-    fun assertionWrapperTest() {
-//        val detailMessage = "error message"
-//
-//        val assertionWrapperPass
-//                = assertionToMatcher<String> {}
-//
-//        val assertionWrapper = assertionToMatcher<String> {
-//            throw AssertionError(detailMessage)
-//        }
-//
-//        assertionWrapperPass.test(TestObserver()).passed shouldBe true
-//        assertionWrapperPass.test(TestObserver()).message shouldBe passedMessage
-//
-//
-//        assertionWrapper.test(TestObserver()).passed shouldBe false
-//        assertionWrapper.test(TestObserver()).message shouldBe detailMessage
-    }
 }
 
