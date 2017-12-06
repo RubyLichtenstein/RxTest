@@ -1,6 +1,7 @@
+# RxKotTe
+
 <img src="./art/rx_logo.png" width="100"><img src="./art/kotlin_logo.png" width="100">
 
-# RxKotTe
 
 [![Build Status](https://travis-ci.org/RubyLichtenstein/RxKotlinTest.svg?branch=master)](https://travis-ci.org/RubyLichtenstein/RxKotlinTest)
 [![codecov](https://codecov.io/gh/RubyLichtenstein/RxKotlinTest/branch/master/graph/badge.svg)](https://codecov.io/gh/RubyLichtenstein/RxKotlinTest)
@@ -25,9 +26,9 @@ Maybe.just("Hello")
         it shouldEmit noValues()
      }
 ```
-## Test Building blocks
+## RxKotTe Building blocks
 
- - Matchers
+ - Matchers (Hamcrest)
  - Assertions
  - Extensions    
 
@@ -150,7 +151,7 @@ fun <T, U : BaseTestConsumer<T, U>> valueCountBetween(min: Int, max: Int) = allO
 # Download
 Gradle
 ```groovy
-testCompile 'com.rubylichtenstein:rxkotlintest:1.2.3'
+testCompile 'com.rubylichtenstein:rxkotlintest:{latestVersion}'
 ```
 
 Maven
@@ -158,7 +159,7 @@ Maven
 <dependency>
     <groupId>com.rubylichtenstein</groupId>
     <artifactId>rxkotlintest</artifactId>
-    <version>1.2.3</version>
+    <version>{latestVersion}</version>
     <type>pom</type>
 </dependency>
 ```
