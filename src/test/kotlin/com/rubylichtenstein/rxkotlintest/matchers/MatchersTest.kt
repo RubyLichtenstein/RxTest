@@ -23,12 +23,9 @@ class MatchersTest {
     val items = listOf(item0, item1, item2)
 
 //    @Test
-//    fun <T> allTest(t: T, actionObserver: (TestObserver<*>) -> Unit, actionSubscriber: (TestSubscriber<T>) -> Unit) {
-//        Observable.just(t)
-//                .test { actionObserver(it) }
-//
-//        Maybe.just(t)
-//                .test {
+//    fun <T> allTest(t: T, actionObserver: (TestObserver<*>) -> Unit) {
+//        Observable.just(t).test { actionObserver(it) }
+//        Maybe.just(t).test {
 //                    actionObserver.invoke(it)
 //                }
 //
@@ -41,7 +38,8 @@ class MatchersTest {
 //                .test {
 //                    actionObserver.invoke(it)
 //                }
-//
+//    }
+
 //        Observable.just(t)
 //                .toFlowable(BackpressureStrategy.BUFFER)
 //                .test {
@@ -100,6 +98,7 @@ class MatchersTest {
         val to = TestObserver<String>()
         val publishSubject = PublishSubject.create<String>()
         val assertionError = AssertionError()
+        val errorPredicate = {_: Throwable -> true}
         publishSubject.subscribe(to)
         publishSubject.onNext("a")
         publishSubject.onError(assertionError)
@@ -109,8 +108,8 @@ class MatchersTest {
         to.assertError(AssertionError::class.java)
         to shouldHave error(AssertionError::class.java)
 
-        to.assertError({ true })
-        to shouldHave error({ true })
+        to.assertError(errorPredicate)
+        to shouldHave error(errorPredicate)
     }
 
     @Test
