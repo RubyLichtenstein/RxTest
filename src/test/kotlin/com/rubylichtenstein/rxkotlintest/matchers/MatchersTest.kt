@@ -1,18 +1,14 @@
 package com.rubylichtenstein.rxkotlintest.matchers
 
 import com.rubylichtenstein.rxkotlintest.assertions.*
-import com.rubylichtenstein.rxkotlintest.extentions.test
+import com.rubylichtenstein.rxkotlintest.extentions.*
 import io.reactivex.*
 import io.reactivex.functions.Predicate
-import io.reactivex.observers.BaseTestConsumer
 import io.reactivex.observers.TestObserver
-import io.reactivex.schedulers.TestScheduler
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.ReplaySubject
-import io.reactivex.subscribers.TestSubscriber
 import org.junit.Test
-import java.util.concurrent.TimeUnit
-import javax.print.DocFlavor
+
 
 class MatchersTest {
 
@@ -99,6 +95,7 @@ class MatchersTest {
         val publishSubject = PublishSubject.create<String>()
         val assertionError = AssertionError()
         val errorPredicate = {_: Throwable -> true}
+
         publishSubject.subscribe(to)
         publishSubject.onNext("a")
         publishSubject.onError(assertionError)

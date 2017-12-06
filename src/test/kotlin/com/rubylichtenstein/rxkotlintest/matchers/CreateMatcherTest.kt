@@ -1,6 +1,5 @@
 package com.rubylichtenstein.rxkotlintest.matchers
 
-
 import com.rubylichtenstein.rxkotlintest.assertions.should
 import com.rubylichtenstein.rxkotlintest.assertions.shouldHave
 import com.rubylichtenstein.rxkotlintest.extentions.test
@@ -22,14 +21,14 @@ class CreateMatcherTest {
 
     fun <T, U : BaseTestConsumer<T, U>> moreValuesThen(count: Int)
             = CreateMatcher<T, U>({ it.values().size > count },
-            "Should have more values then $count",
-            "Have more values then $count"
+            mismatchMessage = "Should have more values then $count",
+            matchMessage = "Have more values then $count"
     )
 
     fun <T, U : BaseTestConsumer<T, U>> lessValuesThen(count: Int)
             = CreateMatcher<T, U>({ it.values().size < count },
-            "Should have less values then $count",
-            "Have less values then $count"
+            mismatchMessage = "Should have less values then $count",
+            matchMessage = "Have less values then $count"
     )
 
     fun <T, U : BaseTestConsumer<T, U>> valueCountBetween(min: Int, max: Int) = allOf(moreValuesThen<T, U>(min), lessValuesThen<T, U>(max))

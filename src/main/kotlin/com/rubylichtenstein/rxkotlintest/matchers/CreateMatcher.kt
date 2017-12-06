@@ -10,9 +10,10 @@ data class AssertionResult(val passed: Boolean, val message: String)
 
 val passedMessage = ""
 
-class CreateMatcher<T, U : BaseTestConsumer<T, U>>(private val assertion: (BaseTestConsumer<T, U>) -> Boolean,
-                       private val mismatchMessage: String,
-                       private val matchMessage: String) : TypeSafeMatcher<BaseTestConsumer<T, U>>() {
+class CreateMatcher<T, U : BaseTestConsumer<T, U>>(
+        private val assertion: (BaseTestConsumer<T, U>) -> Boolean,
+        private val mismatchMessage: String,
+        private val matchMessage: String) : TypeSafeMatcher<BaseTestConsumer<T, U>>() {
 
     override fun describeMismatchSafely(item: BaseTestConsumer<T, U>?, mismatchDescription: Description?) {
         super.describeMismatchSafely(item, mismatchDescription?.appendText(mismatchMessage))

@@ -1,10 +1,12 @@
 # RxKoTTe
-
 [![Build Status](https://travis-ci.org/RubyLichtenstein/RxKotlinTest.svg?branch=master)](https://travis-ci.org/RubyLichtenstein/RxKotlinTest)
 [![codecov](https://codecov.io/gh/RubyLichtenstein/RxKotlinTest/branch/master/graph/badge.svg)](https://codecov.io/gh/RubyLichtenstein/RxKotlinTest)
 [![Download](https://api.bintray.com/packages/rubylichtenstein/RxKotlinTest/com.rubylichtenstein.rxkotlintest/images/download.svg?version=1.2.3) ](https://bintray.com/rubylichtenstein/RxKotlinTest/com.rubylichtenstein.rxkotlintest/1.2.3/link)
 ## More readable tests 
 ```kotlin
+import com.rubylichtenstein.rxkotlintest.assertions.*
+import com.rubylichtenstein.rxkotlintest.extentions.*
+
 Observable.just("Hello")
     .test {
         it shouldEmit "Hello"
@@ -76,17 +78,29 @@ testObserver shouldEmit value()
 ```kotlin
 Maybe.test{
 
+
 }
+```
+
+```kotlin
 Single.test{
 
 }
+```
+
+```kotlin
 Observable.test{
 
 }
+```
+
+```kotlin
 Completable.test{
 
 }
+```
 
+```kotlin
 Flowable.test{
 
 }
@@ -95,28 +109,41 @@ Flowable.test{
 # Create Matcher
 
 #### 1. From scratch 
-Using: `matcher(action: (TestObserver<T>) -> Boolean, message: String): TestObserverMatcher<T>`
+Using: `class CreateMatcher<T, U : BaseTestConsumer<T, U>>(
+                private val assertion: (BaseTestConsumer<T, U>) -> Boolean,
+                private val mismatchMessage: String,
+                private val matchMessage: String) : TypeSafeMatcher<BaseTestConsumer<T, U>>()`
 
 ```kotlin
-fun <T> moreValuesThen(count: Int) = matcher<T>({ it.values().size > count },
-                                                "Should have more values then $count")
+fun <T, U : BaseTestConsumer<T, U>> moreValuesThen(count: Int)
+    = CreateMatcher<T, U>({ it.values().size > count },
+    mismatchMessage = "Should have more values then $count",
+    matchMessage = "Have more values then $count"
+)
 ```
 ```kotlin
-fun <T> lessValuesThen(count: Int) = matcher<T>({ it.values().size < count }, 
-                                                "Should have less values then $count")
+fun <T, U : BaseTestConsumer<T, U>> lessValuesThen(count: Int)
+    = CreateMatcher<T, U>({ it.values().size < count },
+    mismatchMessage = "Should have less values then $count",
+    matchMessage = "Have less values then $count"
+)                                   
 ```
 
 #### 2. Wrap existing
 ```kotlin
-fun <T> noValues() = valueCount<T>(0)
+fun <T, U : BaseTestConsumer<T, U>> noValues() = valueCount<T, U>(0)
 ```
 
 #### 3. Combine with OR and AND
 ```kotlin
-fun <T> errorOrComplete(error: Throwable) = error<T>(error) or complete()
-
-fun <T> valueCountBetween(min: Int, max: Int) = moreValuesThen<T>(min) and lessValuesThen<T>(max)
+fun <T, U : BaseTestConsumer<T, U>> errorOrComplete(error: Throwable)
+            = anyOf(error<T, U>(error), complete())
 ```
+```kotlin
+fun <T, U : BaseTestConsumer<T, U>> valueCountBetween(min: Int, max: Int) = allOf(moreValuesThen<T, U>(min), lessValuesThen<T, U>(max))
+
+```
+
 # Download
 Gradle
 ```groovy
