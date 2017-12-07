@@ -1,6 +1,7 @@
 # RxKotTe
 
-<img src="./art/rx_logo.png" width="100"><img src="./art/kotlin_logo.png" width="100">
+<img src="./art/rx_logo.png" width="100"><img src="./art/kotlin_logo.png" width="100"><img src="http://hamcrest.org/images/logo.jpg" width="100">
+
 
 
 [![Build Status](https://travis-ci.org/RubyLichtenstein/RxKotlinTest.svg?branch=master)](https://travis-ci.org/RubyLichtenstein/RxKotlinTest)
