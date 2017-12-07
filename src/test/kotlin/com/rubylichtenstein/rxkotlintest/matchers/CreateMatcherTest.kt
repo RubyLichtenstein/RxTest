@@ -53,11 +53,11 @@ class CreateMatcherTest {
                 .test {
                     it shouldHave errorOrComplete(Throwable())
                 }
-//
-//        Observable.just("", "")
-//                .test {
-//                    it shouldHave valueCountBetween(1, 3)
-//                }
+
+        Observable.just("", "")
+                .test {
+                    it shouldHave valueCountBetween(1, 3)
+                }
     }
 
     @Test

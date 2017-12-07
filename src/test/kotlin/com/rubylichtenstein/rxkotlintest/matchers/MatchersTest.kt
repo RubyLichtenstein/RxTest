@@ -149,7 +149,7 @@ class MatchersTest {
         publishSubject.onNext(value1)
 
         to.assertValueAt(0, value0)
-        to.assertValueAt(1, value0)
+        to.assertValueAt(1, value1)
 
         to shouldHave valueAt(0, value0)
         to shouldHave valueAt(1, value0)

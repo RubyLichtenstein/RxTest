@@ -11,23 +11,21 @@ val passedMessage = ""
 
 fun <T, U : BaseTestConsumer<T, U>> createMatcher(assertion: (BaseTestConsumer<T, U>) -> Boolean,
                                                   matchMessage: String,
-                                                  mismatchMessage: String): TestConsumerMatcher<T, U> {
-    return object : TestConsumerMatcher<T, U>(matchMessage, mismatchMessage) {
+                                                  mismatchMessage: String): TypeSafeMatcher<BaseTestConsumer<T, U>> {
+    return object : TypeSafeMatcher<BaseTestConsumer<T, U>>() {
+        override fun describeMismatchSafely(item: BaseTestConsumer<T, U>, mismatchDescription: Description?) {
+            super.describeMismatchSafely(item, mismatchDescription?.appendText(mismatchMessage))
+        }
+
+        override fun describeTo(description: Description) {
+            description.appendText(matchMessage)
+        }
+
         override fun matchesSafely(testObserver: BaseTestConsumer<T, U>): Boolean {
             return assertion(testObserver)
         }
     }
 }
-
-//fun <T, U : BaseTestConsumer<T, U>> createMatcher(assertion: (BaseTestConsumer<T, U>) -> Boolean,
-//                                                  matchMessage: String,
-//                                                  mismatchMessage: String): TestConsumerMatcher<T, U> {
-//    return object : TestConsumerMatcher<T, U>(matchMessage, mismatchMessage) {
-//        override fun matchesSafely(testObserver: BaseTestConsumer<T, U>): Boolean {
-//            return assertion(testObserver)
-//        }
-//    }
-//}
 
 fun <T, U : BaseTestConsumer<T, U>> createMatcher(assertion: (BaseTestConsumer<T, U>) -> Unit,
                                                   matchMessage: String = ""): TestConsumerMatcher<T, U> {
