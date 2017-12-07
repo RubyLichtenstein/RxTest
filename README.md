@@ -117,21 +117,21 @@ Flowable.test{
 # Create Matcher
 
 #### 1. From scratch 
-Using: `class CreateMatcher<T, U : BaseTestConsumer<T, U>>(
+Using: `class createMatcher<T, U : BaseTestConsumer<T, U>>(
                 private val assertion: (BaseTestConsumer<T, U>) -> Boolean,
                 private val mismatchMessage: String,
                 private val matchMessage: String) : TypeSafeMatcher<BaseTestConsumer<T, U>>()`
 
 ```kotlin
 fun <T, U : BaseTestConsumer<T, U>> moreValuesThen(count: Int)
-    = CreateMatcher<T, U>({ it.values().size > count },
+    = createMatcher<T, U>({ it.values().size > count },
     mismatchMessage = "Should have more values then $count",
     matchMessage = "Have more values then $count"
 )
 ```
 ```kotlin
 fun <T, U : BaseTestConsumer<T, U>> lessValuesThen(count: Int)
-    = CreateMatcher<T, U>({ it.values().size < count },
+    = createMatcher<T, U>({ it.values().size < count },
     mismatchMessage = "Should have less values then $count",
     matchMessage = "Have less values then $count"
 )                                   

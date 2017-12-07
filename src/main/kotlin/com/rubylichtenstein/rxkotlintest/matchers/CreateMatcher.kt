@@ -2,7 +2,6 @@ package com.rubylichtenstein.rxkotlintest.matchers
 
 
 import io.reactivex.observers.BaseTestConsumer
-import io.reactivex.observers.TestObserver
 import org.hamcrest.Description
 import org.hamcrest.TypeSafeMatcher
 
@@ -10,28 +9,40 @@ data class AssertionResult(val passed: Boolean, val message: String)
 
 val passedMessage = ""
 
-class CreateMatcher<T, U : BaseTestConsumer<T, U>>(
-        private val assertion: (BaseTestConsumer<T, U>) -> Boolean,
-        private val mismatchMessage: String,
-        private val matchMessage: String) : TypeSafeMatcher<BaseTestConsumer<T, U>>() {
-
-    override fun describeMismatchSafely(item: BaseTestConsumer<T, U>?, mismatchDescription: Description?) {
-        super.describeMismatchSafely(item, mismatchDescription?.appendText(mismatchMessage))
-    }
-
-    override fun describeTo(description: Description) {
-        description.appendText(matchMessage)
-    }
-
-    override fun matchesSafely(testObserver: BaseTestConsumer<T, U>): Boolean {
-        return assertion(testObserver)
+fun <T, U : BaseTestConsumer<T, U>> createMatcher(assertion: (BaseTestConsumer<T, U>) -> Boolean,
+                                                  matchMessage: String,
+                                                  mismatchMessage: String): TestConsumerMatcher<T, U> {
+    return object : TestConsumerMatcher<T, U>(matchMessage, mismatchMessage) {
+        override fun matchesSafely(testObserver: BaseTestConsumer<T, U>): Boolean {
+            return assertion(testObserver)
+        }
     }
 }
 
-class AssertionToMatcher<T, U : BaseTestConsumer<T, U>>(private val assertion: (BaseTestConsumer<T, in U>) -> Unit,
-                                                        private var matchMessage: String = "Empty")
+//fun <T, U : BaseTestConsumer<T, U>> createMatcher(assertion: (BaseTestConsumer<T, U>) -> Boolean,
+//                                                  matchMessage: String,
+//                                                  mismatchMessage: String): TestConsumerMatcher<T, U> {
+//    return object : TestConsumerMatcher<T, U>(matchMessage, mismatchMessage) {
+//        override fun matchesSafely(testObserver: BaseTestConsumer<T, U>): Boolean {
+//            return assertion(testObserver)
+//        }
+//    }
+//}
+
+fun <T, U : BaseTestConsumer<T, U>> createMatcher(assertion: (BaseTestConsumer<T, U>) -> Unit,
+                                                  matchMessage: String = ""): TestConsumerMatcher<T, U> {
+    return object : TestConsumerMatcher<T, U>(matchMessage) {
+        override fun matchesSafely(testObserver: BaseTestConsumer<T, U>) =
+                with(applyAssertion(testObserver, assertion)) {
+                    mismatchMessage = message
+                    passed
+                }
+    }
+}
+
+abstract class TestConsumerMatcher<T, U : BaseTestConsumer<T, U>>(private val matchMessage: String,
+                                                                  var mismatchMessage: String = "")
     : TypeSafeMatcher<BaseTestConsumer<T, U>>() {
-    var mismatchMessage = "";
 
     override fun describeMismatchSafely(item: BaseTestConsumer<T, U>, mismatchDescription: Description?) {
         super.describeMismatchSafely(item, mismatchDescription?.appendText(mismatchMessage))
@@ -39,12 +50,6 @@ class AssertionToMatcher<T, U : BaseTestConsumer<T, U>>(private val assertion: (
 
     override fun describeTo(description: Description) {
         description.appendText(matchMessage)
-    }
-
-    override fun matchesSafely(testObserver: BaseTestConsumer<T, U>)
-            = with(applyAssertion(testObserver, assertion)) {
-        mismatchMessage = message
-        passed
     }
 }
 
