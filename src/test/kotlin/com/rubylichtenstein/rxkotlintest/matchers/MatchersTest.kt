@@ -18,50 +18,18 @@ class MatchersTest {
 
     val items = listOf(item0, item1, item2)
 
-//    @Test
-//    fun <T> allTest(t: T, actionObserver: (TestObserver<*>) -> Unit) {
-//        Observable.just(t).test { actionObserver(it) }
-//        Maybe.just(t).test {
-//                    actionObserver.invoke(it)
-//                }
-//
-//        Single.just(t)
-//                .test {
-//                    actionObserver.invoke(it)
-//                }
-//
-//        Completable.complete()
-//                .test {
-//                    actionObserver.invoke(it)
-//                }
-//    }
-
-//        Observable.just(t)
-//                .toFlowable(BackpressureStrategy.BUFFER)
-//                .test {
-//                    actionSubscriber.invoke(it)
-//                }
-//    }it
+    private fun <T> onAllTypesTest(t: T, actionObserver: (TestObserver<T>) -> Unit) {
+        Observable.just(t).test { actionObserver.invoke(it) }
+        Maybe.just(t).test { actionObserver.invoke(it) }
+        Single.just(t).test { actionObserver.invoke(it) }
+    }
 
     @Test
     fun completeTest() {
-        Observable.just(item0)
-                .test {
-                    it.assertComplete()
-                    it should complete()
-                }
-
-        Maybe.just(item0)
-                .test {
-                    it.assertComplete()
-                    it should complete()
-                }
-
-        Single.just(item0)
-                .test {
-                    it.assertComplete()
-                    it should complete()
-                }
+        onAllTypesTest(item0, {
+            it.assertComplete()
+            it should complete()
+        })
 
         Completable.complete()
                 .test {
@@ -72,7 +40,7 @@ class MatchersTest {
         Observable.just("hello")
                 .toFlowable(BackpressureStrategy.BUFFER)
                 .test {
-                    it.should(complete())
+                    it should complete()
                 }
     }
 
@@ -94,7 +62,7 @@ class MatchersTest {
         val to = TestObserver<String>()
         val publishSubject = PublishSubject.create<String>()
         val assertionError = AssertionError()
-        val errorPredicate = {_: Throwable -> true}
+        val errorPredicate = { _: Throwable -> true }
 
         publishSubject.subscribe(to)
         publishSubject.onNext("a")
@@ -152,7 +120,7 @@ class MatchersTest {
         to.assertValueAt(1, value1)
 
         to shouldHave valueAt(0, value0)
-        to shouldHave valueAt(1, value0)
+        to shouldHave valueAt(1, value1)
 
         to.assertValueAt(0, { it == value0 })
         to.assertValueAt(1, { it == value1 })
