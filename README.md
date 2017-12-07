@@ -1,7 +1,6 @@
 # RxKotTe
 
-<img src="./art/rx_logo.png" width="100">![](./art/plus_icon.png)<img src="http://hamcrest.org/images/logo.jpg" width="100">![](./art/plus_icon.png)<img src="./art/kotlin_logo.png" width="100">
-
+<center><img src="./art/rx_logo.png" width="100">![](./art/plus_icon.png)<img src="http://hamcrest.org/images/logo.jpg" width="100">![](./art/plus_icon.png)<img src="./art/kotlin_logo.png" width="100"></center>
 
 [![Build Status](https://travis-ci.org/RubyLichtenstein/RxKotlinTest.svg?branch=master)](https://travis-ci.org/RubyLichtenstein/RxKotlinTest)
 [![codecov](https://codecov.io/gh/RubyLichtenstein/RxKotlinTest/branch/master/graph/badge.svg)](https://codecov.io/gh/RubyLichtenstein/RxKotlinTest)
