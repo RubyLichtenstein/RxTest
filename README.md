@@ -6,15 +6,15 @@
 
 [![Build Status](https://travis-ci.org/RubyLichtenstein/RxKotlinTest.svg?branch=master)](https://travis-ci.org/RubyLichtenstein/RxKotlinTest)
 [![codecov](https://codecov.io/gh/RubyLichtenstein/RxKotlinTest/branch/master/graph/badge.svg)](https://codecov.io/gh/RubyLichtenstein/RxKotlinTest)
-[![Download](https://api.bintray.com/packages/rubylichtenstein/RxKotlinTest/com.rubylichtenstein.rxkotlintest/images/download.svg?version=1.2.3) ](https://bintray.com/rubylichtenstein/RxKotlinTest/com.rubylichtenstein.rxkotlintest/1.2.3/link)
+[![Download](https://api.bintray.com/packages/rubylichtenstein/RxKotlinTest/com.rubylichtenstein.rxkotlintest/images/download.svg?version=1.0.0) ](https://bintray.com/rubylichtenstein/RxKotlinTest/com.rubylichtenstein.rxkotlintest/1.0.0/link)
 ## More readable RxJava2 tests 
 ```kotlin
 import com.rubylichtenstein.rxkotlintest.assertions.*
 import com.rubylichtenstein.rxkotlintest.extentions.*
 
-Observable.just("Hello")
+Observable.just("Hello RxKotTe!")
     .test {
-        it shouldEmit "Hello"
+        it shouldEmit "Hello RxKotTe!"
         it should complete()
         it shouldHave noErrors()
     }
@@ -22,7 +22,7 @@ Observable.just("Hello")
 
 ## Extendable API
 ```kotlin
-Maybe.just("Hello")
+Maybe.just("Hello!")
      .test{
         it shouldEmit noValues()
      }
@@ -125,15 +125,15 @@ Using: `class createMatcher<T, U : BaseTestConsumer<T, U>>(
 ```kotlin
 fun <T, U : BaseTestConsumer<T, U>> moreValuesThen(count: Int)
     = createMatcher<T, U>({ it.values().size > count },
-    mismatchMessage = "Should have more values then $count",
-    matchMessage = "Have more values then $count"
+    mismatchMessage = "Less or equal values then $count",
+    matchMessage = "More values then $count"
 )
 ```
 ```kotlin
 fun <T, U : BaseTestConsumer<T, U>> lessValuesThen(count: Int)
     = createMatcher<T, U>({ it.values().size < count },
-    mismatchMessage = "Should have less values then $count",
-    matchMessage = "Have less values then $count"
+    mismatchMessage = "More or equal values then $count",
+    matchMessage = "Less values then $count"
 )                                   
 ```
 
@@ -155,7 +155,7 @@ fun <T, U : BaseTestConsumer<T, U>> valueCountBetween(min: Int, max: Int) = allO
 # Download
 Gradle
 ```groovy
-testCompile 'com.rubylichtenstein:rxkotlintest:{latestVersion}'
+testCompile 'com.rubylichtenstein:rxkotlintest:1.0.0'
 ```
 
 Maven
@@ -163,7 +163,7 @@ Maven
 <dependency>
     <groupId>com.rubylichtenstein</groupId>
     <artifactId>rxkotlintest</artifactId>
-    <version>{latestVersion}</version>
+    <version>1.0.0</version>
     <type>pom</type>
 </dependency>
 ```
