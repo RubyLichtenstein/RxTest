@@ -28,7 +28,7 @@ class MatchersTest {
     fun completeTest() {
         onAllTypesTest(item0, {
             it.assertComplete()
-            it should notComplete()
+            it should complete()
         })
 
         Completable.complete()
