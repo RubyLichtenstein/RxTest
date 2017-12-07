@@ -69,8 +69,7 @@ testObserver shouldEmit value()
 - `terminate()` 
 
 ### Assertions
-#### Clear assertion intent with test consumer
-extantion functions
+#### Clear assertion intent with test consumer extantion functions
 
 - `should <Matcher>`
 - `shouldHave <Matcher>`
@@ -82,11 +81,10 @@ extantion functions
 - `shouldNeverEmit <(T) -> Boolean>`
 
 ### Extensions
-#### Write you test inside test block 
+#### Write test code inside test block 
 
 ```kotlin
 Maybe.test{
-
 
 }
 ```
