@@ -1,12 +1,13 @@
 # RxKotTe
 
-<img src="./art/rx_logo.png" width="100"><img src="./art/kotlin_logo.png" width="100">
+<img src="./art/rx_logo.png" width="100"><img src="./art/kotlin_logo.png" width="100"><img src="http://hamcrest.org/images/logo.jpg" width="100">
+
 
 
 [![Build Status](https://travis-ci.org/RubyLichtenstein/RxKotlinTest.svg?branch=master)](https://travis-ci.org/RubyLichtenstein/RxKotlinTest)
 [![codecov](https://codecov.io/gh/RubyLichtenstein/RxKotlinTest/branch/master/graph/badge.svg)](https://codecov.io/gh/RubyLichtenstein/RxKotlinTest)
 [![Download](https://api.bintray.com/packages/rubylichtenstein/RxKotlinTest/com.rubylichtenstein.rxkotlintest/images/download.svg?version=1.2.3) ](https://bintray.com/rubylichtenstein/RxKotlinTest/com.rubylichtenstein.rxkotlintest/1.2.3/link)
-## More readable tests 
+## More readable RxJava2 tests 
 ```kotlin
 import com.rubylichtenstein.rxkotlintest.assertions.*
 import com.rubylichtenstein.rxkotlintest.extentions.*
@@ -38,6 +39,7 @@ testObserver should complete()
 testObserver shouldEmit value()
 ``` 
 ### Matchers
+#### Hamcrest matchers for test consumer assertions
 
 - `complete()`
 - `notComplete()`
@@ -68,6 +70,7 @@ testObserver shouldEmit value()
 - `terminate()` 
 
 ### Assertions
+#### Clear assertion intent with test consumer extantion functions
 
 - `should <Matcher>`
 - `shouldHave <Matcher>`
@@ -75,13 +78,14 @@ testObserver shouldEmit value()
 - `shouldEmit <Matcher>`
 - `shouldEmit <T>`
 - `shouldEmit <(T) -> Boolean>`
-- `TestObserver shouldNeverEmit <T>`
+- `shouldNeverEmit <T>`
 - `shouldNeverEmit <(T) -> Boolean>`
 
-### Extensions 
+### Extensions
+#### Write test code inside test block 
+
 ```kotlin
 Maybe.test{
-
 
 }
 ```
@@ -138,7 +142,7 @@ fun <T, U : BaseTestConsumer<T, U>> lessValuesThen(count: Int)
 fun <T, U : BaseTestConsumer<T, U>> noValues() = valueCount<T, U>(0)
 ```
 
-#### 3. Combine with OR and AND
+#### 3. Combine with anyOf and allOf
 ```kotlin
 fun <T, U : BaseTestConsumer<T, U>> errorOrComplete(error: Throwable)
             = anyOf(error<T, U>(error), complete())
