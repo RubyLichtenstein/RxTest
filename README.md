@@ -152,7 +152,7 @@ fun <T, U : BaseTestConsumer<T, U>> valueCountBetween(min: Int, max: Int) = allO
 # Download
 Gradle
 ```groovy
-testCompile 'com.rubylichtenstein:rxkotlintest:{latestVersion}'
+testCompile 'com.rubylichtenstein:rxkotlintest:1.2.3'
 ```
 
 Maven
@@ -160,7 +160,7 @@ Maven
 <dependency>
     <groupId>com.rubylichtenstein</groupId>
     <artifactId>rxkotlintest</artifactId>
-    <version>{latestVersion}</version>
+    <version>1.2.3</version>
     <type>pom</type>
 </dependency>
 ```
