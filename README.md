@@ -1,4 +1,4 @@
-# RxKotTe
+# RxTest
 <img src="./art/rx_logo.png" width="100"><img src="./art/plus_icon.png"><img src="http://hamcrest.org/images/logo.jpg" width="100"><img src="./art/plus_icon.png"><img src="./art/kotlin_logo.png" width="100">
 
 [![Build Status](https://travis-ci.org/RubyLichtenstein/RxKotlinTest.svg?branch=master)](https://travis-ci.org/RubyLichtenstein/RxKotlinTest)
@@ -24,7 +24,7 @@ Maybe.just("Hello!")
         it shouldEmit noValues()
      }
 ```
-## RxKotTe Building blocks
+## RxTest Building blocks
 
  - Matchers (Hamcrest)
  - Assertions
