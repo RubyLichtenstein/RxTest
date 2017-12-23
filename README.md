@@ -1,5 +1,5 @@
 # RxTest 
-## [Kotlin DSL](https://kotlinlang.org/docs/reference/type-safe-builders.html) for testing RxJava. inspired by [KotlinTest](https://github.com/kotlintest/kotlintest).
+__[Kotlin DSL](https://kotlinlang.org/docs/reference/type-safe-builders.html) for testing RxJava. inspired by [KotlinTest](https://github.com/kotlintest/kotlintest).__
 
 <img src="./art/rx_logo.png" width="100"><img src="./art/plus_icon.png"><img src="http://hamcrest.org/images/logo.jpg" width="100"><img src="./art/plus_icon.png"><img src="./art/kotlin_logo.png" width="100">
 
