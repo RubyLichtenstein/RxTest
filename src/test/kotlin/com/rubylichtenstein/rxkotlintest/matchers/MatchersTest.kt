@@ -62,7 +62,7 @@ class MatchersTest {
         val to = TestObserver<String>()
         val publishSubject = PublishSubject.create<String>()
         val assertionError = AssertionError()
-        val errorPredicate = { _: Throwable -> true }
+        val errorPredicate = Predicate{ _: Throwable -> true }
 
         publishSubject.subscribe(to)
         publishSubject.onNext("a")
@@ -100,10 +100,10 @@ class MatchersTest {
         to shouldHave value(value)
         to shouldEmit value
 
-        val a = { v: String -> v.length == 1 }
-        to.assertValue(a)
-        to shouldHave value(a)
-        to shouldEmit a
+        val valuePredicate = Predicate{ v: String -> v.length == 1 }
+        to.assertValue(valuePredicate)
+        to shouldHave value(valuePredicate)
+        to shouldEmit valuePredicate
     }
 
     @Test
@@ -122,14 +122,11 @@ class MatchersTest {
         to shouldHave valueAt(0, value0)
         to shouldHave valueAt(1, value1)
 
-        to.assertValueAt(0, Predicate{ value -> value == value0 })
-        to.assertValueAt(1, Predicate{ value -> value == value1 })
+        to.assertValueAt(0, Predicate { value -> value == value0 })
+        to.assertValueAt(1, Predicate { value -> value == value1 })
 
-        to shouldHave valueAt(0, { value -> value == value0 })
-        to shouldHave valueAt(1, { value -> value == value1 })
-
-        to shouldHave valueAt(0, Predicate{ value -> value == value0 })
-        to shouldHave valueAt(1, Predicate{ value -> value == value1 })
+        to shouldHave valueAt(0, Predicate { value -> value == value0 })
+        to shouldHave valueAt(1, Predicate { value -> value == value1 })
     }
 
     @Test
@@ -187,7 +184,7 @@ class MatchersTest {
         val publishSubject = PublishSubject.create<String>()
         val value = "a"
         val never = "b"
-        val valuePredicate = { v: String -> v.equals(never) }
+        val valuePredicate = Predicate{ v: String -> v.equals(never) }
 
         publishSubject.subscribe(to)
         publishSubject.onNext(value)
@@ -245,7 +242,7 @@ class MatchersTest {
                 }
                 .test {
                     it.assertFailure(Predicate { true }, value0, value1)
-                    it shouldHave failure({ true }, value0, value1)
+                    it shouldHave failure(Predicate{ true }, value0, value1)
                 }
     }
 

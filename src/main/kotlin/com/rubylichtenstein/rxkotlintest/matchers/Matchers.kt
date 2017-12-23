@@ -31,10 +31,17 @@ fun <T, U :BaseTestConsumer<T, U>> error(error: Throwable)
  */
 fun <T, U :BaseTestConsumer<T, U>> error(errorClass: Class<out Throwable>)
         = createMatcher<T, U>({ it.assertError(errorClass) })
+
+///**
+// * @see io.reactivex.observers.TestObserver.assertError
+// */
+//fun <T, U :BaseTestConsumer<T, U>> error(errorPredicate: (Throwable) -> Boolean)
+//        = createMatcher<T, U>({ it.assertError(errorPredicate) })
+
 /**
  * @see io.reactivex.observers.TestObserver.assertError
  */
-fun <T, U :BaseTestConsumer<T, U>> error(errorPredicate: (Throwable) -> Boolean)
+fun <T, U :BaseTestConsumer<T, U>> error(errorPredicate: Predicate<Throwable>)
         = createMatcher<T, U>({ it.assertError(errorPredicate) })
 
 /**
@@ -48,21 +55,35 @@ fun <T, U :BaseTestConsumer<T, U>> noErrors()
  */
 fun <T, U :BaseTestConsumer<T, U>> value(value: T)
         = createMatcher<T, U>({ it.assertValue(value) })
+
+///**
+// * @see io.reactivex.observers.TestObserver.assertValue
+// */
+//fun <T, U :BaseTestConsumer<T, U>> value(valuePredicate: (T) -> Boolean)
+//        = createMatcher<T, U>({ it.assertValue(valuePredicate) })
+
 /**
  * @see io.reactivex.observers.TestObserver.assertValue
  */
-fun <T, U :BaseTestConsumer<T, U>> value(valuePredicate: (T) -> Boolean)
+fun <T, U :BaseTestConsumer<T, U>> value(valuePredicate: Predicate<T>)
         = createMatcher<T, U>({ it.assertValue(valuePredicate) })
+
 /**
  * @see io.reactivex.observers.TestObserver.assertNever
  */
 fun <T, U :BaseTestConsumer<T, U>> never(value: T)
         = createMatcher<T, U>({ it.assertNever(value) })
 
+///**
+// * @see io.reactivex.observers.TestObserver.assertNever
+// */
+//fun <T, U :BaseTestConsumer<T, U>> never(neverPredicate: (T) -> Boolean)
+//        = createMatcher<T, U>({ it.assertNever(neverPredicate) })
+
 /**
  * @see io.reactivex.observers.TestObserver.assertNever
  */
-fun <T, U :BaseTestConsumer<T, U>> never(neverPredicate: (T) -> Boolean)
+fun <T, U :BaseTestConsumer<T, U>> never(neverPredicate: Predicate<T>)
         = createMatcher<T, U>({ it.assertNever(neverPredicate) })
 
 /**
@@ -77,11 +98,11 @@ fun <T, U :BaseTestConsumer<T, U>> valueAt(index: Int, value: T)
 fun <T, U :BaseTestConsumer<T, U>> valueAt(index: Int, valuePredicate: Predicate<T>)
         = createMatcher<T, U>({ it.assertValueAt(index, valuePredicate) })
 
-/**
- * @see io.reactivex.observers.TestObserver.assertValueAt
- */
-fun <T, U :BaseTestConsumer<T, U>> valueAt(index: Int, valuePredicate: (T) -> Boolean)
-        = createMatcher<T, U>({ it.assertValueAt(index, valuePredicate) })
+///**
+// * @see io.reactivex.observers.TestObserver.assertValueAt
+// */
+//fun <T, U :BaseTestConsumer<T, U>> valueAt(index: Int, valuePredicate: (T) -> Boolean)
+//        = createMatcher<T, U>({ it.assertValueAt(index, valuePredicate) })
 
 /**
  * @see io.reactivex.observers.TestObserver.assertValues
@@ -101,11 +122,18 @@ fun <T, U :BaseTestConsumer<T, U>> empty()
 fun <T, U :BaseTestConsumer<T, U>> subscribed()
         = createMatcher<T, U>({ it.assertSubscribed() })
 
+///**
+// * @see io.reactivex.observers.TestObserver.assertFailure
+// */
+//fun <T, U :BaseTestConsumer<T, U>> failure(errorPredicate: (Throwable) -> Boolean, vararg values: T)
+//        = createMatcher<T, U>({ it.assertFailure(errorPredicate, values) })
+
 /**
  * @see io.reactivex.observers.TestObserver.assertFailure
  */
-fun <T, U :BaseTestConsumer<T, U>> failure(errorPredicate: (Throwable) -> Boolean, vararg values: T)
-        = createMatcher<T, U>({ it.assertFailure(errorPredicate, values) })
+fun <T, U :BaseTestConsumer<T, U>> failure(errorPredicate: Predicate<Throwable>, vararg values: T)
+        = createMatcher<T, U>({ it.assertFailure(errorPredicate, *values) })
+
 /**
  * @see io.reactivex.observers.TestObserver.assertFailure
  */
