@@ -13,8 +13,8 @@ import org.junit.Test
 class MatchersTest {
 
     val item0 = "a"
-    val item1 = "a"
-    val item2 = "a"
+    val item1 = "b"
+    val item2 = "c"
 
     val items = listOf(item0, item1, item2)
 

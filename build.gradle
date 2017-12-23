@@ -9,7 +9,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        id "io.gitlab.arturbosch.detekt" version "$detekt_version"
+        classpath "gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detekt_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -17,19 +17,20 @@ buildscript {
 apply plugin: 'kotlin'
 apply plugin: 'maven-publish'
 apply plugin: "jacoco"
+apply plugin: "io.gitlab.arturbosch.detekt"
 
 repositories {
     jcenter()
 }
 
-detekt {
-    version = "$detekt_version"
-    profile("main") {
-        input = "$projectDir/src/main/kotlin"
-        config = "$projectDir/detekt.yml"
-        filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
-    }
-}
+//detekt {
+//    version = "$detekt_version"
+//    profile("main") {
+//        input = "$projectDir/src/main/kotlin"
+//        config = "$projectDir/detekt.yml"
+//        filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
+//    }
+//}
 
 jacocoTestReport {
     reports {
