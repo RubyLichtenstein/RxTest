@@ -8,6 +8,13 @@ import org.hamcrest.TypeSafeMatcher
 data class AssertionResult(val passed: Boolean,
                            val error: AssertionError?)
 
+/**
+ * Create matcher by applying assertion on BaseTestConsumer
+ *
+ * @assertion assertion to apply, return true for success.
+ * @param matchMessage message for success
+ * @param mismatchMessage message for failing test
+ */
 fun <T, U : BaseTestConsumer<T, U>> createMatcher(assertion: (BaseTestConsumer<T, U>) -> Boolean,
                                                   matchMessage: String,
                                                   mismatchMessage: String): TypeSafeMatcher<BaseTestConsumer<T, U>> {
@@ -50,11 +57,18 @@ abstract class TestConsumerMatcher<T, U : BaseTestConsumer<T, U>>(private val ma
     }
 }
 
-
-fun <T, U : BaseTestConsumer<T, U>> applyAssertion(testObserver: BaseTestConsumer<T, U>,
-                                                   assertion: (BaseTestConsumer<T, U>) -> Unit): AssertionResult {
+/**
+ * Apply rx java assertion on testConsumer, delegating AssertionError as AssertionResult
+ *
+ * @param testConsumer to apply assertion on
+ * @param assertion to apply on testConsumer
+ *
+ * @return AssertionResult contains Assertion error in case of assertion fails
+ */
+private fun <T, U : BaseTestConsumer<T, U>> applyAssertion(testConsumer: BaseTestConsumer<T, U>,
+                                                           assertion: (BaseTestConsumer<T, U>) -> Unit): AssertionResult {
     return try {
-        assertion(testObserver)
+        assertion(testConsumer)
         AssertionResult(true, null)
     } catch (assertionError: AssertionError) {
         AssertionResult(false, assertionError)
