@@ -24,14 +24,14 @@ repositories {
     jcenter()
 }
 
-//detekt {
-//    version = "$detekt_version"
-//    profile("main") {
-//        input = "$projectDir/src/main/kotlin"
-//        config = "$projectDir/detekt.yml"
-//        filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
-//    }
-//}
+detekt {
+    version = "$detekt_version"
+    profile("main") {
+        input = "$projectDir/src/main/kotlin"
+        config = "$projectDir/detekt.yml"
+        filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
+    }
+}
 
 jacocoTestReport {
     reports {
