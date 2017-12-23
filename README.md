@@ -118,7 +118,7 @@ Flowable.test{
 }
 ```
  
-# Create Matcher
+## Create Matcher
 
 #### 1. From scratch 
 Using: `createMatcher<T, U : BaseTestConsumer<T, U>>(
@@ -156,13 +156,13 @@ fun <T, U : BaseTestConsumer<T, U>> valueCountBetween(min: Int, max: Int) = allO
 
 ```
 
-# Download
-Gradle
+## Download
+- Gradle
 ```groovy
 testCompile 'com.rubylichtenstein:rxkotlintest:1.0.0'
 ```
 
-Maven
+- Maven
 ```xml
 <dependency>
     <groupId>com.rubylichtenstein</groupId>
@@ -171,8 +171,12 @@ Maven
     <type>pom</type>
 </dependency>
 ```
+## Bugs and Feedback
 
-# Contribute
+For bugs, questions and discussions please use the [Github Issues](https://github.com/RubyLichtenstein/RxTest/issues).
 
-Contact me - ruby.lich@gmail.com
+## Contribution 
+
+More than welcome :).
+
 
