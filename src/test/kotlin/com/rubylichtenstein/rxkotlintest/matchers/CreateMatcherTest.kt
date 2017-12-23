@@ -5,8 +5,10 @@ import com.rubylichtenstein.rxkotlintest.assertions.shouldHave
 import com.rubylichtenstein.rxkotlintest.extentions.test
 import io.reactivex.Observable
 import io.reactivex.observers.BaseTestConsumer
+import io.reactivex.observers.TestObserver
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.TypeSafeMatcher
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -32,6 +34,20 @@ class CreateMatcherTest {
     )
 
     fun <T, U : BaseTestConsumer<T, U>> valueCountBetween(min: Int, max: Int) = allOf(moreValuesThen<T, U>(min), lessValuesThen<T, U>(max))
+
+//    @Test
+//    fun createMatcherTest() {
+//        val count = 4;
+//        val mismatchMessage = "More or equal values then $count"
+//        val matchMessage = "Less values then $count"
+//
+//        val matcher = createMatcher<String, TestObserver<String>>({ it.values().size < count },
+//                mismatchMessage = mismatchMessage,
+//                matchMessage = matchMessage
+//        )
+//
+//        matcher.
+//    }
 
     @Test
     fun composeTest() {

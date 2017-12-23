@@ -48,10 +48,6 @@ abstract class TestConsumerMatcher<T, U : BaseTestConsumer<T, U>>(private val ma
                                                                   var assertionError: AssertionError? = null)
     : TypeSafeMatcher<BaseTestConsumer<T, U>>() {
 
-    override fun describeMismatchSafely(item: BaseTestConsumer<T, U>, mismatchDescription: Description?) {
-        super.describeMismatchSafely(item, mismatchDescription?.appendText(assertionError?.message))
-    }
-
     override fun describeTo(description: Description) {
         description.appendText(matchMessage)
     }
