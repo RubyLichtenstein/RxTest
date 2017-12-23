@@ -7,6 +7,7 @@ buildscript {
 
     repositories {
         jcenter()
+        maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
         classpath "gradle.plugin.io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detekt_version"
@@ -42,7 +43,7 @@ jacocoTestReport {
 dependencies {
     compile 'junit:junit:4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
-    compile 'io.reactivex.rxjava2:rxjava:2.1.5'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.7'
  }
 
 task wrapper(type: Wrapper) {
