@@ -1,4 +1,5 @@
-## RxTest - [Kotlin DSL](https://kotlinlang.org/docs/reference/type-safe-builders.html) for testing RxJava. inspired by [KotlinTest](https://github.com/kotlintest/kotlintest).
+# RxTest 
+## [Kotlin DSL](https://kotlinlang.org/docs/reference/type-safe-builders.html) for testing RxJava. inspired by [KotlinTest](https://github.com/kotlintest/kotlintest).
 
 <img src="./art/rx_logo.png" width="100"><img src="./art/plus_icon.png"><img src="http://hamcrest.org/images/logo.jpg" width="100"><img src="./art/plus_icon.png"><img src="./art/kotlin_logo.png" width="100">
 
@@ -8,7 +9,9 @@
 [![Kotlin version badge](https://img.shields.io/badge/kotlin-1.2.0-blue.svg)](http://kotlinlang.org/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
-## More readable RxJava tests 
+## RxTest main features
+
+- ### More readable RxJava tests 
 ```kotlin
 import com.rubylichtenstein.rxkotlintest.assertions.*
 import com.rubylichtenstein.rxkotlintest.extentions.*
@@ -21,7 +24,7 @@ Observable.just("Hello RxTest!")
     }
 ```
 
-## Extendable API
+- ### Easy to extend API
 ```kotlin
 Maybe.just("Hello!")
      .test{
