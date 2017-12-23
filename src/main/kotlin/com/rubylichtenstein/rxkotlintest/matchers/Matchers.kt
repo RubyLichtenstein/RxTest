@@ -1,5 +1,6 @@
 package com.rubylichtenstein.rxkotlintest.matchers
 
+import io.reactivex.functions.Predicate
 import io.reactivex.observers.BaseTestConsumer
 
 /**
@@ -69,6 +70,12 @@ fun <T, U :BaseTestConsumer<T, U>> never(neverPredicate: (T) -> Boolean)
  */
 fun <T, U :BaseTestConsumer<T, U>> valueAt(index: Int, value: T)
         = createMatcher<T, U>({ it.assertValueAt(index, value) })
+
+/**
+ * @see io.reactivex.observers.TestObserver.assertValueAt
+ */
+fun <T, U :BaseTestConsumer<T, U>> valueAt(index: Int, valuePredicate: Predicate<T>)
+        = createMatcher<T, U>({ it.assertValueAt(index, valuePredicate) })
 
 /**
  * @see io.reactivex.observers.TestObserver.assertValueAt
