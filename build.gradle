@@ -3,11 +3,13 @@ version '1.0.0'
 
 buildscript {
     ext.kotlin_version = '1.2.0'
+    ext.detekt_version = '1.0.0.RC6'
 
     repositories {
         jcenter()
     }
     dependencies {
+        id "io.gitlab.arturbosch.detekt" version "$detekt_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
@@ -18,6 +20,15 @@ apply plugin: "jacoco"
 
 repositories {
     jcenter()
+}
+
+detekt {
+    version = "$detekt_version"
+    profile("main") {
+        input = "$projectDir/src/main/kotlin"
+        config = "$projectDir/detekt.yml"
+        filters = ".*test.*,.*/resources/.*,.*/tmp/.*"
+    }
 }
 
 jacocoTestReport {
