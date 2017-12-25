@@ -40,6 +40,12 @@ class CreateMatcherTest {
                 .test {
                     it shouldHave (valueCountBetween<String, TestObserver<String>>(0, 1) or values("", ""))
                     it shouldHave (valueCountBetween<String, TestObserver<String>>(1, 3) and values("", ""))
+                    try {
+                        it shouldHave (valueCountBetween<String, TestObserver<String>>(0, 1) and values("", ""))
+//                        it shouldHave (valueCountBetween<String, TestObserver<String>>(0, 3) or values("", ""))
+                    } catch (e: Exception) {
+
+                    }
                 }
     }
 //    @Test
