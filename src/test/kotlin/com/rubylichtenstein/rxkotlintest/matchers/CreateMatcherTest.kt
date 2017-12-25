@@ -42,6 +42,11 @@ class CreateMatcherTest {
                     it shouldHave (valueCountBetween<String, TestObserver<String>>(1, 3) and values("", ""))
                     try {
                         it shouldHave (valueCountBetween<String, TestObserver<String>>(0, 1) and values("", ""))
+                    } catch (e: AssertionError) {
+
+                    }
+
+                    try {
                         it shouldHave (valueCountBetween<String, TestObserver<String>>(0, 3) or values("", ""))
                     } catch (e: AssertionError) {
 
