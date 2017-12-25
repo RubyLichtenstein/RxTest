@@ -16,42 +16,32 @@ data class AssertionResult(val passed: Boolean,
  * @param mismatchMessage message for failing test
  */
 fun <T, U : BaseTestConsumer<T, U>> createMatcher(assertion: (BaseTestConsumer<T, U>) -> Boolean,
-                                                  matchMessage: String,
-                                                  mismatchMessage: String): TypeSafeMatcher<BaseTestConsumer<T, U>> {
-    return object : TypeSafeMatcher<BaseTestConsumer<T, U>>() {
-        override fun describeMismatchSafely(item: BaseTestConsumer<T, U>, mismatchDescription: Description?) {
-            super.describeMismatchSafely(item, mismatchDescription?.appendText(mismatchMessage))
-        }
-
-        override fun describeTo(description: Description) {
-            description.appendText(matchMessage)
-        }
-
-        override fun matchesSafely(testObserver: BaseTestConsumer<T, U>): Boolean {
-            return assertion(testObserver)
+                                                  message: String)
+        : Matcher<BaseTestConsumer<T, U>> {
+    return object : Matcher<BaseTestConsumer<T, U>> {
+        override fun test(value: BaseTestConsumer<T, U>): Result {
+            return Result(assertion(value), message)
         }
     }
 }
 
-fun <T, U : BaseTestConsumer<T, U>> createMatcher(assertion: (BaseTestConsumer<T, U>) -> Unit,
-                                                  matchMessage: String = ""): TestConsumerMatcher<T, U> {
-    return object : TestConsumerMatcher<T, U>(matchMessage) {
-        override fun matchesSafely(testObserver: BaseTestConsumer<T, U>) =
-                with(applyAssertion(testObserver, assertion)) {
-                    assertionError = error
-                    passed
-                }
+fun <T, U : BaseTestConsumer<T, U>> createMatcher(assertion: (BaseTestConsumer<T, U>) -> Unit): Matcher<BaseTestConsumer<T, U>> {
+    return object : Matcher<BaseTestConsumer<T, U>> {
+        override fun test(value: BaseTestConsumer<T, U>): Result {
+            val ae = applyAssertion(value, assertion)
+            return Result(ae == null, ae?.message)
+        }
     }
 }
 
-abstract class TestConsumerMatcher<T, U : BaseTestConsumer<T, U>>(private val matchMessage: String,
-                                                                  var assertionError: AssertionError? = null)
-    : TypeSafeMatcher<BaseTestConsumer<T, U>>() {
-
-    override fun describeTo(description: Description) {
-        description.appendText(matchMessage)
-    }
-}
+//abstract class TestConsumerMatcher<T, U : BaseTestConsumer<T, U>>(private val matchMessage: String,
+//                                                                  var assertionError: AssertionError? = null)
+//    : TypeSafeMatcher<BaseTestConsumer<T, U>>() {
+//
+//    override fun describeTo(description: Description) {
+//        description.appendText(matchMessage)
+//    }
+//}
 
 /**
  * Apply rx java assertion on testConsumer, delegating AssertionError as AssertionResult
@@ -62,11 +52,12 @@ abstract class TestConsumerMatcher<T, U : BaseTestConsumer<T, U>>(private val ma
  * @return AssertionResult contains Assertion error in case of assertion fails
  */
 private fun <T, U : BaseTestConsumer<T, U>> applyAssertion(testConsumer: BaseTestConsumer<T, U>,
-                                                           assertion: (BaseTestConsumer<T, U>) -> Unit): AssertionResult {
+                                                           assertion: (BaseTestConsumer<T, U>) -> Unit)
+        : AssertionError? {
     return try {
         assertion(testConsumer)
-        AssertionResult(true, null)
+        null
     } catch (assertionError: AssertionError) {
-        AssertionResult(false, assertionError)
+        assertionError
     }
 }

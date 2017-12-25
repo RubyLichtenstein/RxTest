@@ -19,21 +19,20 @@ class CreateMatcherTest {
     fun <T, U : BaseTestConsumer<T, U>> noValues() = valueCount<T, U>(0)
 
     fun <T, U : BaseTestConsumer<T, U>> errorOrComplete(error: Throwable)
-            = anyOf(error<T, U>(error), complete())
+            = error<T, U>(error) or complete()
 
     fun <T, U : BaseTestConsumer<T, U>> moreValuesThen(count: Int)
             = createMatcher<T, U>({ it.values().size > count },
-            mismatchMessage = "Less or equal values then $count",
-            matchMessage = "More values then $count"
+            message = "Less or equal values then $count"
     )
 
     fun <T, U : BaseTestConsumer<T, U>> lessValuesThen(count: Int)
             = createMatcher<T, U>({ it.values().size < count },
-            mismatchMessage = "More or equal values then $count",
-            matchMessage = "Less values then $count"
+            message = "More or equal values then $count"
     )
 
-    fun <T, U : BaseTestConsumer<T, U>> valueCountBetween(min: Int, max: Int) = allOf(moreValuesThen<T, U>(min), lessValuesThen<T, U>(max))
+    fun <T, U : BaseTestConsumer<T, U>> valueCountBetween(min: Int, max: Int) =
+            moreValuesThen<T, U>(min).and(lessValuesThen<T, U>(max))
 
 //    @Test
 //    fun createMatcherTest() {
