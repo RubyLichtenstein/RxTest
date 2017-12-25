@@ -1,7 +1,7 @@
 {
   "package": {
     "name": "com.rubylichtenstein.rxkotlintest",
-    "repo": "RxTest",
+    "repo": "RxKotlinTest",
     "subject": "rubylichtenstein",
     "desc": "RxTest",
     "website_url": "",
