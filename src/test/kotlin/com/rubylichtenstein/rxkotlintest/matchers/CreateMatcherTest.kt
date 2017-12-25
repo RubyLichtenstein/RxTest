@@ -34,6 +34,14 @@ class CreateMatcherTest {
     fun <T, U : BaseTestConsumer<T, U>> valueCountBetween(min: Int, max: Int) =
             moreValuesThen<T, U>(min) and lessValuesThen(max)
 
+    @Test
+    fun createMatcherOrAndTest() {
+        Observable.just("", "")
+                .test {
+                    it shouldHave (valueCountBetween<String, TestObserver<String>>(0, 1) or value("no"))
+                    it shouldHave (valueCountBetween<String, TestObserver<String>>(1, 3) and value("no"))
+                }
+    }
 //    @Test
 //    fun createMatcherTest() {
 //        val count = 4;
