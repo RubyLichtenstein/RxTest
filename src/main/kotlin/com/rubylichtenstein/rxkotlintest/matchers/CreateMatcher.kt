@@ -19,29 +19,20 @@ fun <T, U : BaseTestConsumer<T, U>> createMatcher(assertion: (BaseTestConsumer<T
                                                   message: String)
         : Matcher<BaseTestConsumer<T, U>> {
     return object : Matcher<BaseTestConsumer<T, U>> {
-        override fun test(value: BaseTestConsumer<T, U>): Result {
-            return Result(assertion(value), message)
-        }
+        override fun test(value: BaseTestConsumer<T, U>) = Result(assertion(value), message)
     }
 }
 
-fun <T, U : BaseTestConsumer<T, U>> createMatcher(assertion: (BaseTestConsumer<T, U>) -> Unit): Matcher<BaseTestConsumer<T, U>> {
+fun <T, U : BaseTestConsumer<T, U>> createMatcher(assertion: (BaseTestConsumer<T, U>) -> Unit)
+        : Matcher<BaseTestConsumer<T, U>> {
     return object : Matcher<BaseTestConsumer<T, U>> {
         override fun test(value: BaseTestConsumer<T, U>): Result {
-            val ae = applyAssertion(value, assertion)
-            return Result(ae == null, ae?.message)
+            applyAssertion(value, assertion).let {
+                return Result(it == null, it?.message)
+            }
         }
     }
 }
-
-//abstract class TestConsumerMatcher<T, U : BaseTestConsumer<T, U>>(private val matchMessage: String,
-//                                                                  var assertionError: AssertionError? = null)
-//    : TypeSafeMatcher<BaseTestConsumer<T, U>>() {
-//
-//    override fun describeTo(description: Description) {
-//        description.appendText(matchMessage)
-//    }
-//}
 
 /**
  * Apply rx java assertion on testConsumer, delegating AssertionError as AssertionResult

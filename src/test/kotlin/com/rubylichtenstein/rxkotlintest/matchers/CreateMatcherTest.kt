@@ -42,25 +42,12 @@ class CreateMatcherTest {
                     it shouldHave (valueCountBetween<String, TestObserver<String>>(1, 3) and values("", ""))
                     try {
                         it shouldHave (valueCountBetween<String, TestObserver<String>>(0, 1) and values("", ""))
-//                        it shouldHave (valueCountBetween<String, TestObserver<String>>(0, 3) or values("", ""))
-                    } catch (e: Exception) {
+                        it shouldHave (valueCountBetween<String, TestObserver<String>>(0, 3) or values("", ""))
+                    } catch (e: AssertionError) {
 
                     }
                 }
     }
-//    @Test
-//    fun createMatcherTest() {
-//        val count = 4;
-//        val mismatchMessage = "More or equal values then $count"
-//        val matchMessage = "Less values then $count"
-//
-//        val matcher = createMatcher<String, TestObserver<String>>({ it.values().size < count },
-//                mismatchMessage = mismatchMessage,
-//                matchMessage = matchMessage
-//        )
-//
-//        matcher.
-//    }
 
     @Test
     fun composeTest() {
