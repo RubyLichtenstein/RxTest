@@ -38,8 +38,8 @@ class CreateMatcherTest {
     fun createMatcherOrAndTest() {
         Observable.just("", "")
                 .test {
-                    it shouldHave (valueCountBetween<String, TestObserver<String>>(0, 1) or value("no"))
-                    it shouldHave (valueCountBetween<String, TestObserver<String>>(1, 3) and value("no"))
+                    it shouldHave (valueCountBetween<String, TestObserver<String>>(0, 1) or values("", ""))
+                    it shouldHave (valueCountBetween<String, TestObserver<String>>(1, 3) and values("", ""))
                 }
     }
 //    @Test
