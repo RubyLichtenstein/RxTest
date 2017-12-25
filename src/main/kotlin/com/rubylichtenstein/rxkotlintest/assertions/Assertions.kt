@@ -44,5 +44,4 @@ fun <T, U : BaseTestConsumer<T, U>> assertThat(actual: BaseTestConsumer<T, U>, m
             throw AssertionError(message)
         }
     }
-
 }

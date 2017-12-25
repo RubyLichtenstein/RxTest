@@ -32,7 +32,7 @@ class CreateMatcherTest {
     )
 
     fun <T, U : BaseTestConsumer<T, U>> valueCountBetween(min: Int, max: Int) =
-            moreValuesThen<T, U>(min).and(lessValuesThen<T, U>(max))
+            moreValuesThen<T, U>(min) and lessValuesThen(max)
 
 //    @Test
 //    fun createMatcherTest() {
