@@ -2,11 +2,6 @@ package com.rubylichtenstein.rxkotlintest.matchers
 
 
 import io.reactivex.observers.BaseTestConsumer
-import org.hamcrest.Description
-import org.hamcrest.TypeSafeMatcher
-
-data class AssertionResult(val passed: Boolean,
-                           val error: AssertionError?)
 
 /**
  * Create matcher by applying assertion on BaseTestConsumer
