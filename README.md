@@ -7,9 +7,8 @@ __[Kotlin DSL](https://kotlinlang.org/docs/reference/type-safe-builders.html) fo
 [![Kotlin version badge](https://img.shields.io/badge/kotlin-1.2.0-blue.svg)](http://kotlinlang.org/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
-## RxTest main features
-
-- ### More readable RxJava tests 
+## Key Features
+- ### More readable tests
 ```kotlin
 import com.rubylichtenstein.rxkotlintest.assertions.*
 import com.rubylichtenstein.rxkotlintest.extentions.*
@@ -22,7 +21,7 @@ Observable.just("Hello RxTest!")
     }
 ```
 
-- ### Easy to extend API
+- ### Extendable - Easily create custom matcher
 ```kotlin
 import com.rubylichtenstein.rxkotlintest.matchers.*
 
