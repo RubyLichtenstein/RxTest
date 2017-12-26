@@ -6,15 +6,15 @@ import io.reactivex.observers.BaseTestConsumer
 /**
  * Create matcher by applying assertion on BaseTestConsumer
  *
- * @assertion assertion to apply, return true for success.
- * @param matchMessage message for success
- * @param mismatchMessage message for failing test
+ * @assertion assertion to apply on testConsumer, true for success.
+ * @param failMessage failMessage for test fail
  */
 fun <T, U : BaseTestConsumer<T, U>> createMatcher(assertion: (BaseTestConsumer<T, U>) -> Boolean,
-                                                  message: String)
+                                                  failMessage: String)
         : Matcher<BaseTestConsumer<T, U>> {
     return object : Matcher<BaseTestConsumer<T, U>> {
-        override fun test(value: BaseTestConsumer<T, U>) = Result(assertion(value), message)
+        override fun test(value: BaseTestConsumer<T, U>) =
+                Result(assertion(value), failMessage)
     }
 }
 

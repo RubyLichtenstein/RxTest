@@ -26,4 +26,4 @@ interface Matcher<T> {
     }
 }
 
-data class Result(val passed: Boolean, val message: String?)
+data class Result(val passed: Boolean, val failMessage: String?)

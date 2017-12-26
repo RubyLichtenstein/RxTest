@@ -1,14 +1,13 @@
 package com.rubylichtenstein.rxkotlintest.matchers
 
-import com.rubylichtenstein.rxkotlintest.assertions.should
-import com.rubylichtenstein.rxkotlintest.assertions.shouldHave
+import com.rubylichtenstein.rxkotlintest.assertions.*
 import com.rubylichtenstein.rxkotlintest.extentions.test
+
 import io.reactivex.Observable
 import io.reactivex.observers.BaseTestConsumer
 import io.reactivex.observers.TestObserver
-import org.hamcrest.CoreMatchers.*
+import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.TypeSafeMatcher
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -23,16 +22,16 @@ class CreateMatcherTest {
 
     fun <T, U : BaseTestConsumer<T, U>> moreValuesThen(count: Int)
             = createMatcher<T, U>({ it.values().size > count },
-            message = "Less or equal values then $count"
+            failMessage = "Less values then $count"
     )
 
     fun <T, U : BaseTestConsumer<T, U>> lessValuesThen(count: Int)
             = createMatcher<T, U>({ it.values().size < count },
-            message = "More or equal values then $count"
+            failMessage = "More values then $count"
     )
 
     fun <T, U : BaseTestConsumer<T, U>> valueCountBetween(min: Int, max: Int) =
-            moreValuesThen<T, U>(min) and lessValuesThen(max)
+            moreValuesThen<T, U>(min) and lessValuesThen<T, U>(max)
 
     @Test
     fun createMatcherOrAndTest() {
@@ -60,7 +59,7 @@ class CreateMatcherTest {
         val values = listOf<String>("Rx", "Kotlin", "Test")
         Observable.fromIterable(values)
                 .test {
-                    it shouldHave moreValuesThen(2)
+                    it shouldEmit moreValuesThen(2)
                     it shouldHave noErrors()
                     it shouldHave valueSequence(values)
                 }

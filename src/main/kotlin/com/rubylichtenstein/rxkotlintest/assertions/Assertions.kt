@@ -41,7 +41,7 @@ infix fun <T, U : BaseTestConsumer<T, U>> BaseTestConsumer<T, U>.shouldNeverEmit
 fun <T, U : BaseTestConsumer<T, U>> assertThat(actual: BaseTestConsumer<T, U>, matcher: Matcher<BaseTestConsumer<T, U>>) {
     with(matcher.test(actual)) {
         if (!passed) {
-            throw AssertionError(message)
+            throw AssertionError(failMessage)
         }
     }
 }
