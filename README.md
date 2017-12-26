@@ -6,7 +6,7 @@ RxTest is a Kotlin library for testing RxJava.
 * **Easy to extend:**
 * **Simple to use:**
 
-#### Exemple
+### Exemple
 ```kotlin
 Observable.just("Hello RxTest!")
     .test {
@@ -15,18 +15,18 @@ Observable.just("Hello RxTest!")
         it shouldHave noErrors()
     }
 ```
-#### Documentation
+### Documentation
 
-- ##### Components
+ - ##### Components
+ 
+   - [Matchers](https://github.com/RubyLichtenstein/RxTest/wiki/Matchers)
+   - [Assertions](https://github.com/RubyLichtenstein/RxTest/wiki/Assertions)
+   - [Extensions](https://github.com/RubyLichtenstein/RxTest/wiki/Extensions)    
 
- - [Matchers](https://github.com/RubyLichtenstein/RxTest/wiki/Matchers)
- - [Assertions](https://github.com/RubyLichtenstein/RxTest/wiki/Assertions)
- - [Extensions](https://github.com/RubyLichtenstein/RxTest/wiki/Extensions)    
-
-- ##### [Create Matcher](https://github.com/RubyLichtenstein/RxTest/wiki/Create-matcher)
- - [From scratch](https://github.com/RubyLichtenstein/RxTest/wiki/Create-matcher#1-from-scratch)
- - [Wrap existing](https://github.com/RubyLichtenstein/RxTest/wiki/Create-matcher#2-wrap-existing)
- - [Combine with And/Or](https://github.com/RubyLichtenstein/RxTest/wiki/Create-matcher#3-combine-with-andor)
+ - ##### [Create Matcher](https://github.com/RubyLichtenstein/RxTest/wiki/Create-matcher)
+   - [From scratch](https://github.com/RubyLichtenstein/RxTest/wiki/Create-matcher#1-from-scratch)
+   - [Wrap existing](https://github.com/RubyLichtenstein/RxTest/wiki/Create-matcher#2-wrap-existing)
+   - [Combine with And/Or](https://github.com/RubyLichtenstein/RxTest/wiki/Create-matcher#3-combine-with-andor)
 
 #### Download
 - Gradle
