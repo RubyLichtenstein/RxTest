@@ -6,29 +6,14 @@ RxTest is a Kotlin library for testing RxJava.
 * **Easy to extend:**
 * **Simple to use:**
 
-- ### Clear tests
+- ### Exemple
 ```kotlin
-import com.rubylichtenstein.rxtest.assertions.*
-import com.rubylichtenstein.rxtest.extentions.*
-
 Observable.just("Hello RxTest!")
     .test {
         it shouldEmit "Hello RxTest!"
         it should complete()
         it shouldHave noErrors()
     }
-```
-
-- ### Extendable - Easily create custom matcher
-```kotlin
-import com.rubylichtenstein.rxtest.matchers.*
-
-fun <T, U : BaseTestConsumer<T, U>> noValues() = valueCount<T, U>(0)
-
-Maybe.just("Hello!")
-     .test{
-        it shouldEmit noValues()
-     }
 ```
 
 ## Components
