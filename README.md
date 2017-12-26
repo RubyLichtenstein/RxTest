@@ -117,7 +117,7 @@ Flowable.test{
 ## Create Matcher
 
 #### 1. From scratch
-With help of creatMatcher()
+With help of createMatcher()
 
 ```kotlin
 import com.rubylichtenstein.rxkotlintest.matchers.*
@@ -134,6 +134,11 @@ import com.rubylichtenstein.rxkotlintest.matchers.*
 fun <T, U : BaseTestConsumer<T, U>> moreValuesThen(count: Int)
     = createMatcher<T, U>({ it.values().size > count },
                           failMessage = "Emited Less values then $count")
+                          
+Observable.just("Hello", "RxTest")
+        .test {
+            it shouldEmit moreValuesThen(1)
+        }                          
 ```
 - Assert emitted less values than X
 ```kotlin
@@ -141,7 +146,12 @@ import com.rubylichtenstein.rxkotlintest.matchers.*
 
 fun <T, U : BaseTestConsumer<T, U>> lessValuesThen(count: Int)
     = createMatcher<T, U>({ it.values().size < count },
-                          failMessage = "More values then $count")                                
+                          failMessage = "More values then $count")    
+                          
+Observable.just("Hello", "RxTest")
+        .test {
+            it shouldEmit lessValuesThen(3)
+        }                             
 ```
 
 #### 2. Wrap existing
