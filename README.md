@@ -35,55 +35,15 @@ Maybe.just("Hello!")
 
 ## RxTest Building blocks
 
- - Matchers
- - Assertions
- - Extensions    
+ - [Matchers](https://github.com/RubyLichtenstein/RxTest/wiki/Matchers)
+ - [Assertions](https://github.com/RubyLichtenstein/RxTest/wiki/Assertions)
+ - [Extensions](https://github.com/RubyLichtenstein/RxTest/wiki/Extensions)    
 
 ```kotlin
 <extension> <assertion> <matcher(value)>
 testObserver should complete()
 testObserver shouldEmit value()
 ``` 
-### Matchers
-
-- `complete()`
-- `notComplete()`
-- `error(error: Throwable)`
-- `error(errorClass: Class<out Throwable>)`
-- `error(errorPredicate: (Throwable) -> Boolean)`
-- `noErrors()`
-- `value(t: T)` 
-- `value(predicate: (T) -> Boolean)` 
-- `values(vararg values: T)` 
-- `valueSequence(sequence: Iterable<T>)` 
-- `valueSet(set: Collection<T>)` 
-- `valueOnly(vararg values: T)` 
-- `valueCount(count: Int)` 
-- `never(t: T)` 
-- `never(predicate: (T) -> Boolean)` 
-- `valueAt(index: Int, value: T)` 
-- `valueAt(index: Int, valuePredicate: (T) -> Boolean)` 
-- `empty()` 
-- `timeout()` 
-- `noTimeout()` 
-- `subscribed()` 
-- `notSubscribed()` 
-- `failure(errorPredicate: (Throwable) -> Boolean, vararg values: T)` 
-- `failure(error: Class<out Throwable>, vararg values: T)` 
-- `failureAndMessage(error: Class<out Throwable>, message: String, vararg values: T)` 
-- `result(vararg values: T)` 
-- `terminate()` 
-
-### Assertions
-
-- `should <Matcher>`
-- `shouldHave <Matcher>`
-- `shouldBe <Matcher>`
-- `shouldEmit <Matcher>`
-- `shouldEmit <T>`
-- `shouldEmit <(T) -> Boolean>`
-- `shouldNeverEmit <T>`
-- `shouldNeverEmit <(T) -> Boolean>`
 
 ### Extensions
 #### Write test code inside test block 
