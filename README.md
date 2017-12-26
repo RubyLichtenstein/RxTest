@@ -41,7 +41,6 @@ testObserver should complete()
 testObserver shouldEmit value()
 ``` 
 ### Matchers
-#### Hamcrest matchers for test consumer assertions
 
 - `complete()`
 - `notComplete()`
@@ -72,7 +71,6 @@ testObserver shouldEmit value()
 - `terminate()` 
 
 ### Assertions
-#### Clear assertion intent with test consumer extantion functions
 
 - `should <Matcher>`
 - `shouldHave <Matcher>`
@@ -118,25 +116,42 @@ Flowable.test{
  
 ## Create Matcher
 
-#### 1. From scratch 
-Using: `createMatcher<T, U : BaseTestConsumer<T, U>>(
-                private val assertion: (BaseTestConsumer<T, U>) -> Boolean,
-                private val mismatchMessage: String,
-                private val matchMessage: String) : TypeSafeMatcher<BaseTestConsumer<T, U>>()`
+#### 1. From scratch
+With help of createMatcher()
 
 ```kotlin
+import com.rubylichtenstein.rxkotlintest.matchers.*
+
+fun <T, U : BaseTestConsumer<T, U>> createMatcher(assertion: (BaseTestConsumer<T, U>) -> Boolean,      
+                                                  message: String)
+                                                  : Matcher<BaseTestConsumer<T, U>>
+```
+Examples:
+- Assert emitted more values than X
+```kotlin
+import com.rubylichtenstein.rxkotlintest.matchers.*
+
 fun <T, U : BaseTestConsumer<T, U>> moreValuesThen(count: Int)
     = createMatcher<T, U>({ it.values().size > count },
-    mismatchMessage = "Less or equal values then $count",
-    matchMessage = "More values then $count"
-)
+                          failMessage = "Emited Less values then $count")
+                          
+Observable.just("Hello", "RxTest")
+        .test {
+            it shouldEmit moreValuesThen(1)
+        }                          
 ```
+- Assert emitted less values than X
 ```kotlin
+import com.rubylichtenstein.rxkotlintest.matchers.*
+
 fun <T, U : BaseTestConsumer<T, U>> lessValuesThen(count: Int)
     = createMatcher<T, U>({ it.values().size < count },
-    mismatchMessage = "More or equal values then $count",
-    matchMessage = "Less values then $count"
-)                                   
+                          failMessage = "More values then $count")    
+                          
+Observable.just("Hello", "RxTest")
+        .test {
+            it shouldEmit lessValuesThen(3)
+        }                             
 ```
 
 #### 2. Wrap existing
@@ -144,13 +159,18 @@ fun <T, U : BaseTestConsumer<T, U>> lessValuesThen(count: Int)
 fun <T, U : BaseTestConsumer<T, U>> noValues() = valueCount<T, U>(0)
 ```
 
-#### 3. Combine with anyOf and allOf
+#### 3. Combine with And/Or
 ```kotlin
+import com.rubylichtenstein.rxkotlintest.matchers.*
+
 fun <T, U : BaseTestConsumer<T, U>> errorOrComplete(error: Throwable)
-            = anyOf(error<T, U>(error), complete())
+            = error<T, U>(error) or complete<T, U>()
 ```
 ```kotlin
-fun <T, U : BaseTestConsumer<T, U>> valueCountBetween(min: Int, max: Int) = allOf(moreValuesThen<T, U>(min), lessValuesThen<T, U>(max))
+import com.rubylichtenstein.rxkotlintest.matchers.*
+
+fun <T, U : BaseTestConsumer<T, U>> valueCountBetween(min: Int, max: Int) 
+            = moreValuesThen<T, U>(min) and lessValuesThen<T, U>(max)
 
 ```
 
