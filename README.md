@@ -24,11 +24,16 @@ Observable.just("Hello RxTest!")
 
 - ### Easy to extend API
 ```kotlin
+import com.rubylichtenstein.rxkotlintest.matchers.*
+
+fun <T, U : BaseTestConsumer<T, U>> noValues() = valueCount<T, U>(0)
+
 Maybe.just("Hello!")
      .test{
         it shouldEmit noValues()
      }
 ```
+
 ## RxTest Building blocks
 
  - Matchers
