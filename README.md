@@ -5,6 +5,8 @@ __[Kotlin DSL](https://kotlinlang.org/docs/reference/type-safe-builders.html) fo
 [![codecov](https://codecov.io/gh/RubyLichtenstein/RxTest/branch/master/graph/badge.svg)](https://codecov.io/gh/RubyLichtenstein/RxTest)
 [![Download](https://api.bintray.com/packages/rubylichtenstein/RxTest/com.rubylichtenstein.rxtest/images/download.svg?version=1.0.2) ](https://bintray.com/rubylichtenstein/RxKotlinTest/com.rubylichtenstein.rxtest/1.0.2/link)
 [![Kotlin version badge](https://img.shields.io/badge/kotlin-1.2.0-blue.svg)](http://kotlinlang.org/)
+[![Download](https://api.bintray.com/packages/rubylichtenstein/RxKotlinTest/com.rubylichtenstein.rxkotlintest/images/download.svg?version=1.0.2) ](https://bintray.com/rubylichtenstein/RxKotlinTest/com.rubylichtenstein.rxtest/1.0.2/link)
+[![Kotlin version badge](https://img.shields.io/badge/kotlin-1.2.10-blue.svg)](http://kotlinlang.org/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 ## Key Features
