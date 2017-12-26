@@ -6,7 +6,7 @@ RxTest is a Kotlin library for testing RxJava.
 * **Easy to extend:**
 * **Simple to use:**
 
-### Exemple
+## Exemple
 ```kotlin
 Observable.just("Hello RxTest!")
     .test {
@@ -15,7 +15,7 @@ Observable.just("Hello RxTest!")
         it shouldHave noErrors()
     }
 ```
-### Documentation
+## Documentation
 
  - ##### Components
  
@@ -28,13 +28,13 @@ Observable.just("Hello RxTest!")
    - [Wrap existing](https://github.com/RubyLichtenstein/RxTest/wiki/Create-matcher#2-wrap-existing)
    - [Combine with And/Or](https://github.com/RubyLichtenstein/RxTest/wiki/Create-matcher#3-combine-with-andor)
 
-#### Download
-- Gradle
+## Download
+- #### Gradle
 ```groovy
 testCompile 'com.rubylichtenstein:rxtest:1.0.3'
 ```
 
-- Maven
+- #### Maven
 ```xml
 <dependency>
     <groupId>com.rubylichtenstein</groupId>
@@ -43,11 +43,11 @@ testCompile 'com.rubylichtenstein:rxtest:1.0.3'
     <type>pom</type>
 </dependency>
 ```
-#### Bugs and Feedback
+## Bugs and Feedback
 
 For bugs, questions and discussions please use the [Github Issues](https://github.com/RubyLichtenstein/RxTest/issues).
 
-#### Contribution 
+## Contribution 
 
 Welcome :).
 
