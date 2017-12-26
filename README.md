@@ -33,7 +33,7 @@ Maybe.just("Hello!")
      }
 ```
 
-## RxTest Building blocks
+## Components
 
  - [Matchers](https://github.com/RubyLichtenstein/RxTest/wiki/Matchers)
  - [Assertions](https://github.com/RubyLichtenstein/RxTest/wiki/Assertions)
