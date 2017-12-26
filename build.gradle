@@ -69,6 +69,6 @@ publishing {
 
 model {
     tasks.generatePomFileForMavenPublication {
-        destination = file("$buildDir/libs/rxkotlintest-" + version + ".pom")
+        destination = file("$buildDir/libs/rxtest-" + version + ".pom")
     }
 }
