@@ -1,5 +1,11 @@
 # RxTest &middot; [![Build Status](https://travis-ci.org/RubyLichtenstein/RxTest.svg?branch=master)](https://travis-ci.org/RubyLichtenstein/RxTest) [![codecov](https://codecov.io/gh/RubyLichtenstein/RxTest/branch/master/graph/badge.svg)](https://codecov.io/gh/RubyLichtenstein/RxTest) [![Download](https://api.bintray.com/packages/rubylichtenstein/RxTest/com.rubylichtenstein.rxtest/images/download.svg)](https://bintray.com/rubylichtenstein/RxTest/com.rubylichtenstein.rxtest/_latestVersion) [![Kotlin version badge](https://img.shields.io/badge/kotlin-1.2.10-blue.svg)](http://kotlinlang.org/) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
+RxTest is a Kotlin library for testing RxJava.
+
+* **Simple, clear tests:**.
+* **Easy to extend:**.
+* **Use now:**.
+
 __[Kotlin DSL](https://kotlinlang.org/docs/reference/type-safe-builders.html) for testing RxJava. inspired by [KotlinTest](https://github.com/kotlintest/kotlintest).__
 
 ## Key Features
