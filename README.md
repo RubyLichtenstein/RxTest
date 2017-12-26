@@ -2,14 +2,11 @@
 
 RxTest is a Kotlin library for testing RxJava.
 
-* **Simple, clear tests:**.
-* **Easy to extend:**.
-* **Use now:**.
+* **Clear tests:**
+* **Easy to extend:**
+* **Simple to use:**
 
-__[Kotlin DSL](https://kotlinlang.org/docs/reference/type-safe-builders.html) for testing RxJava. inspired by [KotlinTest](https://github.com/kotlintest/kotlintest).__
-
-## Key Features
-- ### More readable tests
+- ### Clear tests
 ```kotlin
 import com.rubylichtenstein.rxtest.assertions.*
 import com.rubylichtenstein.rxtest.extentions.*
