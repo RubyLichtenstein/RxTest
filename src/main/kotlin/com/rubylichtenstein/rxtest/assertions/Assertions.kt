@@ -1,8 +1,8 @@
-package com.rubylichtenstein.rxkotlintest.assertions
+package com.rubylichtenstein.rxtest.assertions
 
-import com.rubylichtenstein.rxkotlintest.matchers.Matcher
-import com.rubylichtenstein.rxkotlintest.matchers.never
-import com.rubylichtenstein.rxkotlintest.matchers.value
+import com.rubylichtenstein.rxtest.matchers.Matcher
+import com.rubylichtenstein.rxtest.matchers.never
+import com.rubylichtenstein.rxtest.matchers.value
 import io.reactivex.functions.Predicate
 import io.reactivex.observers.BaseTestConsumer
 

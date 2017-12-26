@@ -1,4 +1,4 @@
-package com.rubylichtenstein.rxkotlintest.matchers
+package com.rubylichtenstein.rxtest.matchers
 
 import io.reactivex.functions.Predicate
 import io.reactivex.observers.BaseTestConsumer

@@ -1,7 +1,7 @@
-package com.rubylichtenstein.rxkotlintest.matchers
+package com.rubylichtenstein.rxtest.matchers
 
-import com.rubylichtenstein.rxkotlintest.assertions.*
-import com.rubylichtenstein.rxkotlintest.extentions.test
+import com.rubylichtenstein.rxtest.assertions.*
+import com.rubylichtenstein.rxtest.extentions.test
 
 import io.reactivex.Observable
 import io.reactivex.observers.BaseTestConsumer

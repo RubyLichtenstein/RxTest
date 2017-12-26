@@ -1,4 +1,4 @@
-package com.rubylichtenstein.rxkotlintest.extentions
+package com.rubylichtenstein.rxtest.extentions
 
 import io.reactivex.*
 import io.reactivex.observers.TestObserver

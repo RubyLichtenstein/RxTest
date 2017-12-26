@@ -1,4 +1,4 @@
-package com.rubylichtenstein.rxkotlintest.matchers
+package com.rubylichtenstein.rxtest.matchers
 
 
 interface Matcher<T> {
