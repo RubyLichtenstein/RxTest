@@ -45,65 +45,7 @@ testObserver should complete()
 testObserver shouldEmit value()
 ``` 
  
-## Create Matcher
-
-#### 1. From scratch
-With help of createMatcher()
-
-```kotlin
-import com.rubylichtenstein.rxtest.matchers.*
-
-fun <T, U : BaseTestConsumer<T, U>> createMatcher(assertion: (BaseTestConsumer<T, U>) -> Boolean,      
-                                                  message: String)
-                                                  : Matcher<BaseTestConsumer<T, U>>
-```
-Examples:
-- Assert emitted more values than X
-```kotlin
-import com.rubylichtenstein.rxtest.matchers.*
-
-fun <T, U : BaseTestConsumer<T, U>> moreValuesThen(count: Int)
-    = createMatcher<T, U>({ it.values().size > count },
-                          failMessage = "Emited Less values then $count")
-                          
-Observable.just("Hello", "RxTest")
-        .test {
-            it shouldEmit moreValuesThen(1)
-        }                          
-```
-- Assert emitted less values than X
-```kotlin
-import com.rubylichtenstein.rxtest.matchers.*
-
-fun <T, U : BaseTestConsumer<T, U>> lessValuesThen(count: Int)
-    = createMatcher<T, U>({ it.values().size < count },
-                          failMessage = "More values then $count")    
-                          
-Observable.just("Hello", "RxTest")
-        .test {
-            it shouldEmit lessValuesThen(3)
-        }                             
-```
-
-#### 2. Wrap existing
-```kotlin
-fun <T, U : BaseTestConsumer<T, U>> noValues() = valueCount<T, U>(0)
-```
-
-#### 3. Combine with And/Or
-```kotlin
-import com.rubylichtenstein.rxtest.matchers.*
-
-fun <T, U : BaseTestConsumer<T, U>> errorOrComplete(error: Throwable)
-            = error<T, U>(error) or complete<T, U>()
-```
-```kotlin
-import com.rubylichtenstein.rxtest.matchers.*
-
-fun <T, U : BaseTestConsumer<T, U>> valueCountBetween(min: Int, max: Int) 
-            = moreValuesThen<T, U>(min) and lessValuesThen<T, U>(max)
-
-```
+## [Create Matcher](https://github.com/RubyLichtenstein/RxTest/wiki/Create-matcher)
 
 ## Download
 - Gradle
