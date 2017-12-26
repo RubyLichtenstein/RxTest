@@ -3,8 +3,7 @@ __[Kotlin DSL](https://kotlinlang.org/docs/reference/type-safe-builders.html) fo
 
 [![Build Status](https://travis-ci.org/RubyLichtenstein/RxTest.svg?branch=master)](https://travis-ci.org/RubyLichtenstein/RxTest)
 [![codecov](https://codecov.io/gh/RubyLichtenstein/RxTest/branch/master/graph/badge.svg)](https://codecov.io/gh/RubyLichtenstein/RxTest)
-[![Download](https://api.bintray.com/packages/rubylichtenstein/RxTest/com.rubylichtenstein.rxtest/images/download.svg?version=1.0.2) ](https://bintray.com/rubylichtenstein/RxKotlinTest/com.rubylichtenstein.rxtest/1.0.2/link)
-[![Kotlin version badge](https://img.shields.io/badge/kotlin-1.2.10-blue.svg)](http://kotlinlang.org/)
+[ ![Download](https://api.bintray.com/packages/rubylichtenstein/RxTest/com.rubylichtenstein.rxtest/images/download.svg) ](https://bintray.com/rubylichtenstein/RxTest/com.rubylichtenstein.rxtest/_latestVersion)[![Kotlin version badge](https://img.shields.io/badge/kotlin-1.2.10-blue.svg)](http://kotlinlang.org/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 ## Key Features
@@ -181,7 +180,7 @@ fun <T, U : BaseTestConsumer<T, U>> valueCountBetween(min: Int, max: Int)
 ## Download
 - Gradle
 ```groovy
-testCompile 'com.rubylichtenstein:rxtest:1.0.2'
+testCompile 'com.rubylichtenstein:rxtest:1.0.3'
 ```
 
 - Maven
@@ -189,7 +188,7 @@ testCompile 'com.rubylichtenstein:rxtest:1.0.2'
 <dependency>
     <groupId>com.rubylichtenstein</groupId>
     <artifactId>rxtest</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <type>pom</type>
 </dependency>
 ```
