@@ -117,19 +117,22 @@ Flowable.test{
 ## Create Matcher
 
 #### 1. From scratch 
-Using: `fun <T, U : BaseTestConsumer<T, U>> createMatcher(assertion: (BaseTestConsumer<T, U>) -> Boolean,
-                                                          message: String)
-        : Matcher<BaseTestConsumer<T, U>>`
+with
+```kotlin
+fun <T, U : BaseTestConsumer<T, U>> createMatcher(assertion: (BaseTestConsumer<T, U>) -> Boolean,      
+                                                  message: String)
+                                                  : Matcher<BaseTestConsumer<T, U>>
+```
         
 ```kotlin
- fun <T, U : BaseTestConsumer<T, U>> moreValuesThen(count: Int)
-            = createMatcher<T, U>({ it.values().size > count },
-                                  failMessage = "Less values then $count")
+fun <T, U : BaseTestConsumer<T, U>> moreValuesThen(count: Int)
+    = createMatcher<T, U>({ it.values().size > count },
+                          failMessage = "Less values then $count")
 ```
 ```kotlin
-   fun <T, U : BaseTestConsumer<T, U>> lessValuesThen(count: Int)
-            = createMatcher<T, U>({ it.values().size < count },
-                                  failMessage = "More values then $count")                                
+fun <T, U : BaseTestConsumer<T, U>> lessValuesThen(count: Int)
+    = createMatcher<T, U>({ it.values().size < count },
+                          failMessage = "More values then $count")                                
 ```
 
 #### 2. Wrap existing
@@ -139,10 +142,14 @@ fun <T, U : BaseTestConsumer<T, U>> noValues() = valueCount<T, U>(0)
 
 #### 3. Combine with And/Or
 ```kotlin
+import com.rubylichtenstein.rxkotlintest.matchers.*
+
 fun <T, U : BaseTestConsumer<T, U>> errorOrComplete(error: Throwable)
             = error<T, U>(error) or complete<T, U>()
 ```
 ```kotlin
+import com.rubylichtenstein.rxkotlintest.matchers.*
+
 fun <T, U : BaseTestConsumer<T, U>> valueCountBetween(min: Int, max: Int) 
             = moreValuesThen<T, U>(min) and lessValuesThen<T, U>(max)
 
