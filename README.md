@@ -6,7 +6,7 @@ RxTest is a Kotlin library for testing RxJava.
 * **Easy to extend:**
 * **Simple to use:**
 
-- ### Exemple
+#### Exemple
 ```kotlin
 Observable.just("Hello RxTest!")
     .test {
@@ -15,22 +15,20 @@ Observable.just("Hello RxTest!")
         it shouldHave noErrors()
     }
 ```
+#### Documentation
 
-## Components
+- ##### Components
 
  - [Matchers](https://github.com/RubyLichtenstein/RxTest/wiki/Matchers)
  - [Assertions](https://github.com/RubyLichtenstein/RxTest/wiki/Assertions)
  - [Extensions](https://github.com/RubyLichtenstein/RxTest/wiki/Extensions)    
 
-```kotlin
-<extension> <assertion> <matcher(value)>
-testObserver should complete()
-testObserver shouldEmit value()
-``` 
- 
-## [Create Matcher](https://github.com/RubyLichtenstein/RxTest/wiki/Create-matcher)
+- ##### [Create Matcher](https://github.com/RubyLichtenstein/RxTest/wiki/Create-matcher)
+ - [From scratch](https://github.com/RubyLichtenstein/RxTest/wiki/Create-matcher#1-from-scratch)
+ - [Wrap existing](https://github.com/RubyLichtenstein/RxTest/wiki/Create-matcher#2-wrap-existing)
+ - [Combine with And/Or](https://github.com/RubyLichtenstein/RxTest/wiki/Create-matcher#3-combine-with-andor)
 
-## Download
+#### Download
 - Gradle
 ```groovy
 testCompile 'com.rubylichtenstein:rxtest:1.0.3'
@@ -45,12 +43,12 @@ testCompile 'com.rubylichtenstein:rxtest:1.0.3'
     <type>pom</type>
 </dependency>
 ```
-## Bugs and Feedback
+#### Bugs and Feedback
 
 For bugs, questions and discussions please use the [Github Issues](https://github.com/RubyLichtenstein/RxTest/issues).
 
-## Contribution 
+#### Contribution 
 
-More than welcome :).
+Welcome :).
 
 
