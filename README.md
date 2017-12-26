@@ -44,39 +44,6 @@ Maybe.just("Hello!")
 testObserver should complete()
 testObserver shouldEmit value()
 ``` 
-
-### Extensions
-#### Write test code inside test block 
-
-```kotlin
-Maybe.test{
-
-}
-```
-
-```kotlin
-Single.test{
-
-}
-```
-
-```kotlin
-Observable.test{
-
-}
-```
-
-```kotlin
-Completable.test{
-
-}
-```
-
-```kotlin
-Flowable.test{
-
-}
-```
  
 ## Create Matcher
 
