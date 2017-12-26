@@ -126,7 +126,7 @@ fun <T, U : BaseTestConsumer<T, U>> createMatcher(assertion: (BaseTestConsumer<T
                                                   message: String)
                                                   : Matcher<BaseTestConsumer<T, U>>
 ```
-Exampels
+Examples:
 - Assert emitted more values than X
 ```kotlin
 import com.rubylichtenstein.rxkotlintest.matchers.*
