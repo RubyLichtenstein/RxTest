@@ -18,22 +18,10 @@ class MatchersTest {
 
     val items = listOf(item0, item1, item2)
 
-    private fun <T> onAllTypesTest(t: T, actionObserver: (TestObserver<T>) -> Unit) {
-        Observable.just(t).test { actionObserver.invoke(it) }
-        Maybe.just(t).test { actionObserver.invoke(it) }
-        Single.just(t).test { actionObserver.invoke(it) }
-    }
-
     @Test
     fun completeTest() {
-        onAllTypesTest(item0, {
-            it.assertComplete()
-            it should complete()
-        })
-
         Completable.complete()
                 .test {
-                    it.assertComplete()
                     it should complete()
                 }
 
@@ -52,9 +40,52 @@ class MatchersTest {
                     onNext("b")
                 }
                 .test {
-                    it.assertNotComplete()
                     it should notComplete()
                 }
+    }
+
+    @Test
+    fun errorTest1() {
+        val to = TestObserver<String>()
+        val assertionError = AssertionError()
+        val errorPredicate = Predicate { _: Throwable -> true }
+
+        PublishSubject.create<String>()
+                .apply {
+                    subscribe(to)
+                    onNext("a")
+                    onError(assertionError)
+                }
+                .test {
+                    it shouldHave error(assertionError)
+                }
+
+
+        to shouldHave error(assertionError)
+         to shouldHave error(AssertionError::class.java)
+
+        to.assertError(errorPredicate)
+        to shouldHave error(errorPredicate)
+    }
+
+    @Test
+    fun errorTest2() {
+        val to = TestObserver<String>()
+        val publishSubject = PublishSubject.create<String>()
+        val assertionError = AssertionError()
+        val errorPredicate = Predicate { _: Throwable -> true }
+
+        publishSubject.subscribe(to)
+        publishSubject.onNext("a")
+        publishSubject.onError(assertionError)
+
+        to.assertError(assertionError)
+        to shouldHave error(assertionError)
+        to.assertError(AssertionError::class.java)
+        to shouldHave error(AssertionError::class.java)
+
+        to.assertError(errorPredicate)
+        to shouldHave error(errorPredicate)
     }
 
     @Test
@@ -62,7 +93,7 @@ class MatchersTest {
         val to = TestObserver<String>()
         val publishSubject = PublishSubject.create<String>()
         val assertionError = AssertionError()
-        val errorPredicate = Predicate{ _: Throwable -> true }
+        val errorPredicate = Predicate { _: Throwable -> true }
 
         publishSubject.subscribe(to)
         publishSubject.onNext("a")
@@ -100,7 +131,7 @@ class MatchersTest {
         to shouldHave value(value)
         to shouldEmit value
 
-        val valuePredicate = Predicate{ v: String -> v.length == 1 }
+        val valuePredicate = Predicate { v: String -> v.length == 1 }
         to.assertValue(valuePredicate)
         to shouldHave value(valuePredicate)
         to shouldEmit valuePredicate
@@ -184,7 +215,7 @@ class MatchersTest {
         val publishSubject = PublishSubject.create<String>()
         val value = "a"
         val never = "b"
-        val valuePredicate = Predicate{ v: String -> v.equals(never) }
+        val valuePredicate = Predicate { v: String -> v.equals(never) }
 
         publishSubject.subscribe(to)
         publishSubject.onNext(value)
@@ -242,7 +273,7 @@ class MatchersTest {
                 }
                 .test {
                     it.assertFailure(Predicate { true }, value0, value1)
-                    it shouldHave failure(Predicate{ true }, value0, value1)
+                    it shouldHave failure(Predicate { true }, value0, value1)
                 }
     }
 
