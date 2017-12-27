@@ -31,13 +31,20 @@ Observable.just("Hello RxTest!")
 ## Download
 - #### Gradle
 ```groovy
-repositories {
-    maven {
-        url  "https://dl.bintray.com/rubylichtenstein/RxTest" 
+buildscript {
+    ...
+    repositories {
+        ...
+        maven {
+            url  "https://dl.bintray.com/rubylichtenstein/RxTest" 
+        }
     }
 }
-       
-testCompile 'com.rubylichtenstein:rxtest:1.0.3'
+
+dependencies {       
+    ...
+    testCompile 'com.rubylichtenstein:rxtest:1.0.3'
+}
 ```
 
 - #### Maven
