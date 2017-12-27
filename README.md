@@ -30,6 +30,7 @@ Observable.just("Hello RxTest!")
 
 ## Download
 - #### Gradle
+Top level build.gradle
 ```groovy
 buildscript {
     ...
@@ -40,7 +41,9 @@ buildscript {
         }
     }
 }
-
+```
+Module level build.gradle
+```groovy
 dependencies {       
     ...
     testCompile 'com.rubylichtenstein:rxtest:1.0.3'
