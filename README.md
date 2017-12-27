@@ -17,6 +17,7 @@ Observable.just("Hello RxTest!")
 ```
 ## Documentation
 
+ - ##### [Examples](https://github.com/RubyLichtenstein/RxTest/wiki/Examples)
  - ##### Components
  
    - [Matchers](https://github.com/RubyLichtenstein/RxTest/wiki/Matchers)
