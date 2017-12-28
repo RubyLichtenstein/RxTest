@@ -5,6 +5,7 @@ import com.rubylichtenstein.rxtest.matchers.never
 import com.rubylichtenstein.rxtest.matchers.value
 import io.reactivex.functions.Predicate
 import io.reactivex.observers.BaseTestConsumer
+import junit.framework.Assert.assertTrue
 
 
 infix fun <T, U : BaseTestConsumer<T, U>> BaseTestConsumer<T, U>.should(matcher: Matcher<BaseTestConsumer<T, U>>)
@@ -42,6 +43,8 @@ fun <T, U : BaseTestConsumer<T, U>> assertThat(actual: BaseTestConsumer<T, U>, m
     with(matcher.test(actual)) {
         if (!passed) {
             throw AssertionError(failMessage)
+        } else {
+            assertTrue(true)
         }
     }
 }

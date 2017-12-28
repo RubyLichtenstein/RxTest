@@ -8,13 +8,16 @@ buildscript {
     repositories {
         jcenter()
         maven { url "https://plugins.gradle.org/m2/" }
+        maven { url "http://dl.bintray.com/jetbrains/spek" }
     }
     dependencies {
         classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detekt_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0'
     }
 }
 
+apply plugin: 'org.junit.platform.gradle.plugin'
 apply plugin: 'kotlin'
 apply plugin: 'maven-publish'
 apply plugin: "jacoco"
@@ -22,6 +25,14 @@ apply plugin: "io.gitlab.arturbosch.detekt"
 
 repositories {
     jcenter()
+}
+
+junitPlatform {
+    filters {
+        engines {
+            include 'spek'
+        }
+    }
 }
 
 jacocoTestReport {
@@ -35,7 +46,11 @@ dependencies {
     compile 'junit:junit:4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
     compile 'io.reactivex.rxjava2:rxjava:2.1.7'
- }
+    testCompile 'org.jetbrains.spek:spek-api:1.1.5'
+    testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:1.1.5'
+    testCompile 'org.junit.platform:junit-platform-runner:1.0.0'
+
+}
 
 task wrapper(type: Wrapper) {
     gradleVersion = '4.4.1'
