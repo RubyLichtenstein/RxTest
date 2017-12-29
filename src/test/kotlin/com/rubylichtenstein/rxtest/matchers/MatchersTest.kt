@@ -1,18 +1,14 @@
 package com.rubylichtenstein.rxtest.matchers
 
-import com.rubylichtenstein.rxtest.assertions.*
-import com.rubylichtenstein.rxtest.extentions.*
-import io.reactivex.*
-import io.reactivex.functions.Predicate
-import io.reactivex.observers.TestObserver
+import com.rubylichtenstein.rxtest.assertions.should
+import com.rubylichtenstein.rxtest.extentions.test
+import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.ReplaySubject
-import junit.framework.Assert.assertEquals
+import junit.framework.TestCase.assertNotNull
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
-import org.junit.Test
 import org.junit.platform.runner.JUnitPlatform
 import org.junit.runner.RunWith
 
@@ -23,15 +19,20 @@ class MatchersTest : Spek({
         val observable = Observable.just("hello")
 
         on("complete") {
-            observable.test {
-                it should complete()
+            it("should complete") {
+                observable.test {
+                    it should complete()
+                }
             }
-//            it("should complete") {
-//                assertEquals(1,1)
-//                observable.test {
-//                    it should complete()
-//                }
-//            }
+
+            it("should throw assertion error not complete") {
+                shouldThrowAssertionError {
+                    PublishSubject.create<String>()
+                            .test {
+                                it should complete()
+                            }
+                }
+            }
         }
     }
 //    val item0 = "a"
@@ -382,3 +383,17 @@ class MatchersTest : Spek({
 ////                    it shouldHave timeout()
 ////                }}
 })
+
+fun shouldThrowAssertionError(function: () -> Unit) {
+    val assertionError = getAssertionError { function() }
+    assertNotNull(assertionError)
+}
+
+fun getAssertionError(function: () -> Unit): AssertionError? {
+    return try {
+        function.invoke()
+        null
+    } catch (assertionError: AssertionError) {
+        return assertionError
+    }
+}

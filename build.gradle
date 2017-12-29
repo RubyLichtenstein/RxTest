@@ -33,6 +33,8 @@ junitPlatform {
             include 'spek'
         }
     }
+        details 'tree'
+
 }
 
 jacocoTestReport {
@@ -43,15 +45,24 @@ jacocoTestReport {
 }
 
 dependencies {
-    compile 'junit:junit:4.12'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     compile 'io.reactivex.rxjava2:rxjava:2.1.7'
-    testCompile 'org.jetbrains.spek:spek-api:1.1.5'
-    testRuntime 'org.jetbrains.spek:spek-junit-platform-engine:1.1.5'
-    testCompile 'org.junit.platform:junit-platform-runner:1.0.0'
+
+    testCompile('org.jetbrains.spek:spek-api:1.1.5')
+
+    testRuntime('org.jetbrains.spek:spek-junit-platform-engine:1.1.5'){
+        exclude group: 'org.junit.platform'
+        exclude group: 'org.jetbrains.kotlin'
+    }
+
+    testRuntime('org.junit.platform:junit-platform-runner:1.0.0')
+    testCompile 'org.junit.platform:junit-platform-console:1.0.0'
+
+    testCompile("org.junit.jupiter:junit-jupiter-api:5.0.2")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.2")
 
 }
-
 task wrapper(type: Wrapper) {
     gradleVersion = '4.4.1'
 }
