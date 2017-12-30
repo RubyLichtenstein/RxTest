@@ -36,7 +36,6 @@ Observable.just("Hello RxTest!")
 - #### Gradle
 ```groovy
 dependencies {       
-    ...
     testCompile 'com.rubylichtenstein:rxtest:1.0.4'
 }
 ```
