@@ -3,25 +3,25 @@
     "name": "com.rubylichtenstein.rxtest",
     "repo": "RxTest",
     "subject": "rubylichtenstein",
-    "desc": "RxTest",
+    "desc": "Kotlin library for testing RxJava",
     "website_url": "",
-    "issue_tracker_url": "",
+    "issue_tracker_url": "https://github.com/RubyLichtenstein/RxTest/issues",
     "vcs_url": "https://github.com/RubyLichtenstein/RxTest.git",
     "licenses": ["Apache-2.0"],
-    "labels": ["kotlin", "bintray", "gradle"],
+    "labels": ["kotlin", "kotlin-dsl", "rxjava2", "bintray", "gradle"],
     "public_download_numbers": false,
     "public_stats": false
   },
 
   "version": {
-    "name": "1.0.3",
-    "released": "2017-12-25",
+    "name": "1.0.4",
+    "released": "2017-12-30",
     "gpgSign": false
   },
 
   "files":
   [
-    {"includePattern": "build/libs/(.*)", "uploadPattern": "com/rubylichtenstein/rxtest/1.0.3/$1"}
+    {"includePattern": "build/libs/(.*)", "uploadPattern": "com/rubylichtenstein/rxtest/1.0.4/$1"}
   ],
   "publish": true
 }
