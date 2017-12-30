@@ -33,23 +33,10 @@ Observable.just("Hello RxTest!")
 
 ## Download
 - #### Gradle
-Top level build.gradle
-```groovy
-buildscript {
-    ...
-    repositories {
-        ...
-        maven {
-            url  "https://dl.bintray.com/rubylichtenstein/RxTest" 
-        }
-    }
-}
-```
-Module level build.gradle
 ```groovy
 dependencies {       
     ...
-    testCompile 'com.rubylichtenstein:rxtest:1.0.3'
+    testCompile 'com.rubylichtenstein:rxtest:1.0.4'
 }
 ```
 
@@ -58,7 +45,7 @@ dependencies {       
 <dependency>
     <groupId>com.rubylichtenstein</groupId>
     <artifactId>rxtest</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <type>pom</type>
 </dependency>
 ```
