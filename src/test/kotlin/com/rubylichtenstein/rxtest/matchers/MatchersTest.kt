@@ -2,9 +2,7 @@ package com.rubylichtenstein.rxtest.matchers
 
 import com.rubylichtenstein.rxtest.assertions.*
 import com.rubylichtenstein.rxtest.extentions.test
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Completable
-import io.reactivex.Observable
+import io.reactivex.*
 import io.reactivex.functions.Predicate
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.TestScheduler
@@ -44,6 +42,16 @@ class MatchersTest {
 
     @Test
     fun completeTest() {
+        Maybe.just("")
+                .test {
+                    it should complete()
+                }
+
+        Single.just("")
+                .test {
+                    it should complete()
+                }
+
         Completable.complete()
                 .test {
                     it should complete()
