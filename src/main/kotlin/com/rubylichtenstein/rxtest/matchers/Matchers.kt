@@ -156,11 +156,20 @@ fun <T, U : BaseTestConsumer<T, U>> valueSet(expected: Collection<T>)
 fun <T, U : BaseTestConsumer<T, U>> valueOnly(vararg values: T)
         = createMatcher<T, U>({ it.assertValuesOnly(*values) })
 
+/**
+ * @see io.reactivex.observers.TestObserver.assertTimeout
+ */
 fun <T, U : BaseTestConsumer<T, U>> timeout()
         = createMatcher<T, U>({ it.assertTimeout() })
 
+/**
+ * @see io.reactivex.observers.TestObserver.assertNoTimeout
+ */
 fun <T, U : BaseTestConsumer<T, U>> noTimeout()
         = createMatcher<T, U>({ it.assertNoTimeout() })
 
+/**
+ * @see io.reactivex.observers.TestObserver.assertNotSubscribed
+ */
 fun <T, U : BaseTestConsumer<T, U>> notSubscribed()
         = createMatcher<T, U>({ it.assertNotSubscribed() })
