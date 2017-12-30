@@ -1,13 +1,18 @@
 package com.rubylichtenstein.rxtest.matchers
 
 import com.rubylichtenstein.rxtest.assertions.*
-import com.rubylichtenstein.rxtest.extentions.*
-import io.reactivex.*
+import com.rubylichtenstein.rxtest.extentions.test
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.functions.Predicate
 import io.reactivex.observers.TestObserver
+import io.reactivex.schedulers.TestScheduler
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.ReplaySubject
+import junit.framework.Assert.assertNotNull
 import org.junit.Test
+import java.util.concurrent.TimeUnit
 
 
 class MatchersTest {
@@ -17,6 +22,25 @@ class MatchersTest {
     val item2 = "c"
 
     val items = listOf(item0, item1, item2)
+
+    fun shouldThrowAssertionError(function: () -> Unit) {
+        val assertionError = getAssertionError { function() }
+        assertNotNull(assertionError)
+    }
+
+    fun getAssertionError(function: () -> Unit): AssertionError? {
+        return try {
+            function.invoke()
+            null
+        } catch (assertionError: AssertionError) {
+            return assertionError
+        }
+    }
+
+    @Test
+    fun shouldThrowAssertionErrorTest() {
+
+    }
 
     @Test
     fun completeTest() {
@@ -30,93 +54,75 @@ class MatchersTest {
                 .test {
                     it should complete()
                 }
+
+        shouldThrowAssertionError {
+            PublishSubject.create<String>()
+                    .test {
+                        it should complete()
+                    }
+        }
     }
 
     @Test
     fun notCompleteTest() {
         PublishSubject.create<String>()
-                .apply {
-                    onNext("a")
-                    onNext("b")
-                }
                 .test {
                     it should notComplete()
                 }
+
+        shouldThrowAssertionError {
+            PublishSubject.create<String>()
+                    .test {
+                        it should complete()
+                    }
+        }
     }
 
     @Test
     fun errorTest1() {
-        val to = TestObserver<String>()
         val assertionError = AssertionError()
-        val errorPredicate = Predicate { _: Throwable -> true }
 
         PublishSubject.create<String>()
                 .apply {
-                    subscribe(to)
-                    onNext("a")
                     onError(assertionError)
                 }
                 .test {
                     it shouldHave error(assertionError)
                 }
-
-
-        to shouldHave error(assertionError)
-         to shouldHave error(AssertionError::class.java)
-
-        to.assertError(errorPredicate)
-        to shouldHave error(errorPredicate)
     }
 
     @Test
     fun errorTest2() {
-        val to = TestObserver<String>()
-        val publishSubject = PublishSubject.create<String>()
         val assertionError = AssertionError()
-        val errorPredicate = Predicate { _: Throwable -> true }
 
-        publishSubject.subscribe(to)
-        publishSubject.onNext("a")
-        publishSubject.onError(assertionError)
-
-        to.assertError(assertionError)
-        to shouldHave error(assertionError)
-        to.assertError(AssertionError::class.java)
-        to shouldHave error(AssertionError::class.java)
-
-        to.assertError(errorPredicate)
-        to shouldHave error(errorPredicate)
+        PublishSubject.create<String>()
+                .apply {
+                    onError(assertionError)
+                }
+                .test {
+                    it shouldHave error(AssertionError::class.java)
+                }
     }
 
     @Test
     fun errorTest() {
-        val to = TestObserver<String>()
-        val publishSubject = PublishSubject.create<String>()
         val assertionError = AssertionError()
-        val errorPredicate = Predicate { _: Throwable -> true }
 
-        publishSubject.subscribe(to)
-        publishSubject.onNext("a")
-        publishSubject.onError(assertionError)
-
-        to.assertError(assertionError)
-        to shouldHave error(assertionError)
-        to.assertError(AssertionError::class.java)
-        to shouldHave error(AssertionError::class.java)
-
-        to.assertError(errorPredicate)
-        to shouldHave error(errorPredicate)
+        PublishSubject.create<String>()
+                .apply {
+                    onError(assertionError)
+                }
+                .test {
+                    it shouldHave error(Predicate { it == assertionError })
+                }
     }
 
     @Test
     fun noErrorTest() {
-        val to = TestObserver<String>()
-        val publishSubject = PublishSubject.create<String>()
-        publishSubject.subscribe(to)
-        publishSubject.onNext("a")
-
-        to.assertNoErrors()
-        to shouldHave noErrors()
+        PublishSubject.create<String>()
+                .test {
+                    it shouldHave noErrors()
+                }
     }
 
     @Test
@@ -343,22 +349,36 @@ class MatchersTest {
                 }
     }
 
-//    @Test
-//    fun timeoutTest() {
-//        val value0 = "a"
-//        val testScheduler = TestScheduler()
-//
-//
-//        Observable.just(value0)
-//                .timeout(1, TimeUnit.MILLISECONDS)
-//                .observeOn(testScheduler)
-//                .doOnNext {
-//                    testScheduler.advanceTimeBy(10, TimeUnit.MILLISECONDS)
-//                }
-//                .test {
-//                    it.assertTimeout()
-//                    it shouldHave timeout()
-//                }}
+    @Test
+    fun timeoutTest() {
+        val scheduler = TestScheduler()
+
+        Observable
+                .interval(100, TimeUnit.MILLISECONDS, scheduler)
+                .test {
+                    it.await(50, TimeUnit.MILLISECONDS)
+                    it shouldHave timeout()
+                }
+    }
+
+    @Test
+    fun noTimeoutTest() {
+        val scheduler = TestScheduler()
+
+        Observable
+                .interval(100, TimeUnit.MILLISECONDS, scheduler)
+                .test {
+                    it shouldHave noTimeout()
+                }
+    }
+
+    @Test
+    fun notSubscribedTest() {
+        TestObserver<String>()
+                .apply {
+                    should(notSubscribed())
+                }
+    }
 }
 
 
