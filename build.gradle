@@ -33,7 +33,7 @@ junitPlatform {
             include 'spek'
         }
     }
-        details 'tree'
+    details 'tree'
 
 }
 
@@ -49,9 +49,13 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     compile 'io.reactivex.rxjava2:rxjava:2.1.7'
 
-    testCompile('org.jetbrains.spek:spek-api:1.1.5')
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 
-    testRuntime('org.jetbrains.spek:spek-junit-platform-engine:1.1.5'){
+    testCompile('org.jetbrains.spek:spek-api:1.1.5') {
+        exclude group: 'org.jetbrains.kotlin'
+    }
+
+    testRuntime('org.jetbrains.spek:spek-junit-platform-engine:1.1.5') {
         exclude group: 'org.junit.platform'
         exclude group: 'org.jetbrains.kotlin'
     }
