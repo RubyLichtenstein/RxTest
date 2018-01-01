@@ -1,8 +1,9 @@
 package com.rubylichtenstein.rxtest.matchers
 
-import com.rubylichtenstein.rxtest.assertions.*
+import com.rubylichtenstein.rxtest.assertions.should
+import com.rubylichtenstein.rxtest.assertions.shouldEmit
+import com.rubylichtenstein.rxtest.assertions.shouldHave
 import com.rubylichtenstein.rxtest.extentions.test
-
 import io.reactivex.Observable
 import io.reactivex.observers.BaseTestConsumer
 import io.reactivex.observers.TestObserver

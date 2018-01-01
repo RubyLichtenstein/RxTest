@@ -42,6 +42,8 @@ fun <T, U : BaseTestConsumer<T, U>> assertThat(actual: BaseTestConsumer<T, U>, m
     with(matcher.test(actual)) {
         if (!passed) {
             throw AssertionError(failMessage)
+        } else {
+            assert(true)
         }
     }
 }
