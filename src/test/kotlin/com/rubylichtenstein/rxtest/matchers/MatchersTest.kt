@@ -93,7 +93,6 @@ class MatchersTest : Spek({
 
         it("should have error predicate") {
             val assertionError = AssertionError()
-
             PublishSubject.create<String>()
                     .apply {
                         onError(assertionError)
@@ -178,115 +177,109 @@ class MatchersTest : Spek({
         }
 
 
-        it("valueSequenceTest") {
+        on("values") {
             val valueSequence = listOf(item0, item1, item2)
-            Observable.fromIterable(valueSequence)
-                    .test {
-                        it.assertValueSequence(valueSequence)
-                        it shouldEmit valueSequence(valueSequence)
-                    }
-        }
+            val obs = Observable.fromIterable(valueSequence)
 
-        it("valueSetTest") {
-            val valueSequence = listOf(item0, item1, item2)
-            Observable.fromIterable(valueSequence)
-                    .test {
-                        it.assertValueSet(valueSequence)
-                        it shouldEmit valueSet(valueSequence)
-                    }
-        }
+            it("valueSequenceTest") {
+                obs.test {
+                    it shouldEmit valueSequence(valueSequence)
+                }
+            }
 
-        it("value Only") {
-            val replaySubject = ReplaySubject.create<String>()
-            replaySubject.onNext(item0)
-            replaySubject.onNext(item1)
-            replaySubject.onNext(item2)
+            it("valueSetTest") {
+                obs.test {
+                    it shouldEmit valueSet(valueSequence)
+                }
+            }
 
-            replaySubject.test {
-                it.assertValuesOnly(item0, item1, item2)
-                it shouldEmit valueOnly(item0, item1, item2)
+            it("value Only") {
+                ReplaySubject.create<String>()
+                        .also {
+                            it.onNext(item0)
+                            it.onNext(item1)
+                            it.onNext(item2)
+                        }
+                        .test {
+                            it shouldEmit valueOnly(item0, item1, item2)
+                        }
             }
         }
 
-        it("neverTest") {
-            val to = TestObserver<String>()
-            val publishSubject = PublishSubject.create<String>()
+        on("never") {
             val value = "a"
             val never = "b"
-            val valuePredicate = Predicate { v: String -> v.equals(never) }
+            val obs = Observable.just(value)
 
-            publishSubject.subscribe(to)
-            publishSubject.onNext(value)
+            val valuePredicate = Predicate { v: String -> v == never }
 
-            to.assertNever(never)
-            to shouldHave never(never)
-            to shouldNeverEmit never
+            it("should never") {
+                obs.test {
+                    it should never(never)
+                }
+            }
 
-            to.assertNever(valuePredicate)
-            to shouldHave never(valuePredicate)
-            to shouldNeverEmit valuePredicate
+            it("should never emit") {
+                obs.test {
+                    it shouldNeverEmit never
+                }
+            }
+            it("should never predicate") {
+                obs.test {
+                    it should never(valuePredicate)
+                }
+            }
+
+            it("should never") {
+                obs.test {
+                    it shouldNeverEmit valuePredicate
+                }
+            }
         }
+
 
         it("emptyTest") {
             PublishSubject.create<String>()
-                    .apply {
-                        subscribe({})
-                    }
                     .test {
-                        it.assertEmpty()
                         it shouldBe empty()
                     }
         }
 
-        it("failure0Test") {
+        on("failure") {
             val value0 = "a"
             val value1 = "b"
             val errorMessage = "Error"
             val error = Throwable(errorMessage)
-            ReplaySubject.create<String>()
-                    .also {
-                        it.onNext(value0)
-                        it.onNext(value1)
-                        it.onError(error)
-                    }
-                    .test {
-                        it.assertFailure(Throwable::class.java, value0, value1)
-                        it shouldHave failure(Throwable::class.java, value0, value1)
-                    }
-        }
 
-        it("failure1Test") {
-            val value0 = "a"
-            val value1 = "b"
-            val errorMessage = "Error"
-            val error = Throwable(errorMessage)
-            ReplaySubject.create<String>()
+            val obs = ReplaySubject.create<String>()
                     .also {
                         it.onNext(value0)
                         it.onNext(value1)
                         it.onError(error)
                     }
-                    .test {
-                        it.assertFailure(Predicate { true }, value0, value1)
-                        it shouldHave failure(Predicate { true }, value0, value1)
-                    }
-        }
 
-        it("failureAndMessageTest") {
-            val value0 = "a"
-            val value1 = "b"
-            val errorMessage = "Error"
-            val error = Throwable(errorMessage)
-            ReplaySubject.create<String>()
-                    .also {
-                        it.onNext(value0)
-                        it.onNext(value1)
-                        it.onError(error)
-                    }
-                    .test {
-                        it.assertFailureAndMessage(Throwable::class.java, errorMessage, value0, value1)
-                        it shouldHave failureAndMessage(Throwable::class.java, errorMessage, value0, value1)
-                    }
+            it("failure0Test") {
+
+
+                obs.test {
+                    it shouldHave failure(Throwable::class.java, value0, value1)
+                }
+            }
+
+            it("failure1Test") {
+                obs.test {
+                    it.assertFailure(Predicate { true }, value0, value1)
+                    it shouldHave failure(Predicate { true }, value0, value1)
+                }
+            }
+
+            it("failureAndMessageTest") {
+
+                obs.test {
+                    it.assertFailureAndMessage(Throwable::class.java, errorMessage, value0, value1)
+                    it shouldHave failureAndMessage(Throwable::class.java, errorMessage, value0, value1)
+                }
+            }
         }
 
         it("resultTest") {
@@ -295,26 +288,24 @@ class MatchersTest : Spek({
             val values = listOf(value0, value1)
             Observable.just(values)
                     .test {
-                        it.assertResult(values)
                         it shouldHave result(values)
                     }
         }
 
         it("subscribeTest") {
             val value0 = "a"
-            Observable.just(value0).apply {
-                subscribe({ })
-                test {
-                    it.assertSubscribed()
-                    it should subscribed()
-                }
-            }
+            Observable.just(value0)
+                    .apply {
+                        subscribe({ })
+                        test {
+                            it should subscribed()
+                        }
+                    }
         }
 
         it("valueCountTest") {
             Observable.fromIterable(items)
                     .test {
-                        it.assertValueCount(items.size)
                         it shouldHave valueCount(items.size)
                     }
         }
@@ -322,13 +313,11 @@ class MatchersTest : Spek({
         it("terminateTest") {
             Observable.just(item0)
                     .test {
-                        it.assertTerminated()
                         it should terminate()
                     }
 
             Observable.error<String>(Throwable())
                     .test {
-                        it.assertTerminated()
                         it should terminate()
                     }
         }
