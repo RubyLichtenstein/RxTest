@@ -53,8 +53,6 @@ class MatchersTest : Spek({
             }
         }
 
-
-
         it("should not complete") {
             PublishSubject.create<String>()
                     .test {
@@ -109,28 +107,33 @@ class MatchersTest : Spek({
                     }
         }
 
-        it("should have first value") {
+        on("value") {
             val value = "a"
+            val obs = Observable.just(value)
 
-            ReplaySubject.create<String>()
-                    .apply {
-                        onNext(value)
-                    }
-                    .test {
-                        it shouldHave value(value)
-                    }
-        }
+            it("should have first value") {
+                obs.test {
+                    it shouldHave value(value)
+                }
+            }
 
-        it("should emit first value") {
-            val value = "a"
+            it("should emit first value") {
+                obs.test {
+                    it shouldEmit value
+                }
+            }
 
-            ReplaySubject.create<String>()
-                    .apply {
-                        onNext(value)
-                    }
-                    .test {
-                        it shouldEmit value
-                    }
+            it("should have first predicate value") {
+                obs.test {
+                    it shouldHave value(Predicate { it == value })
+                }
+            }
+
+            it("should emit first predicate value") {
+                obs.test {
+                    it shouldEmit Predicate { it == value }
+                }
+            }
         }
 
         on("should have value at") {
@@ -175,7 +178,6 @@ class MatchersTest : Spek({
                 }
             }
         }
-
 
         on("values") {
             val valueSequence = listOf(item0, item1, item2)
@@ -224,6 +226,7 @@ class MatchersTest : Spek({
                     it shouldNeverEmit never
                 }
             }
+
             it("should never predicate") {
                 obs.test {
                     it should never(valuePredicate)
@@ -236,7 +239,6 @@ class MatchersTest : Spek({
                 }
             }
         }
-
 
         it("emptyTest") {
             PublishSubject.create<String>()
@@ -258,17 +260,14 @@ class MatchersTest : Spek({
                         it.onError(error)
                     }
 
-            it("failure0Test") {
-
-
+            it("failure by class") {
                 obs.test {
                     it shouldHave failure(Throwable::class.java, value0, value1)
                 }
             }
 
-            it("failure1Test") {
+            it("failure by predicate") {
                 obs.test {
-                    it.assertFailure(Predicate { true }, value0, value1)
                     it shouldHave failure(Predicate { true }, value0, value1)
                 }
             }
@@ -276,7 +275,6 @@ class MatchersTest : Spek({
             it("failureAndMessageTest") {
 
                 obs.test {
-                    it.assertFailureAndMessage(Throwable::class.java, errorMessage, value0, value1)
                     it shouldHave failureAndMessage(Throwable::class.java, errorMessage, value0, value1)
                 }
             }
