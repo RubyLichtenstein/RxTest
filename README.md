@@ -37,7 +37,7 @@ Observable.just("Hello RxTest!")
 - #### Gradle
 ```groovy
 dependencies {       
-    testImplementation 'com.rubylichtenstein:rxtest:1.0.4'
+    testImplementation 'com.rubylichtenstein:rxtest:1.0.5'
 }
 ```
 
@@ -46,7 +46,7 @@ dependencies {       
 <dependency>
     <groupId>com.rubylichtenstein</groupId>
     <artifactId>rxtest</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
     <type>pom</type>
 </dependency>
 ```
