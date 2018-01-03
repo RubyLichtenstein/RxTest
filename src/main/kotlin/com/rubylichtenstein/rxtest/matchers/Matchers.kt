@@ -4,10 +4,6 @@ import io.reactivex.functions.Predicate
 import io.reactivex.observers.BaseTestConsumer
 
 /**
- * Created by ruby on 27/10/17.
- */
-
-/**
  * @see io.reactivex.observers.TestObserver.assertComplete
  */
 fun <T, U : BaseTestConsumer<T, U>> complete()

@@ -4,7 +4,8 @@ package com.rubylichtenstein.rxtest.matchers
 import io.reactivex.observers.BaseTestConsumer
 
 /**
- * Create matcher by applying assertion on BaseTestConsumer
+ * Create matcher
+ * by applying assertion on BaseTestConsumer
  *
  * @assertion assertion to apply on testConsumer, true for success.
  * @param failMessage failMessage for test fail
@@ -33,9 +34,9 @@ fun <T, U : BaseTestConsumer<T, U>> createMatcher(assertion: (BaseTestConsumer<T
  * Apply rx java assertion on testConsumer, delegating AssertionError as AssertionResult
  *
  * @param testConsumer to apply assertion on
- * @param assertion to apply on testConsumer
+ * @param assertion to apply on testConsumer - native RxJava assertions
  *
- * @return AssertionResult contains Assertion error in case of assertion fails
+ * @return AssertionError? null in case od success
  */
 private fun <T, U : BaseTestConsumer<T, U>> applyAssertion(testConsumer: BaseTestConsumer<T, U>,
                                                            assertion: (BaseTestConsumer<T, U>) -> Unit)
