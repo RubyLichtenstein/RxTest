@@ -5,6 +5,7 @@ import com.rubylichtenstein.rxtest.matchers.never
 import com.rubylichtenstein.rxtest.matchers.value
 import io.reactivex.functions.Predicate
 import io.reactivex.observers.BaseTestConsumer
+import java.lang.AssertionError
 
 
 infix fun <T, U : BaseTestConsumer<T, U>> BaseTestConsumer<T, U>.should(matcher: Matcher<BaseTestConsumer<T, U>>)
