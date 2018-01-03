@@ -1,7 +1,7 @@
 {
   "package": {
     "name": "com.rubylichtenstein.rxtest",
-    "repo": "RxTestDebug",
+    "repo": "RxTest",
     "subject": "rubylichtenstein",
     "desc": "Kotlin library for testing RxJava",
     "website_url": "",
@@ -14,14 +14,14 @@
   },
 
   "version": {
-    "name": "1.0.4",
+    "name": "1.0.5",
     "released": "2017-12-30",
     "gpgSign": false
   },
 
   "files":
   [
-    {"includePattern": "build/libs/(.*)", "uploadPattern": "com/rubylichtenstein/rxtest/1.0.4/$1"}
+    {"includePattern": "build/libs/(.*)", "uploadPattern": "com/rubylichtenstein/rxtest/1.0.5/$1"}
   ],
   "publish": true
 }
