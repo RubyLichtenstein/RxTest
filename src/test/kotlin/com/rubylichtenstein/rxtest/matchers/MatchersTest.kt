@@ -25,6 +25,7 @@ class MatchersTest : Spek({
         val items = listOf(item0, item1, item2)
 
         it("should complete") {
+
             Maybe.just("")
                     .test {
                         it should complete()

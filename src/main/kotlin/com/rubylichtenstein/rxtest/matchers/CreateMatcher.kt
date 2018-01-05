@@ -7,15 +7,15 @@ import io.reactivex.observers.BaseTestConsumer
  * Create matcher
  * by applying assertion on BaseTestConsumer
  *
- * @assertion assertion to apply on testConsumer, true for success.
- * @param failMessage failMessage for test fail
+ * @assertion assertion to apply on testConsumer,should return true on success.
+ * @param failMessage to show in case the test not pass
  */
 fun <T, U : BaseTestConsumer<T, U>> createMatcher(assertion: (BaseTestConsumer<T, U>) -> Boolean,
                                                   failMessage: String)
         : Matcher<BaseTestConsumer<T, U>> {
     return object : Matcher<BaseTestConsumer<T, U>> {
-        override fun test(value: BaseTestConsumer<T, U>) =
-                Result(assertion(value), failMessage)
+        override fun test(value: BaseTestConsumer<T, U>)
+                = Result(assertion.invoke(value), failMessage)
     }
 }
 
@@ -36,15 +36,16 @@ fun <T, U : BaseTestConsumer<T, U>> createMatcher(assertion: (BaseTestConsumer<T
  * @param testConsumer to apply assertion on
  * @param assertion to apply on testConsumer - native RxJava assertions
  *
- * @return AssertionError? null in case od success
+ * @return AssertionError? null on success
  */
 private fun <T, U : BaseTestConsumer<T, U>> applyAssertion(testConsumer: BaseTestConsumer<T, U>,
                                                            assertion: (BaseTestConsumer<T, U>) -> Unit)
         : AssertionError? {
     return try {
-        assertion(testConsumer)
+        assertion.invoke(testConsumer)
         null
     } catch (assertionError: AssertionError) {
         assertionError
     }
 }
+
