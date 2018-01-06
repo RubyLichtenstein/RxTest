@@ -6,7 +6,7 @@ RxTest is a Kotlin library for testing RxJava.
 
 #### Main features 
 * **Clear tests:** write clean, readable and simple tests in scala-test *should* style.
-* **Easy to extend:** create custom matchers for more complex scenarios or just for more readable code.
+* **Easy to extend:** create custom matchers for complex test cases or just for more readable code.
 * **Simple to use:** test api same as RxJava assertions you already know. 
 
 ## Exemple
