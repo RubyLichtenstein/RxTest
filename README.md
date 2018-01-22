@@ -6,11 +6,11 @@
 RxTest is a Kotlin library for testing RxJava.
 
 #### Main features 
-* **Clear tests:** write clean, readable and simple tests in scala-test *should* style.
+* **Clear tests:** write clean, readable and simple tests in scala-test '*should* style'.
 * **Easy to extend:** create custom matchers for complex test cases or just for more readable code.
-* **Simple to use:** same api as rxjava assertions you already know. 
+* **Simple to use:** same API as RxJava assertions you already know. 
 
-## Exemple
+## Example
 ```kotlin
 Observable.just("Hello RxTest!")
     .test {
@@ -57,7 +57,7 @@ For bugs, questions and discussions please use the [Github Issues](https://githu
 
 ## Contribution 
 
-Welcome :).
+Welcome :)
 
 
 
