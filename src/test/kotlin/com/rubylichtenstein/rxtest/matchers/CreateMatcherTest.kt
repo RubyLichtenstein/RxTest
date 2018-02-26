@@ -9,98 +9,127 @@ import io.reactivex.observers.BaseTestConsumer
 import io.reactivex.observers.TestObserver
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert.assertThat
-import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.JUnit4
+import org.jetbrains.spek.api.Spek
+import org.jetbrains.spek.api.dsl.describe
+import org.jetbrains.spek.api.dsl.it
+import org.jetbrains.spek.api.dsl.on
 
-@RunWith(JUnit4::class)
-class CreateMatcherTest {
+object CreateMatcherTest : Spek({
 
+    describe("MatchersTest") {
+        fun <T, U : BaseTestConsumer<T, U>> noValues() = valueCount<T, U>(0)
 
-    fun <T, U : BaseTestConsumer<T, U>> noValues()
-            = valueCount<T, U>(0)
+        fun <T, U : BaseTestConsumer<T, U>> errorOrComplete(error: Throwable) = error<T, U>(error) or complete()
 
-    fun <T, U : BaseTestConsumer<T, U>> errorOrComplete(error: Throwable)
-            = error<T, U>(error) or complete()
-
-    fun <T, U : BaseTestConsumer<T, U>> moreValuesThen(count: Int)
-            = createMatcher<T, U>({ it.values().size > count },
+        fun <T, U : BaseTestConsumer<T, U>> moreValuesThen(count: Int) = createMatcher<T, U>(
+            { it.values().size > count },
             failMessage = "Less values then $count"
-    )
+        )
 
-    fun <T, U : BaseTestConsumer<T, U>> lessValuesThen(count: Int)
-            = createMatcher<T, U>({ it.values().size < count },
-            failMessage = "More values then $count"
-    )
 
-    fun <T, U : BaseTestConsumer<T, U>> valueCountBetween(min: Int, max: Int) =
-            moreValuesThen<T, U>(min) and lessValuesThen<T, U>(max)
+        fun <T, U : BaseTestConsumer<T, U>> lessValuesThen(count: Int) =
+            createMatcher<T, U>(
+                { it.values().size < count },
+                failMessage = "More values then $count"
+            )
 
-    @Test
-    fun createMatcherOrAndTest() {
-        Observable.just("", "")
-                .test {
-                    it shouldHave (valueCountBetween<String, TestObserver<String>>(0, 1) or values("", ""))
-                    it shouldHave (valueCountBetween<String, TestObserver<String>>(1, 3) and values("", ""))
+        fun <T> valueCountBetween(min: Int, max: Int) =
+            moreValuesThen<T, TestObserver<T>>(min) and lessValuesThen<T, TestObserver<T>>(max)
+
+        on("createMatcherOrAndTest") {
+            val hello = "Hello"
+            val stranger = "stranger"
+
+            val obs by memoized { Observable.just(hello, stranger) }
+
+            it("or test") {
+                obs.test {
+                    it shouldHave (valueCountBetween<String>(0, 1) or values(hello, stranger))
+                }
+            }
+
+            it("and test") {
+                obs.test {
+                    it shouldHave (valueCountBetween<String>(1, 3) and values(hello, stranger))
+                }
+            }
+
+            it("fail and test") {
+                obs.test {
                     try {
-                        it shouldHave (valueCountBetween<String, TestObserver<String>>(0, 1) and values("", ""))
+                        it shouldHave (valueCountBetween<String>(0, 1) and values(hello, stranger))
                     } catch (e: AssertionError) {
 
                     }
-
-                    it shouldHave (valueCountBetween<String, TestObserver<String>>(0, 3) or values("", ""))
                 }
-    }
+            }
 
-    @Test
-    fun createMatcherTest() {
-
-        val values = listOf<String>("Rx", "Kotlin", "Test")
-        Observable.fromIterable(values)
-                .test {
-                    it shouldEmit moreValuesThen(2)
-                    it shouldHave noErrors()
-                    it shouldHave valueSequence(values)
+            it("or test") {
+                obs.test {
+                    it shouldHave (valueCountBetween<String>(0, 3) or values(hello, stranger))
                 }
+            }
 
-        Observable.empty<String>()
-                .test {
-                    it shouldHave noValues()
+        }
+        on("fail test") {
+            it("") {
+                try {
+                    Observable.just("")
+                        .test {
+                            it should notComplete()
+                        }
+                } catch (e: Throwable) {
+                    assertThat(e, notNullValue())
                 }
+            }
 
-        Observable.just("")
-                .test {
-                    it shouldHave errorOrComplete(Throwable())
+            it("fail test") {
+                try {
+                    Observable.just("", "")
+                        .test {
+                            it shouldHave moreValuesThen(45)
+                        }
+                } catch (e: Throwable) {
+                    assertThat(e, notNullValue())
                 }
+            }
 
-        Observable.just("", "")
-                .test {
-                    it shouldHave valueCountBetween(1, 3)
-                }
-    }
+        }
+        on("create matcher test") {
+            val values = listOf<String>("Rx", "Kotlin", "Test")
 
-    @Test
-    fun createFailTest() {
-        try {
-            Observable.just("", "")
+            it("moreValuesThen") {
+                Observable.fromIterable(values)
                     .test {
-                        it shouldHave moreValuesThen(45)
+                        it shouldEmit moreValuesThen(2)
                     }
-        } catch (e: Throwable) {
-            assertThat(e, notNullValue())
+            }
+
+            it("noValues") {
+                Observable.empty<String>()
+                    .test {
+                        it shouldHave noValues()
+                    }
+            }
+
+            it("errorOrComplete") {
+                Observable.just("")
+                    .test {
+                        it shouldHave errorOrComplete(Throwable())
+                    }
+            }
+
+            it("valueCountBetween") {
+                Observable.just("", "")
+                    .test {
+                        it shouldHave valueCountBetween(1, 3)
+                    }
+            }
+
         }
     }
+})
 
-    @Test
-    fun failTest() {
-        try {
-            Observable.just("")
-                    .test {
-                        it should notComplete()
-                    }
-        } catch (e: Throwable) {
-            assertThat(e, notNullValue())
-        }
-    }
-}
+
+
 

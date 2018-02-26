@@ -32,12 +32,10 @@ infix fun <T, U : BaseTestConsumer<T, U>> BaseTestConsumer<T, U>.shouldNeverEmit
 infix fun <T, U : BaseTestConsumer<T, U>> BaseTestConsumer<T, U>.shouldNeverEmit(t: Predicate<T>)
         = should(never(t))
 
-fun <T, U : BaseTestConsumer<T, U>> assertThat(actual: BaseTestConsumer<T, U>, matcher: Matcher<BaseTestConsumer<T, U>>) {
-    with(matcher.test(actual)) {
+fun <T, U : BaseTestConsumer<T, U>> assertThat(baseTestConsumer: BaseTestConsumer<T, U>, matcher: Matcher<BaseTestConsumer<T, U>>) {
+    with(matcher.test(baseTestConsumer)) {
         if (!passed) {
             throw AssertionError(failMessage)
-        } else {
-            assert(true)
         }
     }
 }
