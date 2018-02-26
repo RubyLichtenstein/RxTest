@@ -1,5 +1,5 @@
 # RxTest &middot; <img src="https://github.com/RubyLichtenstein/RxTest/blob/master/art/kotlin_logo.png" alt="kotlin-logo" height="28" width="28"> + <img src="https://github.com/RubyLichtenstein/RxTest/blob/master/art/rx_logo.png" alt="rx-logo" height="34" width="34">
-[![Build Status](https://travis-ci.org/RubyLichtenstein/RxTest.svg?branch=master)](https://travis-ci.org/RubyLichtenstein/RxTest) [![codecov](https://codecov.io/gh/RubyLichtenstein/RxTest/branch/master/graph/badge.svg)](https://codecov.io/gh/RubyLichtenstein/RxTest) [![Download](https://api.bintray.com/packages/rubylichtenstein/RxTest/com.rubylichtenstein.rxtest/images/download.svg)](https://bintray.com/rubylichtenstein/RxTest/com.rubylichtenstein.rxtest/_latestVersion) [![Kotlin version badge](https://img.shields.io/badge/kotlin-1.2.10-blue.svg)](http://kotlinlang.org/) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0) [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/RxTest/) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-RxTest-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/6647)
+[![Build Status](https://travis-ci.org/RubyLichtenstein/RxTest.svg?branch=master)](https://travis-ci.org/RubyLichtenstein/RxTest) [![codecov](https://codecov.io/gh/RubyLichtenstein/RxTest/branch/master/graph/badge.svg)](https://codecov.io/gh/RubyLichtenstein/RxTest) [![Download](https://api.bintray.com/packages/rubylichtenstein/RxTest/com.rubylichtenstein.rxtest/images/download.svg)](https://bintray.com/rubylichtenstein/RxTest/com.rubylichtenstein.rxtest/_latestVersion) [![Kotlin version badge](https://img.shields.io/badge/kotlin-1.2.21-blue.svg)](http://kotlinlang.org/) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0) [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/RxTest/) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-RxTest-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/6647)
 
 
 
@@ -38,7 +38,7 @@ Observable.just("Hello RxTest!")
 - #### Gradle
 ```groovy
 dependencies {       
-    testImplementation 'com.rubylichtenstein:rxtest:1.0.5'
+    testImplementation 'com.rubylichtenstein:rxtest:1.0.6'
 }
 ```
 
@@ -47,7 +47,7 @@ dependencies {       
 <dependency>
     <groupId>com.rubylichtenstein</groupId>
     <artifactId>rxtest</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
     <type>pom</type>
 </dependency>
 ```
