@@ -17,24 +17,24 @@ import org.jetbrains.spek.api.dsl.on
 object CreateMatcherTest : Spek({
 
     describe("MatchersTest") {
-        fun <T, U : BaseTestConsumer<T, U>> noValues()
-                = valueCount<T, U>(0)
+        fun <T, U : BaseTestConsumer<T, U>> noValues() = valueCount<T, U>(0)
 
-        fun <T, U : BaseTestConsumer<T, U>> errorOrComplete(error: Throwable)
-                = error<T, U>(error) or complete()
+        fun <T, U : BaseTestConsumer<T, U>> errorOrComplete(error: Throwable) = error<T, U>(error) or complete()
 
-        fun <T, U : BaseTestConsumer<T, U>> moreValuesThen(count: Int)
-                = createMatcher<T, U>({ it.values().size > count },
-                failMessage = "Less values then $count"
+        fun <T, U : BaseTestConsumer<T, U>> moreValuesThen(count: Int) = createMatcher<T, U>(
+            { it.values().size > count },
+            failMessage = "Less values then $count"
         )
 
 
         fun <T, U : BaseTestConsumer<T, U>> lessValuesThen(count: Int) =
-                createMatcher<T, U>({ it.values().size < count },
-                        failMessage = "More values then $count")
+            createMatcher<T, U>(
+                { it.values().size < count },
+                failMessage = "More values then $count"
+            )
 
         fun <T> valueCountBetween(min: Int, max: Int) =
-                moreValuesThen<T, TestObserver<T>>(min) and lessValuesThen<T, TestObserver<T>>(max)
+            moreValuesThen<T, TestObserver<T>>(min) and lessValuesThen<T, TestObserver<T>>(max)
 
         on("createMatcherOrAndTest") {
             val hello = "Hello"
@@ -75,9 +75,9 @@ object CreateMatcherTest : Spek({
             it("") {
                 try {
                     Observable.just("")
-                            .test {
-                                it should notComplete()
-                            }
+                        .test {
+                            it should notComplete()
+                        }
                 } catch (e: Throwable) {
                     assertThat(e, notNullValue())
                 }
@@ -86,9 +86,9 @@ object CreateMatcherTest : Spek({
             it("fail test") {
                 try {
                     Observable.just("", "")
-                            .test {
-                                it shouldHave moreValuesThen(45)
-                            }
+                        .test {
+                            it shouldHave moreValuesThen(45)
+                        }
                 } catch (e: Throwable) {
                     assertThat(e, notNullValue())
                 }
@@ -100,30 +100,30 @@ object CreateMatcherTest : Spek({
 
             it("moreValuesThen") {
                 Observable.fromIterable(values)
-                        .test {
-                            it shouldEmit moreValuesThen(2)
-                        }
+                    .test {
+                        it shouldEmit moreValuesThen(2)
+                    }
             }
 
             it("noValues") {
                 Observable.empty<String>()
-                        .test {
-                            it shouldHave noValues()
-                        }
+                    .test {
+                        it shouldHave noValues()
+                    }
             }
 
             it("errorOrComplete") {
                 Observable.just("")
-                        .test {
-                            it shouldHave errorOrComplete(Throwable())
-                        }
+                    .test {
+                        it shouldHave errorOrComplete(Throwable())
+                    }
             }
 
             it("valueCountBetween") {
                 Observable.just("", "")
-                        .test {
-                            it shouldHave valueCountBetween(1, 3)
-                        }
+                    .test {
+                        it shouldHave valueCountBetween(1, 3)
+                    }
             }
 
         }

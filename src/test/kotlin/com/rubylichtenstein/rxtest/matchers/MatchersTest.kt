@@ -27,44 +27,44 @@ object MatchersTest : Spek({
         it("should complete") {
 
             Maybe.just("")
-                    .test {
-                        it should complete()
-                    }
+                .test {
+                    it should complete()
+                }
 
             Single.just("")
-                    .test {
-                        it should complete()
-                    }
+                .test {
+                    it should complete()
+                }
 
             Completable.complete()
-                    .test {
-                        it should complete()
-                    }
+                .test {
+                    it should complete()
+                }
             Observable.just("hello")
-                    .toFlowable(BackpressureStrategy.BUFFER)
-                    .test {
-                        it should complete()
-                    }
+                .toFlowable(BackpressureStrategy.BUFFER)
+                .test {
+                    it should complete()
+                }
 
             shouldThrowAssertionError {
                 PublishSubject.create<String>()
-                        .test {
-                            it should complete()
-                        }
+                    .test {
+                        it should complete()
+                    }
             }
         }
 
         it("should not complete") {
             PublishSubject.create<String>()
-                    .test {
-                        it should notComplete()
-                    }
+                .test {
+                    it should notComplete()
+                }
 
             shouldThrowAssertionError {
                 PublishSubject.create<String>()
-                        .test {
-                            it should complete()
-                        }
+                    .test {
+                        it should complete()
+                    }
             }
         }
 
@@ -72,40 +72,40 @@ object MatchersTest : Spek({
             val assertionError = AssertionError()
 
             PublishSubject.create<String>()
-                    .apply {
-                        onError(assertionError)
-                    }
-                    .test {
-                        it shouldHave error(assertionError)
-                    }
+                .apply {
+                    onError(assertionError)
+                }
+                .test {
+                    it shouldHave error(assertionError)
+                }
         }
 
         it("should have error type") {
             PublishSubject.create<String>()
-                    .apply {
-                        onError(AssertionError())
-                    }
-                    .test {
-                        it shouldHave error(AssertionError::class.java)
-                    }
+                .apply {
+                    onError(AssertionError())
+                }
+                .test {
+                    it shouldHave error(AssertionError::class.java)
+                }
         }
 
         it("should have error predicate") {
             val assertionError = AssertionError()
             PublishSubject.create<String>()
-                    .apply {
-                        onError(assertionError)
-                    }
-                    .test {
-                        it shouldHave error(Predicate { it == assertionError })
-                    }
+                .apply {
+                    onError(assertionError)
+                }
+                .test {
+                    it shouldHave error(Predicate { it == assertionError })
+                }
         }
 
         it("should have no errors") {
             PublishSubject.create<String>()
-                    .test {
-                        it shouldHave noErrors()
-                    }
+                .test {
+                    it shouldHave noErrors()
+                }
         }
 
         on("value") {
@@ -198,14 +198,14 @@ object MatchersTest : Spek({
 
             it("value Only") {
                 ReplaySubject.create<String>()
-                        .also {
-                            it.onNext(item0)
-                            it.onNext(item1)
-                            it.onNext(item2)
-                        }
-                        .test {
-                            it shouldEmit valueOnly(item0, item1, item2)
-                        }
+                    .also {
+                        it.onNext(item0)
+                        it.onNext(item1)
+                        it.onNext(item2)
+                    }
+                    .test {
+                        it shouldEmit valueOnly(item0, item1, item2)
+                    }
             }
         }
 
@@ -243,9 +243,9 @@ object MatchersTest : Spek({
 
         it("emptyTest") {
             PublishSubject.create<String>()
-                    .test {
-                        it shouldBe empty()
-                    }
+                .test {
+                    it shouldBe empty()
+                }
         }
 
         on("failure") {
@@ -255,11 +255,11 @@ object MatchersTest : Spek({
             val error = Throwable(errorMessage)
 
             val obs = ReplaySubject.create<String>()
-                    .also {
-                        it.onNext(value0)
-                        it.onNext(value1)
-                        it.onError(error)
-                    }
+                .also {
+                    it.onNext(value0)
+                    it.onNext(value1)
+                    it.onError(error)
+                }
 
             it("failure by class") {
                 obs.test {
@@ -286,67 +286,67 @@ object MatchersTest : Spek({
             val value1 = "b"
             val values = listOf(value0, value1)
             Observable.just(values)
-                    .test {
-                        it shouldHave result(values)
-                    }
+                .test {
+                    it shouldHave result(values)
+                }
         }
 
         it("subscribeTest") {
             val value0 = "a"
             Observable.just(value0)
-                    .apply {
-                        subscribe({ })
-                        test {
-                            it should subscribed()
-                        }
+                .apply {
+                    subscribe({ })
+                    test {
+                        it should subscribed()
                     }
+                }
         }
 
         it("valueCountTest") {
             Observable.fromIterable(items)
-                    .test {
-                        it shouldHave valueCount(items.size)
-                    }
+                .test {
+                    it shouldHave valueCount(items.size)
+                }
         }
 
         it("terminateTest") {
             Observable.just(item0)
-                    .test {
-                        it should terminate()
-                    }
+                .test {
+                    it should terminate()
+                }
 
             Observable.error<String>(Throwable())
-                    .test {
-                        it should terminate()
-                    }
+                .test {
+                    it should terminate()
+                }
         }
 
         it("timeoutTest") {
             val scheduler = TestScheduler()
 
             Observable
-                    .interval(100, TimeUnit.MILLISECONDS, scheduler)
-                    .test {
-                        it.await(50, TimeUnit.MILLISECONDS)
-                        it shouldHave timeout()
-                    }
+                .interval(100, TimeUnit.MILLISECONDS, scheduler)
+                .test {
+                    it.await(50, TimeUnit.MILLISECONDS)
+                    it shouldHave timeout()
+                }
         }
 
         it("noTimeoutTest") {
             val scheduler = TestScheduler()
 
             Observable
-                    .interval(100, TimeUnit.MILLISECONDS, scheduler)
-                    .test {
-                        it shouldHave noTimeout()
-                    }
+                .interval(100, TimeUnit.MILLISECONDS, scheduler)
+                .test {
+                    it shouldHave noTimeout()
+                }
         }
 
         it("notSubscribedTest") {
             TestObserver<String>()
-                    .apply {
-                        should(notSubscribed())
-                    }
+                .apply {
+                    should(notSubscribed())
+                }
         }
     }
 })
