@@ -28,6 +28,7 @@ object CreateMatcherTest : Spek({
                 failMessage = "Less values then $count"
         )
 
+
         fun <T, U : BaseTestConsumer<T, U>> lessValuesThen(count: Int) =
                 createMatcher<T, U>({ it.values().size < count },
                         failMessage = "More values then $count")
