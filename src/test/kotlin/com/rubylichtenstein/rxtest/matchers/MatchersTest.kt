@@ -15,6 +15,7 @@ import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 import java.util.concurrent.TimeUnit
 
+internal
 object MatchersTest : Spek({
     describe("") {
 
@@ -327,7 +328,7 @@ object MatchersTest : Spek({
             Observable
                 .interval(delay, TimeUnit.MILLISECONDS, scheduler)
                 .test {
-                    it.await(delay/2, TimeUnit.MILLISECONDS)
+                    it.await(delay / 2, TimeUnit.MILLISECONDS)
                     it shouldHave timeout()
                 }
         }
@@ -351,13 +352,12 @@ object MatchersTest : Spek({
     }
 })
 
-fun assertThrowsAssertionError(function: () -> Unit) {
+internal fun assertThrowsAssertionError(function: () -> Unit) {
     val assertionError = catchAssertionError { function() }
     assertNotNull(assertionError)
 }
 
-
-fun catchAssertionError(function: () -> Unit): AssertionError? {
+internal fun catchAssertionError(function: () -> Unit): AssertionError? {
     return try {
         function.invoke()
         null

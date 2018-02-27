@@ -13,10 +13,9 @@ import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 
+internal
 object CreateMatcherTest : Spek({
-
     describe("MatchersTest") {
-
         on("createMatcherOrAndTest") {
             val hello = "Hello"
             val stranger = "stranger"
@@ -27,20 +26,23 @@ object CreateMatcherTest : Spek({
 
             it("or test") {
                 observable.test {
-                    it shouldHave (valueCountBetween<String>(0, itemsCount-1) or values(hello, stranger))
+                    it shouldHave (valueCountBetween<String>(0, itemsCount - 1) or values(hello, stranger))
                 }
             }
 
             it("and test") {
                 observable.test {
-                    it shouldHave (valueCountBetween<String>(itemsCount-1, itemsCount+1) and values(hello, stranger))
+                    it shouldHave (valueCountBetween<String>(itemsCount - 1, itemsCount + 1) and values(
+                        hello,
+                        stranger
+                    ))
                 }
             }
 
             it("fail and test") {
                 observable.test {
                     try {
-                        it shouldHave (valueCountBetween<String>(0, itemsCount-1) and values(hello, stranger))
+                        it shouldHave (valueCountBetween<String>(0, itemsCount - 1) and values(hello, stranger))
                     } catch (e: AssertionError) {
                         assertThat(e, notNullValue())
                     }
@@ -49,7 +51,7 @@ object CreateMatcherTest : Spek({
 
             it("or test") {
                 observable.test {
-                    it shouldHave (valueCountBetween<String>(0, itemsCount+1) or values(hello, stranger))
+                    it shouldHave (valueCountBetween<String>(0, itemsCount + 1) or values(hello, stranger))
                 }
             }
         }
