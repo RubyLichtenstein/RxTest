@@ -61,7 +61,7 @@ object CreateMatcherTest : Spek({
                     try {
                         it shouldHave (valueCountBetween<String>(0, itemsCount-1) and values(hello, stranger))
                     } catch (e: AssertionError) {
-
+                        assertThat(e, notNullValue())
                     }
                 }
             }

@@ -46,7 +46,7 @@ object MatchersTest : Spek({
                     it should complete()
                 }
 
-            shouldThrowAssertionError {
+            assertThrowAssertionError {
                 PublishSubject.create<String>()
                     .test {
                         it should complete()
@@ -60,7 +60,7 @@ object MatchersTest : Spek({
                     it should notComplete()
                 }
 
-            shouldThrowAssertionError {
+            assertThrowAssertionError {
                 PublishSubject.create<String>()
                     .test {
                         it should complete()
@@ -323,11 +323,11 @@ object MatchersTest : Spek({
 
         it("timeoutTest") {
             val scheduler = TestScheduler()
-
+            val delay = 100L
             Observable
-                .interval(100, TimeUnit.MILLISECONDS, scheduler)
+                .interval(delay, TimeUnit.MILLISECONDS, scheduler)
                 .test {
-                    it.await(50, TimeUnit.MILLISECONDS)
+                    it.await(delay/2, TimeUnit.MILLISECONDS)
                     it shouldHave timeout()
                 }
         }
@@ -351,13 +351,13 @@ object MatchersTest : Spek({
     }
 })
 
-fun shouldThrowAssertionError(function: () -> Unit) {
-    val assertionError = getAssertionError { function() }
+fun assertThrowAssertionError(function: () -> Unit) {
+    val assertionError = catchAssertionError { function() }
     assertNotNull(assertionError)
 }
 
 
-fun getAssertionError(function: () -> Unit): AssertionError? {
+fun catchAssertionError(function: () -> Unit): AssertionError? {
     return try {
         function.invoke()
         null
