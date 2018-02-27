@@ -51,6 +51,11 @@ dependencies {       
     <type>pom</type>
 </dependency>
 ```
+## Mentions
+
+[![androidweekly](https://img.shields.io/badge/androidweekly.net-298-orange.svg?style=flat-square)](http://androidweekly.net/issues/issue-298) 
+[![androidweekly](https://img.shields.io/badge/androidweekly.cn-161-orange.svg?style=flat-square)](http://androidweekly.cn/android-dev-wekly-issue-161/)
+
 ## Bugs and Feedback
 
 For bugs, questions and discussions please use the [Github Issues](https://github.com/RubyLichtenstein/RxTest/issues).
