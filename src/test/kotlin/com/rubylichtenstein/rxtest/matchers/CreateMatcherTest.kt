@@ -40,24 +40,26 @@ object CreateMatcherTest : Spek({
             val hello = "Hello"
             val stranger = "stranger"
 
+            val itemsCount = 2
+
             val obs by memoized { Observable.just(hello, stranger) }
 
             it("or test") {
                 obs.test {
-                    it shouldHave (valueCountBetween<String>(0, 1) or values(hello, stranger))
+                    it shouldHave (valueCountBetween<String>(0, itemsCount-1) or values(hello, stranger))
                 }
             }
 
             it("and test") {
                 obs.test {
-                    it shouldHave (valueCountBetween<String>(1, 3) and values(hello, stranger))
+                    it shouldHave (valueCountBetween<String>(itemsCount-1, itemsCount+1) and values(hello, stranger))
                 }
             }
 
             it("fail and test") {
                 obs.test {
                     try {
-                        it shouldHave (valueCountBetween<String>(0, 1) and values(hello, stranger))
+                        it shouldHave (valueCountBetween<String>(0, itemsCount-1) and values(hello, stranger))
                     } catch (e: AssertionError) {
 
                     }
@@ -66,7 +68,7 @@ object CreateMatcherTest : Spek({
 
             it("or test") {
                 obs.test {
-                    it shouldHave (valueCountBetween<String>(0, 3) or values(hello, stranger))
+                    it shouldHave (valueCountBetween<String>(0, itemsCount+1) or values(hello, stranger))
                 }
             }
 

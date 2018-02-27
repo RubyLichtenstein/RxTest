@@ -1,6 +1,5 @@
 package com.rubylichtenstein.rxtest.matchers
 
-
 interface Matcher<T> {
 
     fun test(value: T): Result

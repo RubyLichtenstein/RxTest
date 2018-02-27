@@ -1,6 +1,5 @@
 package com.rubylichtenstein.rxtest.matchers
 
-
 import io.reactivex.observers.BaseTestConsumer
 
 /**
