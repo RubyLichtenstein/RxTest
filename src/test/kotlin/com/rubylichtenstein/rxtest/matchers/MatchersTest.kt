@@ -46,7 +46,7 @@ object MatchersTest : Spek({
                     it should complete()
                 }
 
-            assertThrowAssertionError {
+            assertThrowsAssertionError {
                 PublishSubject.create<String>()
                     .test {
                         it should complete()
@@ -60,7 +60,7 @@ object MatchersTest : Spek({
                     it should notComplete()
                 }
 
-            assertThrowAssertionError {
+            assertThrowsAssertionError {
                 PublishSubject.create<String>()
                     .test {
                         it should complete()
@@ -351,7 +351,7 @@ object MatchersTest : Spek({
     }
 })
 
-fun assertThrowAssertionError(function: () -> Unit) {
+fun assertThrowsAssertionError(function: () -> Unit) {
     val assertionError = catchAssertionError { function() }
     assertNotNull(assertionError)
 }

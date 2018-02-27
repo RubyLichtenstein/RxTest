@@ -1,6 +1,5 @@
 package com.rubylichtenstein.rxtest.matchers
 
-import com.rubylichtenstein.rxtest.assertions.should
 import com.rubylichtenstein.rxtest.assertions.shouldEmit
 import com.rubylichtenstein.rxtest.assertions.shouldHave
 import com.rubylichtenstein.rxtest.extentions.test
@@ -24,22 +23,22 @@ object CreateMatcherTest : Spek({
 
             val itemsCount = 2
 
-            val obs by memoized { Observable.just(hello, stranger) }
+            val observable by memoized { Observable.just(hello, stranger) }
 
             it("or test") {
-                obs.test {
+                observable.test {
                     it shouldHave (valueCountBetween<String>(0, itemsCount-1) or values(hello, stranger))
                 }
             }
 
             it("and test") {
-                obs.test {
+                observable.test {
                     it shouldHave (valueCountBetween<String>(itemsCount-1, itemsCount+1) and values(hello, stranger))
                 }
             }
 
             it("fail and test") {
-                obs.test {
+                observable.test {
                     try {
                         it shouldHave (valueCountBetween<String>(0, itemsCount-1) and values(hello, stranger))
                     } catch (e: AssertionError) {
@@ -49,36 +48,12 @@ object CreateMatcherTest : Spek({
             }
 
             it("or test") {
-                obs.test {
+                observable.test {
                     it shouldHave (valueCountBetween<String>(0, itemsCount+1) or values(hello, stranger))
                 }
             }
-
         }
-        on("fail test") {
-            it("") {
-                try {
-                    Observable.just("")
-                        .test {
-                            it should notComplete()
-                        }
-                } catch (e: Throwable) {
-                    assertThat(e, notNullValue())
-                }
-            }
 
-            it("fail test") {
-                try {
-                    Observable.just("", "")
-                        .test {
-                            it shouldHave moreValuesThen(45)
-                        }
-                } catch (e: Throwable) {
-                    assertThat(e, notNullValue())
-                }
-            }
-
-        }
         on("create matcher test") {
             val values = listOf<String>("Rx", "Kotlin", "Test")
 
