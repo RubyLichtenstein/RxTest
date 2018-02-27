@@ -37,6 +37,7 @@ fun <T, U : BaseTestConsumer<T, U>> createMatcher(assertion: (BaseTestConsumer<T
  *
  * @return AssertionError? null on success
  */
+
 private inline fun <T, U : BaseTestConsumer<T, U>> applyAssertion(
     testConsumer: BaseTestConsumer<T, U>,
     assertion: (BaseTestConsumer<T, U>) -> Unit
