@@ -14,14 +14,14 @@
   },
 
   "version": {
-    "name": "1.0.6",
-    "released": "2018-02-26",
+    "name": "1.0.7",
+    "released": "2018-02-27",
     "gpgSign": false
   },
 
   "files":
   [
-    {"includePattern": "build/libs/(.*)", "uploadPattern": "com/rubylichtenstein/rxtest/1.0.6/$1"}
+    {"includePattern": "build/libs/(.*)", "uploadPattern": "com/rubylichtenstein/rxtest/1.0.7/$1"}
   ],
   "publish": true
 }
