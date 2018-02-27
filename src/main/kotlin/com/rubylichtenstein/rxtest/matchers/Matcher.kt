@@ -15,11 +15,7 @@ interface Matcher<T> {
      */
     infix fun and(other: Matcher<T>): Matcher<T> = object : Matcher<T> {
         override fun test(value: T): Result {
-            val r = this@Matcher.test(value)
-            return if (!r.passed)
-                r
-            else
-                other.test(value)
+            return andTest(value, other)
         }
     }
 
@@ -28,12 +24,30 @@ interface Matcher<T> {
      */
     infix fun or(other: Matcher<T>): Matcher<T> = object : Matcher<T> {
         override fun test(value: T): Result {
-            val r = this@Matcher.test(value)
-            return if (r.passed)
-                r
-            else
-                other.test(value)
+            return orTest(value, other)
         }
+    }
+
+    private fun andTest(
+        value: T,
+        other: Matcher<T>
+    ): Result {
+        val r = this.test(value)
+        return if (!r.passed)
+            r
+        else
+            other.test(value)
+    }
+
+    private fun orTest(
+        value: T,
+        other: Matcher<T>
+    ): Result {
+        val r = this.test(value)
+        return if (r.passed)
+            r
+        else
+            other.test(value)
     }
 }
 
