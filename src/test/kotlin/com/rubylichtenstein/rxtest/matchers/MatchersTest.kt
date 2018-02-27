@@ -15,6 +15,7 @@ import org.jetbrains.spek.api.dsl.it
 import org.jetbrains.spek.api.dsl.on
 import java.util.concurrent.TimeUnit
 
+internal
 object MatchersTest : Spek({
     describe("") {
 
@@ -46,7 +47,7 @@ object MatchersTest : Spek({
                     it should complete()
                 }
 
-            shouldThrowAssertionError {
+            assertThrowsAssertionError {
                 PublishSubject.create<String>()
                     .test {
                         it should complete()
@@ -60,7 +61,7 @@ object MatchersTest : Spek({
                     it should notComplete()
                 }
 
-            shouldThrowAssertionError {
+            assertThrowsAssertionError {
                 PublishSubject.create<String>()
                     .test {
                         it should complete()
@@ -323,11 +324,11 @@ object MatchersTest : Spek({
 
         it("timeoutTest") {
             val scheduler = TestScheduler()
-
+            val delay = 100L
             Observable
-                .interval(100, TimeUnit.MILLISECONDS, scheduler)
+                .interval(delay, TimeUnit.MILLISECONDS, scheduler)
                 .test {
-                    it.await(50, TimeUnit.MILLISECONDS)
+                    it.await(delay / 2, TimeUnit.MILLISECONDS)
                     it shouldHave timeout()
                 }
         }
@@ -351,13 +352,12 @@ object MatchersTest : Spek({
     }
 })
 
-fun shouldThrowAssertionError(function: () -> Unit) {
-    val assertionError = getAssertionError { function() }
+internal fun assertThrowsAssertionError(function: () -> Unit) {
+    val assertionError = catchAssertionError { function() }
     assertNotNull(assertionError)
 }
 
-
-fun getAssertionError(function: () -> Unit): AssertionError? {
+internal fun catchAssertionError(function: () -> Unit): AssertionError? {
     return try {
         function.invoke()
         null
