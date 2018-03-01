@@ -54,7 +54,7 @@ dependencies {       
 ```
 ## Mentions
 
-[![androidweekly](https://img.shields.io/badge/androidweekly.net-298-orange.svg?style=flat-square)](https://androidweekly.net/issues/issue-298) 
+[![androidweekly](https://img.shields.io/badge/androidweekly.net-298-orange.svg?style=flat-square)](http://androidweekly.net/issues/issue-298) 
 [![androidweekly](https://img.shields.io/badge/androidweekly.cn-161-orange.svg?style=flat-square)](https://androidweekly.cn/android-dev-weekly-issue-161/)
 
 ## Bugs and Feedback
